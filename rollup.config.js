@@ -20,6 +20,7 @@ export default {
       exclude: 'node_modules/**',
     }),
   ],
+  extend: true,
   external: [ 'three' ],
   globals: {
     three: 'THREE',

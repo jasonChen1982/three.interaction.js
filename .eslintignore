@@ -5,5 +5,5 @@ static/**
 examples/**
 docs/**
 test/**
-gulpfile.js
+rollup.config.js
 karma.conf.js
