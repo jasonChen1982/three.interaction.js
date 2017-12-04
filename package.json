@@ -1,0 +1,87 @@
+{
+  "name": "three.interaction",
+  "version": "0.0.0",
+  "description": "a interaction manager, serve the three.js, help you build a interactivity 3d-scene",
+  "main": "./build/three.interaction.js",
+  "module": "./esm/three.interaction.js",
+  "files": [
+    "CHANGELOG.md",
+    "README.md",
+    "build",
+    "esm",
+    "src"
+  ],
+  "scripts": {
+    "build": "rollup -c",
+    "build:dev": "rollup -c -w",
+    "prever": "npm run build && git add -A && git commit -m 'release: release a new version'",
+    "ver": "standard-version -m 'chore(release): v%s'",
+    "postver": "git push --follow-tags origin master && tnpm publish",
+    "docs": "jsdoc -c jsdoc.conf.json -R README.md",
+    "lint": "eslint .",
+    "fix": "eslint --fix ./src",
+    "test": "karma start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jasonChen1982/three.interaction.js.git"
+  },
+  "keywords": [
+    "threejs",
+    "three.js",
+    "event",
+    "eventer",
+    "interaction",
+    "event-system"
+  ],
+  "author": {
+    "name": "jason Chen",
+    "email": "jasonchen1882@gmail.com",
+    "url": "http://jason82.com"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jasonChen1982/three.interaction.js/issues"
+  },
+  "homepage": "https://github.com/jasonChen1982/three.interaction.js#readme",
+  "peerDependencies": {
+    "three": "^0.88.0"
+  },
+  "devDependencies": {
+    "@pixi/jsdoc-template": "^2.2.0",
+    "babel-core": "^6.26.0",
+    "babel-plugin-external-helpers": "^6.22.0",
+    "babel-preset-env": "^1.6.1",
+    "chai": "^4.1.2",
+    "chalk": "^2.3.0",
+    "eslint": "^4.12.1",
+    "eslint-config-google": "^0.9.1",
+    "jsdoc": "^3.5.5",
+    "karma": "^1.7.1",
+    "karma-chai": "^0.1.0",
+    "karma-mocha": "^1.3.0",
+    "karma-phantomjs-launcher": "^1.0.4",
+    "mocha": "^4.0.1",
+    "rollup": "^0.52.0",
+    "rollup-plugin-babel": "^3.0.2",
+    "standard-version": "^4.2.0",
+    "validate-commit-msg": "^2.14.0"
+  },
+  "config": {
+    "validate-commit-msg": {
+      "types": [
+        "feat",
+        "fix",
+        "docs",
+        "style",
+        "refactor",
+        "perf",
+        "test",
+        "chore",
+        "release",
+        "revert",
+        "deps"
+      ]
+    }
+  }
+}

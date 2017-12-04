@@ -1,0 +1,16 @@
+{
+  "extends": ["eslint:recommended", "eslint-config-google"],
+  "env": {
+    "browser": true,
+    "es6": true
+  },
+  "rules": {
+    "no-bitwise": 0,
+    "max-len": 0,
+    "object-curly-spacing": ["error", "always", { "arraysInObjects": true }]
+  },
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module"
+  }
+}

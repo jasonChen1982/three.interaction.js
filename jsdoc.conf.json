@@ -1,0 +1,53 @@
+{
+  "tags": {
+      "allowUnknownTags": false
+  },
+  "source": {
+      "include": [
+          "./src/"
+      ],
+      "exclude": [],
+      "includePattern": ".+\\.js(doc)?$",
+      "excludePattern": "(^|\\/|\\\\)_"
+  },
+  "plugins": [
+      "./node_modules/jsdoc/plugins/markdown"
+  ],
+  "templates": {
+      "cleverLinks"   : false,
+      "monospaceLinks": false,
+      "default"       : {
+          "outputSourceFiles" : true
+      },
+      "applicationName": "three.interaction.js",
+      "footer"        : "Made with ♥ by JasonChen (github.com/jasonChen1982)",
+      "copyright"     : "three.interaction.js Copyright © 2013-2017 JasonChen.",
+      "disqus": "",
+      "googleAnalytics": "UA-103772589-5",
+      "openGraph": {
+          "title": "",
+          "type": "website",
+          "image": "",
+          "site_name": "",
+          "url": ""
+      },
+      "meta": {
+          "title": "three.interaction.js API Documentation",
+          "description": "Documentation for three.interaction.js library",
+          "keyword": "docs, documentation, three.js, three.js event system, three.interaction.js, renderer, html5, javascript, jsdoc"
+      },
+      "linenums"      : true
+  },
+  "markdown"  : {
+      "parser"        : "gfm",
+      "hardwrap"      : false
+  },
+  "opts": {
+      "encoding"      : "utf8",
+      "recurse"       : true,
+      "private"       : false,
+      "lenient"       : true,
+      "destination"   : "./docs",
+      "template"      : "./node_modules/@pixi/jsdoc-template"
+  }
+}

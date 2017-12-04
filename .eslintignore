@@ -1,0 +1,9 @@
+node_modules/**
+build/**
+esm/**
+static/**
+examples/**
+docs/**
+test/**
+gulpfile.js
+karma.conf.js
