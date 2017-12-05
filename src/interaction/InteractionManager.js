@@ -839,7 +839,7 @@ class InteractionManager extends EventDispatcher {
 
     // Resets the flag as set by a stopPropagation call. This flag is usually reset by a user interaction of any kind,
     // but there was a scenario of a display object moving under a static mouse cursor.
-    // In this case, mouseover and mouseevents would not pass the flag test in fireEvent function
+    // In this case, mouseover and mouseevents would not pass the flag test in triggerEvent function
     for (const k in this.activeInteractionData) {
       // eslint-disable-next-line no-prototype-builtins
       if (this.activeInteractionData.hasOwnProperty(k)) {
@@ -915,7 +915,7 @@ class InteractionManager extends EventDispatcher {
    * @param {object} eventData - the event data object
    * @private
    */
-  fireEvent(displayObject, eventString, eventData) {
+  triggerEvent(displayObject, eventString, eventData) {
     if (!eventData.stopped) {
       eventData.currentTarget = displayObject;
       eventData.type = eventString;
@@ -1124,10 +1124,10 @@ class InteractionManager extends EventDispatcher {
       if (!displayObject.trackedPointers[id]) {
         displayObject.trackedPointers[id] = new InteractionTrackingData(id);
       }
-      this.fireEvent(displayObject, 'pointerdown', interactionEvent);
+      this.triggerEvent(displayObject, 'pointerdown', interactionEvent);
 
       if (data.pointerType === 'touch') {
-        this.fireEvent(displayObject, 'touchstart', interactionEvent);
+        this.triggerEvent(displayObject, 'touchstart', interactionEvent);
       } else if (data.pointerType === 'mouse' || data.pointerType === 'pen') {
         const isRightButton = data.button === 2;
 
@@ -1137,7 +1137,7 @@ class InteractionManager extends EventDispatcher {
           displayObject.trackedPointers[id].leftDown = true;
         }
 
-        this.fireEvent(displayObject, isRightButton ? 'rightdown' : 'mousedown', interactionEvent);
+        this.triggerEvent(displayObject, isRightButton ? 'rightdown' : 'mousedown', interactionEvent);
       }
     }
   }
@@ -1211,10 +1211,10 @@ class InteractionManager extends EventDispatcher {
 
     if (displayObject.trackedPointers[id] !== undefined) {
       delete displayObject.trackedPointers[id];
-      this.fireEvent(displayObject, 'pointercancel', interactionEvent);
+      this.triggerEvent(displayObject, 'pointercancel', interactionEvent);
 
       if (data.pointerType === 'touch') {
-        this.fireEvent(displayObject, 'touchcancel', interactionEvent);
+        this.triggerEvent(displayObject, 'touchcancel', interactionEvent);
       }
     }
   }
@@ -1262,13 +1262,13 @@ class InteractionManager extends EventDispatcher {
       const isDown = trackingData !== undefined && (trackingData.flags & test);
 
       if (hit) {
-        this.fireEvent(displayObject, isRightButton ? 'rightup' : 'mouseup', interactionEvent);
+        this.triggerEvent(displayObject, isRightButton ? 'rightup' : 'mouseup', interactionEvent);
 
         if (isDown) {
-          this.fireEvent(displayObject, isRightButton ? 'rightclick' : 'click', interactionEvent);
+          this.triggerEvent(displayObject, isRightButton ? 'rightclick' : 'click', interactionEvent);
         }
       } else if (isDown) {
-        this.fireEvent(displayObject, isRightButton ? 'rightupoutside' : 'mouseupoutside', interactionEvent);
+        this.triggerEvent(displayObject, isRightButton ? 'rightupoutside' : 'mouseupoutside', interactionEvent);
       }
       // update the down state of the tracking data
       if (trackingData) {
@@ -1282,21 +1282,21 @@ class InteractionManager extends EventDispatcher {
 
     // Pointers and Touches, and Mouse
     if (hit) {
-      this.fireEvent(displayObject, 'pointerup', interactionEvent);
-      if (isTouch) this.fireEvent(displayObject, 'touchend', interactionEvent);
+      this.triggerEvent(displayObject, 'pointerup', interactionEvent);
+      if (isTouch) this.triggerEvent(displayObject, 'touchend', interactionEvent);
 
       if (trackingData) {
-        this.fireEvent(displayObject, 'pointertap', interactionEvent);
+        this.triggerEvent(displayObject, 'pointertap', interactionEvent);
         if (isTouch) {
-          this.fireEvent(displayObject, 'tap', interactionEvent);
+          this.triggerEvent(displayObject, 'tap', interactionEvent);
           // touches are no longer over (if they ever were) when we get the touchend
           // so we should ensure that we don't keep pretending that they are
           trackingData.over = false;
         }
       }
     } else if (trackingData) {
-      this.fireEvent(displayObject, 'pointerupoutside', interactionEvent);
-      if (isTouch) this.fireEvent(displayObject, 'touchendoutside', interactionEvent);
+      this.triggerEvent(displayObject, 'pointerupoutside', interactionEvent);
+      if (isTouch) this.triggerEvent(displayObject, 'touchendoutside', interactionEvent);
     }
     // Only remove the tracking data if there is no over/down state still associated with it
     if (trackingData && trackingData.none) {
@@ -1373,9 +1373,9 @@ class InteractionManager extends EventDispatcher {
     }
 
     if (!this.moveWhenInside || hit) {
-      this.fireEvent(displayObject, 'pointermove', interactionEvent);
-      if (isTouch) this.fireEvent(displayObject, 'touchmove', interactionEvent);
-      if (isMouse) this.fireEvent(displayObject, 'mousemove', interactionEvent);
+      this.triggerEvent(displayObject, 'pointermove', interactionEvent);
+      if (isTouch) this.triggerEvent(displayObject, 'touchmove', interactionEvent);
+      if (isMouse) this.triggerEvent(displayObject, 'mousemove', interactionEvent);
     }
   }
 
@@ -1444,9 +1444,9 @@ class InteractionManager extends EventDispatcher {
     if (hit && this.mouseOverRenderer) {
       if (!trackingData.over) {
         trackingData.over = true;
-        this.fireEvent(displayObject, 'pointerover', interactionEvent);
+        this.triggerEvent(displayObject, 'pointerover', interactionEvent);
         if (isMouse) {
-          this.fireEvent(displayObject, 'mouseover', interactionEvent);
+          this.triggerEvent(displayObject, 'mouseover', interactionEvent);
         }
       }
 
@@ -1457,9 +1457,9 @@ class InteractionManager extends EventDispatcher {
       }
     } else if (trackingData.over) {
       trackingData.over = false;
-      this.fireEvent(displayObject, 'pointerout', this.eventData);
+      this.triggerEvent(displayObject, 'pointerout', this.eventData);
       if (isMouse) {
-        this.fireEvent(displayObject, 'mouseout', interactionEvent);
+        this.triggerEvent(displayObject, 'mouseout', interactionEvent);
       }
       // if there is no mouse down information for the pointer, then it is safe to delete
       if (trackingData.none) {

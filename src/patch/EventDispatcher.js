@@ -35,7 +35,7 @@ EventDispatcher.prototype.off = function(type, fn) {
  */
 EventDispatcher.prototype.once = function(type, fn) {
   if (!Utils.isFunction(fn)) return;
-  const cb = ev => {
+  const cb = (ev) => {
     fn(ev);
     this.off(type, cb);
   };

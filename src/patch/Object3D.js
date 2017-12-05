@@ -56,7 +56,7 @@ Object3D.prototype.off = function(type, fn) {
  */
 Object3D.prototype.once = function(type, fn) {
   if (!Utils.isFunction(fn)) return;
-  const cb = ev => {
+  const cb = (ev) => {
     fn(ev);
     this.off(type, cb);
   };
