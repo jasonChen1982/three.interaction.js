@@ -1,0 +1,1425 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>three.interaction.js API Documentation</title>
+    
+    <meta name="description" content="Documentation for three.interaction.js library" />
+    
+        <meta name="keywords" content="docs, documentation, three.js, three.js event system, three.interaction.js, renderer, html5, javascript, jsdoc" />
+        <meta name="keyword" content="docs, documentation, three.js, three.js event system, three.interaction.js, renderer, html5, javascript, jsdoc" />
+    
+    
+    
+    <meta property="og:title" content=""/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:image" content=""/>
+    
+    <meta property="og:url" content=""/>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <script src="scripts/jquery.min.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link href="https://fonts.googleapis.com/css?family=Libre+Franklin:400,700" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/main.css">
+    
+    
+    <script>
+    var config = {"monospaceLinks":false,"cleverLinks":false,"default":{"outputSourceFiles":true},"applicationName":"three.interaction.js","footer":"Made with ♥ by JasonChen (github.com/jasonChen1982)","copyright":"three.interaction.js Copyright © 2013-2017 JasonChen.","disqus":"","googleAnalytics":"UA-103772589-5","openGraph":{"title":"","type":"website","image":"","site_name":"","url":""},"meta":{"title":"three.interaction.js API Documentation","description":"Documentation for three.interaction.js library","keyword":"docs, documentation, three.js, three.js event system, three.interaction.js, renderer, html5, javascript, jsdoc"},"linenums":true};
+    </script>
+    
+
+    
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', config.googleAnalytics]);
+      _gaq.push(['_trackPageview']);
+    
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+    </script>
+    
+</head>
+<body>
+<div id="wrap" class="clearfix">
+    
+<div class="navigation">
+    <h3 class="applicationName"><a href="index.html">three.interaction.js</a></h3>
+    <button id="menuToggle" class="btn btn-link btn-lg menu-toggle">
+        <span class="glyphicon glyphicon-menu-hamburger"></span>
+    </button>
+    <div class="search">
+        <input id="search" type="text" class="form-control input-md" placeholder="Search...">
+    </div>
+    <ul class="list">
+    
+        <li class="item" data-name="Utils">
+            <span class="title namespace ">
+                
+                <span class="namespaceTag">
+                    <span class="glyphicon glyphicon-folder-open"></span>
+                </span>
+                
+                <a href="Utils.html">Utils</a>
+            </span>
+            <ul class="members itemMembers">
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="methods itemMembers">
+            
+            <span class="subtitle">Methods</span>
+            
+                <li class="parent  " data-name="Utils.isArray"><a href="Utils.html#.isArray">isArray</a></li>
+            
+                <li class="parent  " data-name="Utils.isBoolean"><a href="Utils.html#.isBoolean">isBoolean</a></li>
+            
+                <li class="parent  " data-name="Utils.isFunction"><a href="Utils.html#.isFunction">isFunction</a></li>
+            
+                <li class="parent  " data-name="Utils.isNumber"><a href="Utils.html#.isNumber">isNumber</a></li>
+            
+                <li class="parent  " data-name="Utils.isObject"><a href="Utils.html#.isObject">isObject</a></li>
+            
+                <li class="parent  " data-name="Utils.isString"><a href="Utils.html#.isString">isString</a></li>
+            
+                <li class="parent  " data-name="Utils.isUndefined"><a href="Utils.html#.isUndefined">isUndefined</a></li>
+            
+            </ul>
+            <ul class="events itemMembers">
+            
+            </ul>
+        </li>
+    
+        <li class="item" data-name="InteractionData">
+            <span class="title  ">
+                
+                <a href="InteractionData.html">InteractionData</a>
+            </span>
+            <ul class="members itemMembers">
+            
+            <span class="subtitle">Members</span>
+            
+                <li class="parent " data-name="InteractionData#button"><a href="InteractionData.html#button">button</a></li>
+            
+                <li class="parent " data-name="InteractionData#buttons"><a href="InteractionData.html#buttons">buttons</a></li>
+            
+                <li class="parent " data-name="InteractionData#global"><a href="InteractionData.html#global">global</a></li>
+            
+                <li class="parent " data-name="InteractionData#height"><a href="InteractionData.html#height">height</a></li>
+            
+                <li class="parent " data-name="InteractionData#identifier"><a href="InteractionData.html#identifier">identifier</a></li>
+            
+                <li class="parent " data-name="InteractionData#isPrimary"><a href="InteractionData.html#isPrimary">isPrimary</a></li>
+            
+                <li class="parent " data-name="InteractionData#originalEvent"><a href="InteractionData.html#originalEvent">originalEvent</a></li>
+            
+                <li class="parent " data-name="InteractionData#pointerId"><a href="InteractionData.html#pointerId">pointerId</a></li>
+            
+                <li class="parent " data-name="InteractionData#pointerType"><a href="InteractionData.html#pointerType">pointerType</a></li>
+            
+                <li class="parent " data-name="InteractionData#pressure"><a href="InteractionData.html#pressure">pressure</a></li>
+            
+                <li class="parent " data-name="InteractionData#rotationAngle"><a href="InteractionData.html#rotationAngle">rotationAngle</a></li>
+            
+                <li class="parent " data-name="InteractionData#tangentialPressure"><a href="InteractionData.html#tangentialPressure">tangentialPressure</a></li>
+            
+                <li class="parent " data-name="InteractionData#target"><a href="InteractionData.html#target">target</a></li>
+            
+                <li class="parent " data-name="InteractionData#tiltX"><a href="InteractionData.html#tiltX">tiltX</a></li>
+            
+                <li class="parent " data-name="InteractionData#tiltY"><a href="InteractionData.html#tiltY">tiltY</a></li>
+            
+                <li class="parent " data-name="InteractionData#twist"><a href="InteractionData.html#twist">twist</a></li>
+            
+                <li class="parent " data-name="InteractionData#width"><a href="InteractionData.html#width">width</a></li>
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="methods itemMembers">
+            
+            </ul>
+            <ul class="events itemMembers">
+            
+            </ul>
+        </li>
+    
+        <li class="item" data-name="InteractionEvent">
+            <span class="title  ">
+                
+                <a href="InteractionEvent.html">InteractionEvent</a>
+            </span>
+            <ul class="members itemMembers">
+            
+            <span class="subtitle">Members</span>
+            
+                <li class="parent " data-name="InteractionEvent#currentTarget"><a href="InteractionEvent.html#currentTarget">currentTarget</a></li>
+            
+                <li class="parent " data-name="InteractionEvent#data"><a href="InteractionEvent.html#data">data</a></li>
+            
+                <li class="parent " data-name="InteractionEvent#intersect"><a href="InteractionEvent.html#intersect">intersect</a></li>
+            
+                <li class="parent " data-name="InteractionEvent#stopped"><a href="InteractionEvent.html#stopped">stopped</a></li>
+            
+                <li class="parent " data-name="InteractionEvent#target"><a href="InteractionEvent.html#target">target</a></li>
+            
+                <li class="parent " data-name="InteractionEvent#type"><a href="InteractionEvent.html#type">type</a></li>
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="methods itemMembers">
+            
+            <span class="subtitle">Methods</span>
+            
+                <li class="parent  " data-name="InteractionEvent#stopPropagation"><a href="InteractionEvent.html#stopPropagation">stopPropagation</a></li>
+            
+            </ul>
+            <ul class="events itemMembers">
+            
+            </ul>
+        </li>
+    
+        <li class="item" data-name="InteractionManager">
+            <span class="title  ">
+                
+                <a href="InteractionManager.html">InteractionManager</a>
+            </span>
+            <ul class="members itemMembers">
+            
+            <span class="subtitle">Members</span>
+            
+                <li class="parent " data-name="InteractionManager#autoPreventDefault"><a href="InteractionManager.html#autoPreventDefault">autoPreventDefault</a></li>
+            
+                <li class="parent " data-name="InteractionManager#camera"><a href="InteractionManager.html#camera">camera</a></li>
+            
+                <li class="parent " data-name="InteractionManager#currentCursorMode"><a href="InteractionManager.html#currentCursorMode">currentCursorMode</a></li>
+            
+                <li class="parent " data-name="InteractionManager#cursorStyles"><a href="InteractionManager.html#cursorStyles">cursorStyles</a></li>
+            
+                <li class="parent " data-name="InteractionManager#eventData"><a href="InteractionManager.html#eventData">eventData</a></li>
+            
+                <li class="parent " data-name="InteractionManager#interactionFrequency"><a href="InteractionManager.html#interactionFrequency">interactionFrequency</a></li>
+            
+                <li class="parent " data-name="InteractionManager#mouse"><a href="InteractionManager.html#mouse">mouse</a></li>
+            
+                <li class="parent " data-name="InteractionManager#moveWhenInside"><a href="InteractionManager.html#moveWhenInside">moveWhenInside</a></li>
+            
+                <li class="parent " data-name="InteractionManager#raycaster"><a href="InteractionManager.html#raycaster">raycaster</a></li>
+            
+                <li class="parent " data-name="InteractionManager#renderer"><a href="InteractionManager.html#renderer">renderer</a></li>
+            
+                <li class="parent " data-name="InteractionManager#scene"><a href="InteractionManager.html#scene">scene</a></li>
+            
+                <li class="parent " data-name="InteractionManager#supportsPointerEvents"><a href="InteractionManager.html#supportsPointerEvents">supportsPointerEvents</a></li>
+            
+                <li class="parent " data-name="InteractionManager#supportsTouchEvents"><a href="InteractionManager.html#supportsTouchEvents">supportsTouchEvents</a></li>
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="methods itemMembers">
+            
+            <span class="subtitle">Methods</span>
+            
+                <li class="parent  " data-name="InteractionManager#destroy"><a href="InteractionManager.html#destroy">destroy</a></li>
+            
+                <li class="  " data-name="InteractionManager#emit"><a href="InteractionManager.html#emit">emit</a></li>
+            
+                <li class="parent  " data-name="InteractionManager#hitTest"><a href="InteractionManager.html#hitTest">hitTest</a></li>
+            
+                <li class="parent  " data-name="InteractionManager#mapPositionToPoint"><a href="InteractionManager.html#mapPositionToPoint">mapPositionToPoint</a></li>
+            
+                <li class="  " data-name="InteractionManager#off"><a href="InteractionManager.html#off">off</a></li>
+            
+                <li class="  " data-name="InteractionManager#on"><a href="InteractionManager.html#on">on</a></li>
+            
+                <li class="  " data-name="InteractionManager#once"><a href="InteractionManager.html#once">once</a></li>
+            
+                <li class="parent  " data-name="InteractionManager#setCursorMode"><a href="InteractionManager.html#setCursorMode">setCursorMode</a></li>
+            
+                <li class="parent  " data-name="InteractionManager#setTargetElement"><a href="InteractionManager.html#setTargetElement">setTargetElement</a></li>
+            
+                <li class="parent  " data-name="InteractionManager#update"><a href="InteractionManager.html#update">update</a></li>
+            
+            </ul>
+            <ul class="events itemMembers">
+            
+            </ul>
+        </li>
+    
+    </ul>
+</div>
+    <div class="main">
+        <h1 class="page-title" data-filename="Utils.html">Namespace: Utils</h1>
+        
+
+
+
+<section>
+    
+<header>
+    <div class="header content-size">
+        <h2>Utils
+        </h2>
+        
+    </div>
+</header>  
+
+<article class="content-size">
+    <div class="container-overview">
+    
+    
+    
+        
+            <div class="description"><p>Utils tool box</p></div>
+        
+        
+        
+<dl class="details">
+    
+        
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+        
+        
+    
+    </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+        <h3 class="subsection-title">Methods</h3>
+        
+        <dl class="list-methods">
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id=".isArray">
+            <a class="share-icon" href="#.isArray"><span class="glyphicon glyphicon-link"></span></a>
+            <span class="">
+                Utils.isArray
+            </span>
+            <span class="signature">(variable)</span><span class="type-signature">Boolean</span>
+            
+            <span class="access-signature">static</span>
+            
+            
+        </h4>
+    
+        
+        <div class="tag-source">
+            <a href="utils_Utils.js.html#line26">Utils.js:26</a>
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>determine whether it is a <code>Array</code></p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>variable</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">*</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>a variable which you want to determine</p></td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Type</th>
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    
+        <tr>
+            
+            <td class="type">
+            
+                        Boolean
+                        
+                    
+            </td>
+            <td class="description last">type result</td>
+        </tr>
+    
+    </tbody>
+</table>
+
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id=".isBoolean">
+            <a class="share-icon" href="#.isBoolean"><span class="glyphicon glyphicon-link"></span></a>
+            <span class="">
+                Utils.isBoolean
+            </span>
+            <span class="signature">(variable)</span><span class="type-signature">Boolean</span>
+            
+            <span class="access-signature">static</span>
+            
+            
+        </h4>
+    
+        
+        <div class="tag-source">
+            <a href="utils_Utils.js.html#line120">Utils.js:120</a>
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>determine whether it is a <code>Boolean</code></p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>variable</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">*</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>a variable which you want to determine</p></td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Type</th>
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    
+        <tr>
+            
+            <td class="type">
+            
+                        Boolean
+                        
+                    
+            </td>
+            <td class="description last">type result</td>
+        </tr>
+    
+    </tbody>
+</table>
+
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id=".isFunction">
+            <a class="share-icon" href="#.isFunction"><span class="glyphicon glyphicon-link"></span></a>
+            <span class="">
+                Utils.isFunction
+            </span>
+            <span class="signature">(variable)</span><span class="type-signature">Boolean</span>
+            
+            <span class="access-signature">static</span>
+            
+            
+        </h4>
+    
+        
+        <div class="tag-source">
+            <a href="utils_Utils.js.html#line90">Utils.js:90</a>
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>determine whether it is a <code>Function</code></p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>variable</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">*</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>a variable which you want to determine</p></td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Type</th>
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    
+        <tr>
+            
+            <td class="type">
+            
+                        Boolean
+                        
+                    
+            </td>
+            <td class="description last">type result</td>
+        </tr>
+    
+    </tbody>
+</table>
+
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id=".isNumber">
+            <a class="share-icon" href="#.isNumber"><span class="glyphicon glyphicon-link"></span></a>
+            <span class="">
+                Utils.isNumber
+            </span>
+            <span class="signature">(variable)</span><span class="type-signature">Boolean</span>
+            
+            <span class="access-signature">static</span>
+            
+            
+        </h4>
+    
+        
+        <div class="tag-source">
+            <a href="utils_Utils.js.html#line74">Utils.js:74</a>
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>determine whether it is a <code>Number</code></p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>variable</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">*</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>a variable which you want to determine</p></td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Type</th>
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    
+        <tr>
+            
+            <td class="type">
+            
+                        Boolean
+                        
+                    
+            </td>
+            <td class="description last">type result</td>
+        </tr>
+    
+    </tbody>
+</table>
+
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id=".isObject">
+            <a class="share-icon" href="#.isObject"><span class="glyphicon glyphicon-link"></span></a>
+            <span class="">
+                Utils.isObject
+            </span>
+            <span class="signature">(variable)</span><span class="type-signature">Boolean</span>
+            
+            <span class="access-signature">static</span>
+            
+            
+        </h4>
+    
+        
+        <div class="tag-source">
+            <a href="utils_Utils.js.html#line42">Utils.js:42</a>
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>determine whether it is a <code>Object</code></p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>variable</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">*</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>a variable which you want to determine</p></td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Type</th>
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    
+        <tr>
+            
+            <td class="type">
+            
+                        Boolean
+                        
+                    
+            </td>
+            <td class="description last">type result</td>
+        </tr>
+    
+    </tbody>
+</table>
+
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id=".isString">
+            <a class="share-icon" href="#.isString"><span class="glyphicon glyphicon-link"></span></a>
+            <span class="">
+                Utils.isString
+            </span>
+            <span class="signature">(variable)</span><span class="type-signature">Boolean</span>
+            
+            <span class="access-signature">static</span>
+            
+            
+        </h4>
+    
+        
+        <div class="tag-source">
+            <a href="utils_Utils.js.html#line58">Utils.js:58</a>
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>determine whether it is a <code>String</code></p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>variable</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">*</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>a variable which you want to determine</p></td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Type</th>
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    
+        <tr>
+            
+            <td class="type">
+            
+                        Boolean
+                        
+                    
+            </td>
+            <td class="description last">type result</td>
+        </tr>
+    
+    </tbody>
+</table>
+
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id=".isUndefined">
+            <a class="share-icon" href="#.isUndefined"><span class="glyphicon glyphicon-link"></span></a>
+            <span class="">
+                Utils.isUndefined
+            </span>
+            <span class="signature">(variable)</span><span class="type-signature">Boolean</span>
+            
+            <span class="access-signature">static</span>
+            
+            
+        </h4>
+    
+        
+        <div class="tag-source">
+            <a href="utils_Utils.js.html#line107">Utils.js:107</a>
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>determine whether it is a <code>undefined</code></p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>variable</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">*</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>a variable which you want to determine</p></td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Type</th>
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    
+        <tr>
+            
+            <td class="type">
+            
+                        Boolean
+                        
+                    
+            </td>
+            <td class="description last">type result</td>
+        </tr>
+    
+    </tbody>
+</table>
+
+    
+    
+    
+</dd>
+
+        </dl>
+    
+    
+    
+    
+    
+
+    
+</article>
+
+</section>  
+
+
+
+
+
+        
+
+        <footer class="content-size">
+            <div class="footer">
+                Documentation generated by <a target="_blank" href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Tue Dec 05 2017 12:07:42 GMT+0800 (CST)
+            </div>
+        </footer>
+    </div>
+</div>
+<script>prettyPrint();</script>
+<script src="scripts/main.js"></script>
+</body>
+</html>

@@ -5,9 +5,9 @@ import { Vector2 } from 'three';
  *
  * @class
  */
-export default class InteractionData {
+class InteractionData {
   /**
-   *
+   * InteractionData constructor
    */
   constructor() {
     /**
@@ -176,3 +176,5 @@ export default class InteractionData {
     this.isPrimary = false;
   }
 }
+
+export default InteractionData;

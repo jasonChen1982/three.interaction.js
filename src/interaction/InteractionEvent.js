@@ -3,9 +3,9 @@
  *
  * @class
  */
-export default class InteractionEvent {
+class InteractionEvent {
   /**
-   *
+   * InteractionEvent constructor
    */
   constructor() {
     /**
@@ -71,3 +71,5 @@ export default class InteractionEvent {
     this.intersect = null;
   }
 }
+
+export default InteractionEvent;

@@ -1,0 +1,2877 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>three.interaction.js API Documentation</title>
+    
+    <meta name="description" content="Documentation for three.interaction.js library" />
+    
+        <meta name="keywords" content="docs, documentation, three.js, three.js event system, three.interaction.js, renderer, html5, javascript, jsdoc" />
+        <meta name="keyword" content="docs, documentation, three.js, three.js event system, three.interaction.js, renderer, html5, javascript, jsdoc" />
+    
+    
+    
+    <meta property="og:title" content=""/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:image" content=""/>
+    
+    <meta property="og:url" content=""/>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <script src="scripts/jquery.min.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link href="https://fonts.googleapis.com/css?family=Libre+Franklin:400,700" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/main.css">
+    
+    
+    <script>
+    var config = {"monospaceLinks":false,"cleverLinks":false,"default":{"outputSourceFiles":true},"applicationName":"three.interaction.js","footer":"Made with ♥ by JasonChen (github.com/jasonChen1982)","copyright":"three.interaction.js Copyright © 2013-2017 JasonChen.","disqus":"","googleAnalytics":"UA-103772589-5","openGraph":{"title":"","type":"website","image":"","site_name":"","url":""},"meta":{"title":"three.interaction.js API Documentation","description":"Documentation for three.interaction.js library","keyword":"docs, documentation, three.js, three.js event system, three.interaction.js, renderer, html5, javascript, jsdoc"},"linenums":true};
+    </script>
+    
+
+    
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', config.googleAnalytics]);
+      _gaq.push(['_trackPageview']);
+    
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+    </script>
+    
+</head>
+<body>
+<div id="wrap" class="clearfix">
+    
+<div class="navigation">
+    <h3 class="applicationName"><a href="index.html">three.interaction.js</a></h3>
+    <button id="menuToggle" class="btn btn-link btn-lg menu-toggle">
+        <span class="glyphicon glyphicon-menu-hamburger"></span>
+    </button>
+    <div class="search">
+        <input id="search" type="text" class="form-control input-md" placeholder="Search...">
+    </div>
+    <ul class="list">
+    
+        <li class="item" data-name="Utils">
+            <span class="title namespace ">
+                
+                <span class="namespaceTag">
+                    <span class="glyphicon glyphicon-folder-open"></span>
+                </span>
+                
+                <a href="Utils.html">Utils</a>
+            </span>
+            <ul class="members itemMembers">
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="methods itemMembers">
+            
+            <span class="subtitle">Methods</span>
+            
+                <li class="parent  " data-name="Utils.isArray"><a href="Utils.html#.isArray">isArray</a></li>
+            
+                <li class="parent  " data-name="Utils.isBoolean"><a href="Utils.html#.isBoolean">isBoolean</a></li>
+            
+                <li class="parent  " data-name="Utils.isFunction"><a href="Utils.html#.isFunction">isFunction</a></li>
+            
+                <li class="parent  " data-name="Utils.isNumber"><a href="Utils.html#.isNumber">isNumber</a></li>
+            
+                <li class="parent  " data-name="Utils.isObject"><a href="Utils.html#.isObject">isObject</a></li>
+            
+                <li class="parent  " data-name="Utils.isString"><a href="Utils.html#.isString">isString</a></li>
+            
+                <li class="parent  " data-name="Utils.isUndefined"><a href="Utils.html#.isUndefined">isUndefined</a></li>
+            
+            </ul>
+            <ul class="events itemMembers">
+            
+            </ul>
+        </li>
+    
+        <li class="item" data-name="InteractionData">
+            <span class="title  ">
+                
+                <a href="InteractionData.html">InteractionData</a>
+            </span>
+            <ul class="members itemMembers">
+            
+            <span class="subtitle">Members</span>
+            
+                <li class="parent " data-name="InteractionData#button"><a href="InteractionData.html#button">button</a></li>
+            
+                <li class="parent " data-name="InteractionData#buttons"><a href="InteractionData.html#buttons">buttons</a></li>
+            
+                <li class="parent " data-name="InteractionData#global"><a href="InteractionData.html#global">global</a></li>
+            
+                <li class="parent " data-name="InteractionData#height"><a href="InteractionData.html#height">height</a></li>
+            
+                <li class="parent " data-name="InteractionData#identifier"><a href="InteractionData.html#identifier">identifier</a></li>
+            
+                <li class="parent " data-name="InteractionData#isPrimary"><a href="InteractionData.html#isPrimary">isPrimary</a></li>
+            
+                <li class="parent " data-name="InteractionData#originalEvent"><a href="InteractionData.html#originalEvent">originalEvent</a></li>
+            
+                <li class="parent " data-name="InteractionData#pointerId"><a href="InteractionData.html#pointerId">pointerId</a></li>
+            
+                <li class="parent " data-name="InteractionData#pointerType"><a href="InteractionData.html#pointerType">pointerType</a></li>
+            
+                <li class="parent " data-name="InteractionData#pressure"><a href="InteractionData.html#pressure">pressure</a></li>
+            
+                <li class="parent " data-name="InteractionData#rotationAngle"><a href="InteractionData.html#rotationAngle">rotationAngle</a></li>
+            
+                <li class="parent " data-name="InteractionData#tangentialPressure"><a href="InteractionData.html#tangentialPressure">tangentialPressure</a></li>
+            
+                <li class="parent " data-name="InteractionData#target"><a href="InteractionData.html#target">target</a></li>
+            
+                <li class="parent " data-name="InteractionData#tiltX"><a href="InteractionData.html#tiltX">tiltX</a></li>
+            
+                <li class="parent " data-name="InteractionData#tiltY"><a href="InteractionData.html#tiltY">tiltY</a></li>
+            
+                <li class="parent " data-name="InteractionData#twist"><a href="InteractionData.html#twist">twist</a></li>
+            
+                <li class="parent " data-name="InteractionData#width"><a href="InteractionData.html#width">width</a></li>
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="methods itemMembers">
+            
+            </ul>
+            <ul class="events itemMembers">
+            
+            </ul>
+        </li>
+    
+        <li class="item" data-name="InteractionEvent">
+            <span class="title  ">
+                
+                <a href="InteractionEvent.html">InteractionEvent</a>
+            </span>
+            <ul class="members itemMembers">
+            
+            <span class="subtitle">Members</span>
+            
+                <li class="parent " data-name="InteractionEvent#currentTarget"><a href="InteractionEvent.html#currentTarget">currentTarget</a></li>
+            
+                <li class="parent " data-name="InteractionEvent#data"><a href="InteractionEvent.html#data">data</a></li>
+            
+                <li class="parent " data-name="InteractionEvent#intersect"><a href="InteractionEvent.html#intersect">intersect</a></li>
+            
+                <li class="parent " data-name="InteractionEvent#stopped"><a href="InteractionEvent.html#stopped">stopped</a></li>
+            
+                <li class="parent " data-name="InteractionEvent#target"><a href="InteractionEvent.html#target">target</a></li>
+            
+                <li class="parent " data-name="InteractionEvent#type"><a href="InteractionEvent.html#type">type</a></li>
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="methods itemMembers">
+            
+            <span class="subtitle">Methods</span>
+            
+                <li class="parent  " data-name="InteractionEvent#stopPropagation"><a href="InteractionEvent.html#stopPropagation">stopPropagation</a></li>
+            
+            </ul>
+            <ul class="events itemMembers">
+            
+            </ul>
+        </li>
+    
+        <li class="item" data-name="InteractionManager">
+            <span class="title  ">
+                
+                <a href="InteractionManager.html">InteractionManager</a>
+            </span>
+            <ul class="members itemMembers">
+            
+            <span class="subtitle">Members</span>
+            
+                <li class="parent " data-name="InteractionManager#autoPreventDefault"><a href="InteractionManager.html#autoPreventDefault">autoPreventDefault</a></li>
+            
+                <li class="parent " data-name="InteractionManager#camera"><a href="InteractionManager.html#camera">camera</a></li>
+            
+                <li class="parent " data-name="InteractionManager#currentCursorMode"><a href="InteractionManager.html#currentCursorMode">currentCursorMode</a></li>
+            
+                <li class="parent " data-name="InteractionManager#cursorStyles"><a href="InteractionManager.html#cursorStyles">cursorStyles</a></li>
+            
+                <li class="parent " data-name="InteractionManager#eventData"><a href="InteractionManager.html#eventData">eventData</a></li>
+            
+                <li class="parent " data-name="InteractionManager#interactionFrequency"><a href="InteractionManager.html#interactionFrequency">interactionFrequency</a></li>
+            
+                <li class="parent " data-name="InteractionManager#mouse"><a href="InteractionManager.html#mouse">mouse</a></li>
+            
+                <li class="parent " data-name="InteractionManager#moveWhenInside"><a href="InteractionManager.html#moveWhenInside">moveWhenInside</a></li>
+            
+                <li class="parent " data-name="InteractionManager#raycaster"><a href="InteractionManager.html#raycaster">raycaster</a></li>
+            
+                <li class="parent " data-name="InteractionManager#renderer"><a href="InteractionManager.html#renderer">renderer</a></li>
+            
+                <li class="parent " data-name="InteractionManager#scene"><a href="InteractionManager.html#scene">scene</a></li>
+            
+                <li class="parent " data-name="InteractionManager#supportsPointerEvents"><a href="InteractionManager.html#supportsPointerEvents">supportsPointerEvents</a></li>
+            
+                <li class="parent " data-name="InteractionManager#supportsTouchEvents"><a href="InteractionManager.html#supportsTouchEvents">supportsTouchEvents</a></li>
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="methods itemMembers">
+            
+            <span class="subtitle">Methods</span>
+            
+                <li class="parent  " data-name="InteractionManager#destroy"><a href="InteractionManager.html#destroy">destroy</a></li>
+            
+                <li class="  " data-name="InteractionManager#emit"><a href="InteractionManager.html#emit">emit</a></li>
+            
+                <li class="parent  " data-name="InteractionManager#hitTest"><a href="InteractionManager.html#hitTest">hitTest</a></li>
+            
+                <li class="parent  " data-name="InteractionManager#mapPositionToPoint"><a href="InteractionManager.html#mapPositionToPoint">mapPositionToPoint</a></li>
+            
+                <li class="  " data-name="InteractionManager#off"><a href="InteractionManager.html#off">off</a></li>
+            
+                <li class="  " data-name="InteractionManager#on"><a href="InteractionManager.html#on">on</a></li>
+            
+                <li class="  " data-name="InteractionManager#once"><a href="InteractionManager.html#once">once</a></li>
+            
+                <li class="parent  " data-name="InteractionManager#setCursorMode"><a href="InteractionManager.html#setCursorMode">setCursorMode</a></li>
+            
+                <li class="parent  " data-name="InteractionManager#setTargetElement"><a href="InteractionManager.html#setTargetElement">setTargetElement</a></li>
+            
+                <li class="parent  " data-name="InteractionManager#update"><a href="InteractionManager.html#update">update</a></li>
+            
+            </ul>
+            <ul class="events itemMembers">
+            
+            </ul>
+        </li>
+    
+    </ul>
+</div>
+    <div class="main">
+        <h1 class="page-title" data-filename="InteractionManager.html">Class: InteractionManager</h1>
+        
+
+
+
+<section>
+    
+<header>
+    <div class="header content-size">
+        <h2>InteractionManager
+        </h2>
+        
+            <div class="class-description"><p>The interaction manager deals with mouse, touch and pointer events. Any DisplayObject can be interactive
+if its interactive parameter is set to true
+This manager also supports multitouch.
+base on <code>pixi.js</code></p></div>
+        
+    </div>
+</header>  
+
+<article class="content-size">
+    <div class="container-overview">
+    
+    
+    
+        
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id="InteractionManager">
+            <a class="share-icon" href="#InteractionManager"><span class="glyphicon glyphicon-link"></span></a>
+            <span class="">
+                new InteractionManager
+            </span>
+            <span class="signature">(renderer, scene, camera, <span class="optional">options</span>)</span>
+            
+            
+            
+            
+        </h4>
+    
+        
+        <div class="tag-source">
+            <a href="interaction_InteractionManager.js.html#line52">InteractionManager.js:52</a>
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+
+    
+    
+    
+    
+    
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>renderer</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">WebGLRenderer</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                    
+                    
+                        
+                    
+                
+                <p>A reference to the current renderer</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>scene</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">Scene</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                    
+                    
+                        
+                    
+                
+                <p>A reference to the current scene</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>camera</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">Camera</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                    
+                    
+                        
+                    
+                
+                <p>A reference to the current camera</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>options</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                    
+                        <span class="optional">optional</span>
+                    
+                    
+                        
+                    
+                
+                <p>The options for the manager.</p>
+                
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		<th>Default</th>
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>autoPreventDefault</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">Boolean</span>
+
+
+            
+            </td>
+            
+            
+                <td class="default">
+                
+                    true
+                
+                </td>
+            
+            
+            <td class="description last">
+                
+                    
+                        <span class="optional">optional</span>
+                    
+                    
+                        
+                    
+                
+                <p>Should the manager automatically prevent default browser actions.</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>interactionFrequency</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+            
+            
+                <td class="default">
+                
+                    10
+                
+                </td>
+            
+            
+            <td class="description last">
+                
+                    
+                        <span class="optional">optional</span>
+                    
+                    
+                        
+                    
+                
+                <p>Frequency increases the interaction events will be checked.</p></td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+            </td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+        <h5>Example</h5>
+        
+
+    
+    <pre class="prettyprint"><code>import { Scene, PerspectiveCamera, WebGLRenderer, Mesh, BoxGeometry, MeshBasicMaterial } from 'three';
+const renderer = new WebGLRenderer({ canvas: canvasElement });
+const scene = new Scene();
+const camera = new PerspectiveCamera(60, width / height, 0.1, 100);
+
+const interactionManager = new InteractionManager(renderer, scene, camera);
+// then you can bind every interaction event with any mesh which you had `add` into `scene` before
+const cube = new Mesh(
+  new BoxGeometry(1, 1, 1),
+  new MeshBasicMaterial({ color: 0xffffff }),
+);
+scene.add(cube);
+cube.on('touchstart', ev => {
+  console.log(ev);
+});
+
+cube.on('mousedown', ev => {
+  console.log(ev);
+});
+
+cube.on('pointerdown', ev => {
+  console.log(ev);
+});
+// and so on</code></pre>
+    
+
+    
+</dd>
+
+    
+    </div>
+    
+    
+        <h3 class="subsection-title">Extends</h3>
+        
+        <ul>
+            <li><a href="EventDispatcher.html">EventDispatcher</a></li>
+        </ul>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+        <h3 class="subsection-title">Members</h3>
+        
+        <dl class="list-members">
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id="autoPreventDefault">
+            <a class="share-icon" href="#autoPreventDefault"><span class="glyphicon glyphicon-link"></span></a>
+            <span class="">autoPreventDefault</span>
+            <span class="type-signature type">boolean</span>
+            
+            
+            
+            
+        </h4>
+    </div>
+    
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        <p>Should default browser actions automatically be prevented.
+Does not apply to pointer events for backwards compatibility
+preventDefault on pointer events stops mouse events from firing
+Thus, for every pointer event, there will always be either a mouse of touch event alongside it.</p>
+    </div>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <dt class="tag-default">Default Value:</dt>
+    <dd class="tag-default"><ul class="dummy"><li>true</li></ul></dd>
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id="camera">
+            <a class="share-icon" href="#camera"><span class="glyphicon glyphicon-link"></span></a>
+            <span class="">camera</span>
+            <span class="type-signature type">WebGLRenderer</span>
+            
+            
+            
+            
+        </h4>
+    </div>
+    
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        <p>The renderer this interaction manager works for.</p>
+    </div>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id="currentCursorMode">
+            <a class="share-icon" href="#currentCursorMode"><span class="glyphicon glyphicon-link"></span></a>
+            <span class="">currentCursorMode</span>
+            <span class="type-signature type">string</span>
+            
+            
+            
+            
+        </h4>
+    </div>
+    
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        <p>The mode of the cursor that is being used.
+The value of this is a key from the cursorStyles dictionary.</p>
+    </div>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id="cursorStyles">
+            <a class="share-icon" href="#cursorStyles"><span class="glyphicon glyphicon-link"></span></a>
+            <span class="">cursorStyles</span>
+            <span class="type-signature type">Object.&lt;string, (string|function()|Object.&lt;string, string>)></span>
+            
+            
+            
+            
+        </h4>
+    </div>
+    
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        <p>Dictionary of how different cursor modes are handled. Strings are handled as CSS cursor
+values, objects are handled as dictionaries of CSS values for interactionDOMElement,
+and functions are called instead of changing the CSS.
+Default CSS cursor values are provided for 'default' and 'pointer' modes.</p>
+    </div>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id="eventData">
+            <a class="share-icon" href="#eventData"><span class="glyphicon glyphicon-link"></span></a>
+            <span class="">eventData</span>
+            <span class="type-signature type">object</span>
+            
+            
+            
+            
+        </h4>
+    </div>
+    
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        <p>An event data object to handle all the event tracking/dispatching</p>
+    </div>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id="interactionFrequency">
+            <a class="share-icon" href="#interactionFrequency"><span class="glyphicon glyphicon-link"></span></a>
+            <span class="">interactionFrequency</span>
+            <span class="type-signature type">number</span>
+            
+            
+            
+            
+        </h4>
+    </div>
+    
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        <p>Frequency in milliseconds that the mousemove, moveover &amp; mouseout interaction events will be checked.</p>
+    </div>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <dt class="tag-default">Default Value:</dt>
+    <dd class="tag-default"><ul class="dummy"><li>10</li></ul></dd>
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id="mouse">
+            <a class="share-icon" href="#mouse"><span class="glyphicon glyphicon-link"></span></a>
+            <span class="">mouse</span>
+            <span class="type-signature type"><a href="InteractionData.html">InteractionData</a></span>
+            
+            
+            
+            
+        </h4>
+    </div>
+    
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        <p>The mouse data</p>
+    </div>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id="moveWhenInside">
+            <a class="share-icon" href="#moveWhenInside"><span class="glyphicon glyphicon-link"></span></a>
+            <span class="">moveWhenInside</span>
+            <span class="type-signature type">boolean</span>
+            
+            
+            
+            
+        </h4>
+    </div>
+    
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        <p>This property determines if mousemove and touchmove events are fired only when the cursor
+is over the object.
+Setting to true will make things work more in line with how the DOM verison works.
+Setting to false can make things easier for things like dragging
+It is currently set to false as this is how three.js used to work.</p>
+    </div>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <dt class="tag-default">Default Value:</dt>
+    <dd class="tag-default"><ul class="dummy"><li>false</li></ul></dd>
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id="raycaster">
+            <a class="share-icon" href="#raycaster"><span class="glyphicon glyphicon-link"></span></a>
+            <span class="">raycaster</span>
+            <span class="type-signature type">Raycaster</span>
+            
+            
+            
+            
+        </h4>
+    </div>
+    
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        <p>ray caster, for survey intersects from 3d-scene</p>
+    </div>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id="renderer">
+            <a class="share-icon" href="#renderer"><span class="glyphicon glyphicon-link"></span></a>
+            <span class="">renderer</span>
+            <span class="type-signature type">WebGLRenderer</span>
+            
+            
+            
+            
+        </h4>
+    </div>
+    
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        <p>The renderer this interaction manager works for.</p>
+    </div>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id="scene">
+            <a class="share-icon" href="#scene"><span class="glyphicon glyphicon-link"></span></a>
+            <span class="">scene</span>
+            <span class="type-signature type">WebGLRenderer</span>
+            
+            
+            
+            
+        </h4>
+    </div>
+    
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        <p>The renderer this interaction manager works for.</p>
+    </div>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id="supportsPointerEvents">
+            <a class="share-icon" href="#supportsPointerEvents"><span class="glyphicon glyphicon-link"></span></a>
+            <span class="">supportsPointerEvents</span>
+            <span class="type-signature type">boolean</span>
+            
+            <span class="access-signature">readonly</span>
+            
+            
+        </h4>
+    </div>
+    
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        <p>Does the device support pointer events
+https://www.w3.org/Submission/pointer-events/</p>
+    </div>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id="supportsTouchEvents">
+            <a class="share-icon" href="#supportsTouchEvents"><span class="glyphicon glyphicon-link"></span></a>
+            <span class="">supportsTouchEvents</span>
+            <span class="type-signature type">boolean</span>
+            
+            <span class="access-signature">readonly</span>
+            
+            
+        </h4>
+    </div>
+    
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        <p>Does the device support touch events
+https://www.w3.org/TR/touch-events/</p>
+    </div>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
+        </dl>
+    
+    
+    
+        <h3 class="subsection-title">Methods</h3>
+        
+        <dl class="list-methods">
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id="destroy">
+            <a class="share-icon" href="#destroy"><span class="glyphicon glyphicon-link"></span></a>
+            <span class="">
+                destroy
+            </span>
+            <span class="signature">()</span>
+            
+            
+            
+            
+        </h4>
+    
+        
+        <div class="tag-source">
+            <a href="interaction_InteractionManager.js.html#line1639">InteractionManager.js:1639</a>
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>Destroys the interaction manager</p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id="emit">
+            <a class="share-icon" href="#emit"><span class="glyphicon glyphicon-link"></span></a>
+            <span class="">
+                emit
+            </span>
+            <span class="signature">(type, event)</span><span class="type-signature">this</span>
+            
+            
+            
+                <span class="access-signature inherited"><a href="EventDispatcher.html#emit">inherited</a></span>
+            
+            
+        </h4>
+    
+        
+        <div class="tag-source">
+            <a href="patch_EventDispatcher.js.html#line53">EventDispatcher.js:53</a>
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>emit a event</p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>type</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>event type, evnet name</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>event</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>event object, include more information</p></td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Type</th>
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    
+        <tr>
+            
+            <td class="type">
+            
+                        this
+                        
+                    
+            </td>
+            <td class="description last">this</td>
+        </tr>
+    
+    </tbody>
+</table>
+
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id="hitTest">
+            <a class="share-icon" href="#hitTest"><span class="glyphicon glyphicon-link"></span></a>
+            <span class="">
+                hitTest
+            </span>
+            <span class="signature">(globalPoint, <span class="optional">root</span>)</span><span class="type-signature"><a href="Object3D.html">Object3D</a></span>
+            
+            
+            
+            
+        </h4>
+    
+        
+        <div class="tag-source">
+            <a href="interaction_InteractionManager.js.html#line678">InteractionManager.js:678</a>
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>Hit tests a point against the display tree, returning the first interactive object that is hit.</p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>globalPoint</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">Point</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                    
+                    
+                        
+                    
+                
+                <p>A point to hit test with, in global space.</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>root</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type"><a href="Object3D.html">Object3D</a></span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                    
+                        <span class="optional">optional</span>
+                    
+                    
+                        
+                    
+                
+                <p>The root display object to start from. If omitted, defaults
+to the last rendered root of the associated renderer.</p></td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Type</th>
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    
+        <tr>
+            
+            <td class="type">
+            
+                        <a href="Object3D.html">Object3D</a>
+                        
+                    
+            </td>
+            <td class="description last">The hit display object, if any.</td>
+        </tr>
+    
+    </tbody>
+</table>
+
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id="mapPositionToPoint">
+            <a class="share-icon" href="#mapPositionToPoint"><span class="glyphicon glyphicon-link"></span></a>
+            <span class="">
+                mapPositionToPoint
+            </span>
+            <span class="signature">(point, x, y)</span>
+            
+            
+            
+            
+        </h4>
+    
+        
+        <div class="tag-source">
+            <a href="interaction_InteractionManager.js.html#line939">InteractionManager.js:939</a>
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>Maps x and y coords from a DOM object and maps them correctly to the three.js view. The
+resulting value is stored in the point. This takes into account the fact that the DOM
+element could be scaled and positioned anywhere on the screen.</p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>point</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">Vector2</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>the point that the result will be stored in</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>x</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>the x coord of the position to map</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>y</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>the y coord of the position to map</p></td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id="off">
+            <a class="share-icon" href="#off"><span class="glyphicon glyphicon-link"></span></a>
+            <span class="">
+                off
+            </span>
+            <span class="signature">(type, fn)</span><span class="type-signature">this</span>
+            
+            
+            
+                <span class="access-signature inherited"><a href="EventDispatcher.html#off">inherited</a></span>
+            
+            
+        </h4>
+    
+        
+        <div class="tag-source">
+            <a href="patch_EventDispatcher.js.html#line24">EventDispatcher.js:24</a>
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>proxy <code>removeEventListener</code> function</p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>type</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>event type, evnet name</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>fn</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>callback, which you had bind before</p></td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Type</th>
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    
+        <tr>
+            
+            <td class="type">
+            
+                        this
+                        
+                    
+            </td>
+            <td class="description last">this</td>
+        </tr>
+    
+    </tbody>
+</table>
+
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id="on">
+            <a class="share-icon" href="#on"><span class="glyphicon glyphicon-link"></span></a>
+            <span class="">
+                on
+            </span>
+            <span class="signature">(type, fn)</span><span class="type-signature">this</span>
+            
+            
+            
+                <span class="access-signature inherited"><a href="EventDispatcher.html#on">inherited</a></span>
+            
+            
+        </h4>
+    
+        
+        <div class="tag-source">
+            <a href="patch_EventDispatcher.js.html#line11">EventDispatcher.js:11</a>
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>proxy <code>addEventListener</code> function</p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>type</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>event type, evnet name</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>fn</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>callback</p></td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Type</th>
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    
+        <tr>
+            
+            <td class="type">
+            
+                        this
+                        
+                    
+            </td>
+            <td class="description last">this</td>
+        </tr>
+    
+    </tbody>
+</table>
+
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id="once">
+            <a class="share-icon" href="#once"><span class="glyphicon glyphicon-link"></span></a>
+            <span class="">
+                once
+            </span>
+            <span class="signature">(type, fn)</span><span class="type-signature">this</span>
+            
+            
+            
+                <span class="access-signature inherited"><a href="EventDispatcher.html#once">inherited</a></span>
+            
+            
+        </h4>
+    
+        
+        <div class="tag-source">
+            <a href="patch_EventDispatcher.js.html#line36">EventDispatcher.js:36</a>
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>binding a once event, just emit once time</p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>type</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>event type, evnet name</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>fn</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>callback</p></td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Type</th>
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    
+        <tr>
+            
+            <td class="type">
+            
+                        this
+                        
+                    
+            </td>
+            <td class="description last">this</td>
+        </tr>
+    
+    </tbody>
+</table>
+
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id="setCursorMode">
+            <a class="share-icon" href="#setCursorMode"><span class="glyphicon glyphicon-link"></span></a>
+            <span class="">
+                setCursorMode
+            </span>
+            <span class="signature">(mode)</span>
+            
+            
+            
+            
+        </h4>
+    
+        
+        <div class="tag-source">
+            <a href="interaction_InteractionManager.js.html#line874">InteractionManager.js:874</a>
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>Sets the current cursor mode, handling any callbacks or CSS style changes.</p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>mode</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>cursor mode, a key from the cursorStyles dictionary</p></td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id="setTargetElement">
+            <a class="share-icon" href="#setTargetElement"><span class="glyphicon glyphicon-link"></span></a>
+            <span class="">
+                setTargetElement
+            </span>
+            <span class="signature">(element)</span>
+            
+            
+            
+            
+        </h4>
+    
+        
+        <div class="tag-source">
+            <a href="interaction_InteractionManager.js.html#line701">InteractionManager.js:701</a>
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>Sets the DOM element which will receive mouse/touch events. This is useful for when you have
+other DOM elements on top of the renderers Canvas element. With this you'll be bale to deletegate
+another DOM element to receive those events.</p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>element</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">HTMLCanvasElement</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>the DOM element which will receive mouse and touch events.</p></td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id="update">
+            <a class="share-icon" href="#update"><span class="glyphicon glyphicon-link"></span></a>
+            <span class="">
+                update
+            </span>
+            <span class="signature">(deltaTime)</span>
+            
+            
+            
+            
+        </h4>
+    
+        
+        <div class="tag-source">
+            <a href="interaction_InteractionManager.js.html#line817">InteractionManager.js:817</a>
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>Updates the state of interactive objects.
+Invoked by a throttled ticker.</p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>deltaTime</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>time delta since last tick</p></td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        </dl>
+    
+    
+    
+    
+    
+
+    
+</article>
+
+</section>  
+
+
+
+
+
+        
+
+        <footer class="content-size">
+            <div class="footer">
+                Documentation generated by <a target="_blank" href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Tue Dec 05 2017 12:07:42 GMT+0800 (CST)
+            </div>
+        </footer>
+    </div>
+</div>
+<script>prettyPrint();</script>
+<script src="scripts/main.js"></script>
+</body>
+</html>

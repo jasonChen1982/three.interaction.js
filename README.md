@@ -1,3 +1,5 @@
+# three.interaction
+
 a full-interaction manager, help `three.js` easy to binding interaction event
 
 ```javascript
@@ -31,3 +33,14 @@ cube.on('mouseup', function(ev) {});
 scene.add(cube);
 
 ```
+
+
+## Documentation
+[documentation][documentation]
+
+## Examples
+[examples][examples]
+
+
+[documentation]:https://jasonchen1982.github.io/three.interaction.js/docs "three.interaction documention page"
+[examples]:https://jasonchen1982.github.io/three.interaction.js/examples "three.interaction examples page"
