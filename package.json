@@ -16,7 +16,7 @@
     "build:dev": "rollup -c -w",
     "prever": "npm run build && git add -A && git commit -m 'release: release a new version'",
     "ver": "standard-version -m 'chore(release): v%s'",
-    "postver": "git push --follow-tags origin master && tnpm publish",
+    "postver": "git push --follow-tags origin master && npm publish",
     "docs": "jsdoc -c jsdoc.conf.json -R README.md",
     "lint": "eslint .",
     "fix": "eslint --fix ./src",
