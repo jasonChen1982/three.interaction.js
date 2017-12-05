@@ -42,5 +42,5 @@ scene.add(cube);
 [examples][examples]
 
 
-[documentation]:https://jasonchen1982.github.io/three.interaction.js/docs "three.interaction documention page"
-[examples]:https://jasonchen1982.github.io/three.interaction.js/examples "three.interaction examples page"
+[documentation]:https://jasonchen1982.github.io/three.interaction.js/docs/ "three.interaction documention page"
+[examples]:https://jasonchen1982.github.io/three.interaction.js/examples/ "three.interaction examples page"
