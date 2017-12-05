@@ -18,7 +18,8 @@ const hitTestEvent = {
  * The interaction manager deals with mouse, touch and pointer events. Any DisplayObject can be interactive
  * if its interactive parameter is set to true
  * This manager also supports multitouch.
- * base on `pixi.js`
+ *
+ * base on [pixi.js](http://www.pixijs.com/)
  *
  * @example
  * import { Scene, PerspectiveCamera, WebGLRenderer, Mesh, BoxGeometry, MeshBasicMaterial } from 'three';
@@ -73,14 +74,14 @@ class InteractionManager extends EventDispatcher {
     /**
      * The renderer this interaction manager works for.
      *
-     * @member {WebGLRenderer}
+     * @member {Scene}
      */
     this.scene = scene;
 
     /**
      * The renderer this interaction manager works for.
      *
-     * @member {WebGLRenderer}
+     * @member {Camera}
      */
     this.camera = camera;
 
