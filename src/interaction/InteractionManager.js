@@ -1,5 +1,6 @@
 import { EventDispatcher, Raycaster } from 'three';
 
+import Ticker from '../utils/Ticker';
 import InteractionData from './InteractionData';
 import InteractionEvent from './InteractionEvent';
 import InteractionTrackingData from './InteractionTrackingData';
@@ -56,7 +57,7 @@ class InteractionManager extends EventDispatcher {
    * @param {Scene} scene - A reference to the current scene
    * @param {Camera} camera - A reference to the current camera
    * @param {Object} [options] - The options for the manager.
-   * @param {Boolean} [options.autoPreventDefault=true] - Should the manager automatically prevent default browser actions.
+   * @param {Boolean} [options.autoPreventDefault=false] - Should the manager automatically prevent default browser actions.
    * @param {Number} [options.interactionFrequency=10] - Frequency increases the interaction events will be checked.
    */
   constructor(renderer, scene, camera, options) {
@@ -92,9 +93,17 @@ class InteractionManager extends EventDispatcher {
      * Thus, for every pointer event, there will always be either a mouse of touch event alongside it.
      *
      * @member {boolean}
-     * @default true
+     * @default false
      */
-    this.autoPreventDefault = options.autoPreventDefault !== undefined ? options.autoPreventDefault : true;
+    this.autoPreventDefault = options.autoPreventDefault || false;
+
+    /**
+     * whether auto-update for over event
+     *
+     * @member {boolean}
+     * @default false
+     */
+    this.autoUpdate = options.autoUpdate || false;
 
     /**
      * Frequency in milliseconds that the mousemove, moveover & mouseout interaction events will be checked.
@@ -158,7 +167,7 @@ class InteractionManager extends EventDispatcher {
      * @member {boolean}
      * @default false
      */
-    this.moveWhenInside = false;
+    this.moveWhenInside = true;
 
     /**
      * Have events been attached to the dom element?
@@ -195,6 +204,13 @@ class InteractionManager extends EventDispatcher {
     this.supportsPointerEvents = !!window.PointerEvent;
 
     // this will make it so that you don't have to call bind all the time
+
+    /**
+     * @private
+     * @member {Function}
+     */
+    this.onClick = this.onClick.bind(this);
+    this.processClick = this.processClick.bind(this);
 
     /**
      * @private
@@ -268,9 +284,33 @@ class InteractionManager extends EventDispatcher {
     /**
      * ray caster, for survey intersects from 3d-scene
      *
+     * @private
      * @member {Raycaster}
      */
     this.raycaster = new Raycaster();
+
+    /**
+     * a ticker
+     *
+     * @private
+     * @member {Ticker}
+     */
+    this.ticker = new Ticker();
+
+    /**
+     * update for some over event
+     *
+     * @private
+     */
+    this.update = this.update.bind(this);
+
+    /**
+     * snippet time
+     *
+     * @private
+     * @member {Number}
+     */
+    this._deltaTime = 0;
 
     this.setTargetElement(this.renderer.domElement);
 
@@ -717,8 +757,10 @@ class InteractionManager extends EventDispatcher {
       return;
     }
 
-    // core.ticker.shared.add(this.update, this, core.UPDATE_PRIORITY.INTERACTION);
-    // TODO: shoule add update to tick
+    if (this.autoUpdate) this.ticker.addEventListener('tick', this.update);
+
+    // add click TODO:
+    this.interactionDOMElement.addEventListener('click', this.onClick, true);
 
     if (window.navigator.msPointerEnabled) {
       this.interactionDOMElement.style['-ms-content-zooming'] = 'none';
@@ -772,8 +814,10 @@ class InteractionManager extends EventDispatcher {
       return;
     }
 
-    // core.ticker.shared.remove(this.update, this);
-    // TODO: shoule remove update to tick
+    if (this.autoUpdate) this.ticker.removeEventListener('tick', this.update);
+
+    // remove click TODO:
+    this.interactionDOMElement.removeEventListener('click', this.onClick, true);
 
     if (window.navigator.msPointerEnabled) {
       this.interactionDOMElement.style['-ms-content-zooming'] = '';
@@ -815,8 +859,8 @@ class InteractionManager extends EventDispatcher {
    *
    * @param {number} deltaTime - time delta since last tick
    */
-  update(deltaTime) {
-    this._deltaTime += deltaTime;
+  update({ snippet }) {
+    this._deltaTime += snippet;
 
     if (this._deltaTime < this.interactionFrequency) {
       return;
@@ -1060,6 +1104,47 @@ class InteractionManager extends EventDispatcher {
     return hit;
   }
 
+
+  /**
+   * Is called when the click is pressed down on the renderer element
+   *
+   * @private
+   * @param {MouseEvent} originalEvent - The DOM event of a click being pressed down
+   */
+  onClick(originalEvent) {
+    if (originalEvent.type !== 'click') return;
+
+    const events = this.normalizeToPointerData(originalEvent);
+
+    if (this.autoPreventDefault && events[0].isNormalized) {
+      originalEvent.preventDefault();
+    }
+
+    const interactionData = this.getInteractionDataForPointerId(events[0]);
+
+    const interactionEvent = this.configureInteractionEventForDOMEvent(this.eventData, event, interactionData);
+
+    interactionEvent.data.originalEvent = originalEvent;
+
+    this.processInteractive(interactionEvent, this.scene, this.processClick, true);
+
+    this.emit('click', interactionEvent);
+  }
+
+  /**
+   * Processes the result of the click check and dispatches the event if need be
+   *
+   * @private
+   * @param {InteractionEvent} interactionEvent - The interaction event wrapping the DOM event
+   * @param {Object3D} displayObject - The display object that was tested
+   * @param {boolean} hit - the result of the hit test on the display object
+   */
+  processClick(interactionEvent, displayObject, hit) {
+    if (hit) {
+      this.triggerEvent(displayObject, 'click', interactionEvent);
+    }
+  }
+
   /**
    * Is called when the pointer button is pressed down on the renderer element
    *
@@ -1127,6 +1212,7 @@ class InteractionManager extends EventDispatcher {
       this.triggerEvent(displayObject, 'pointerdown', interactionEvent);
 
       if (data.pointerType === 'touch') {
+        displayObject.started = true;
         this.triggerEvent(displayObject, 'touchstart', interactionEvent);
       } else if (data.pointerType === 'mouse' || data.pointerType === 'pen') {
         const isRightButton = data.button === 2;
@@ -1265,7 +1351,7 @@ class InteractionManager extends EventDispatcher {
         this.triggerEvent(displayObject, isRightButton ? 'rightup' : 'mouseup', interactionEvent);
 
         if (isDown) {
-          this.triggerEvent(displayObject, isRightButton ? 'rightclick' : 'click', interactionEvent);
+          this.triggerEvent(displayObject, isRightButton ? 'rightclick' : 'leftclick', interactionEvent);
         }
       } else if (isDown) {
         this.triggerEvent(displayObject, isRightButton ? 'rightupoutside' : 'mouseupoutside', interactionEvent);
@@ -1283,7 +1369,10 @@ class InteractionManager extends EventDispatcher {
     // Pointers and Touches, and Mouse
     if (hit) {
       this.triggerEvent(displayObject, 'pointerup', interactionEvent);
-      if (isTouch) this.triggerEvent(displayObject, 'touchend', interactionEvent);
+      if (isTouch && displayObject.started) {
+        displayObject.started = false;
+        this.triggerEvent(displayObject, 'touchend', interactionEvent);
+      }
 
       if (trackingData) {
         this.triggerEvent(displayObject, 'pointertap', interactionEvent);
@@ -1374,7 +1463,7 @@ class InteractionManager extends EventDispatcher {
 
     if (!this.moveWhenInside || hit) {
       this.triggerEvent(displayObject, 'pointermove', interactionEvent);
-      if (isTouch) this.triggerEvent(displayObject, 'touchmove', interactionEvent);
+      if (isTouch && displayObject.started) this.triggerEvent(displayObject, 'touchmove', interactionEvent);
       if (isMouse) this.triggerEvent(displayObject, 'mousemove', interactionEvent);
     }
   }
