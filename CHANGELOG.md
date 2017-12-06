@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.0.2"></a>
+## [0.0.2](https://github.com/jasonChen1982/three.interaction.js/compare/v0.0.1...v0.0.2) (2017-12-06)
+
+
+### Bug Fixes
+
+* **move:** move event was not same with browser ([05991dc](https://github.com/jasonChen1982/three.interaction.js/commit/05991dc))
+
+
+### Features
+
+* **click:** add really click event ([b1abb5a](https://github.com/jasonChen1982/three.interaction.js/commit/b1abb5a))
+* **script:** adjust release script ([e42b357](https://github.com/jasonChen1982/three.interaction.js/commit/e42b357))
+
+
+
 <a name="0.0.1"></a>
 ## 0.0.1 (2017-12-05)
 
