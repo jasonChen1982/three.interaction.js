@@ -157,6 +157,13 @@ var Utils = {
   }()
 };
 
+/**
+ * proxy `addEventListener` function
+ *
+ * @param {String} type event type, evnet name
+ * @param {Function} fn callback
+ * @return {this} this
+ */
 EventDispatcher.prototype.on = function (type, fn) {
   if (!Utils.isFunction(fn)) return;
   this.addEventListener(type, fn);
@@ -207,6 +214,9 @@ EventDispatcher.prototype.emit = function (type, event) {
   return this;
 };
 
+/**
+ * whether displayObject is interactively
+ */
 Object3D.prototype.interactive = false;
 
 /**
@@ -387,6 +397,10 @@ var possibleConstructorReturn = function (self, call) {
   return call && (typeof call === "object" || typeof call === "function") ? call : self;
 };
 
+/**
+ * @extends EventDispatcher
+ */
+
 var Ticker = function (_EventDispatcher) {
   inherits(Ticker, _EventDispatcher);
 
@@ -471,6 +485,12 @@ var Ticker = function (_EventDispatcher) {
   }]);
   return Ticker;
 }(EventDispatcher);
+
+/**
+ * Holds all information related to an Interaction event
+ *
+ * @class
+ */
 
 var InteractionData = function () {
   /**
