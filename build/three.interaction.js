@@ -2039,7 +2039,7 @@ var InteractionManager = function (_EventDispatcher) {
 
         if (displayObject.interactive) {
           if (hit && !interactionEvent.target) {
-            interactionEvent.target = displayObject;
+            interactionEvent.data.target = interactionEvent.target = displayObject;
           }
 
           if (func) {
