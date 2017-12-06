@@ -25,6 +25,10 @@
           color: #de3d91;
         }
       </style>
+      <script src="//res.wx.qq.com/mmbizwap/zh_CN/htmledition/js/vconsole/3.0.0/vconsole.min.js"></script>
+      <script>
+        new VConsole();
+      </script>
     </head>
 
     <body>
@@ -32,9 +36,7 @@
       <canvas id="webgl"></canvas>
       <script src="../libs/three.js"></script>
       <script src="../../build/three.interaction.js"></script>
-      <!-- <script src="//res.wx.qq.com/mmbizwap/zh_CN/htmledition/js/vconsole/3.0.0/vconsole.min.js"></script> -->
       <script>
-        // new VConsole();
         window.addEventListener('resize', onWindowResize, false);
 
         var WIDTH = window.innerWidth;
@@ -52,7 +54,7 @@
 
         var cube = new THREE.Mesh(
           new THREE.BoxGeometry(1, 1, 1),
-          new THREE.MeshPhongMaterial({ color: 0xaaaaaa }),
+          new THREE.MeshPhongMaterial({ color: 0xaaaaaa })
         );
         cube.cursor = 'pointer';
         cube.position.y = -3;
@@ -65,16 +67,33 @@
 
         var box = document.querySelector('#event-box');
         cube.on('pointerdown', function(ev) {
-          box.innerHTML += 'dispatch <span>pointerdown</span> event <br/>';
-          console.log(ev);
+          // box.innerHTML = 'dispatch <span>pointerdown</span> event <br/>';
+          console.log('pointerdown');
+        });
+        cube.on('pointermove', function(ev) {
+          // box.innerHTML += 'dispatch <span>pointermove</span> event <br/>';
+          console.log('pointermove');
+        });
+        cube.on('pointerup', function(ev) {
+          // box.innerHTML += 'dispatch <span>pointerup</span> event <br/>';
+          console.log('pointerup');
         });
         cube.on('click', function(ev) {
-          box.innerHTML += 'dispatch <span>click</span> event <br/>';
-          console.log(ev);
+          // box.innerHTML += 'dispatch <span>click</span> event <br/>';
+          console.log('click');
         });
         cube.on('touchstart', function(ev) {
-          box.innerHTML += 'dispatch <span>touchstart</span> event <br/>';
-          console.log(ev);
+          // box.innerHTML += 'dispatch <span>touchstart</span> event <br/>';
+          console.log('touchstart');
+        });
+        cube.on('touchmove', function(ev) {
+          ev.data.originalEvent.preventDefault();
+          // box.innerHTML += 'dispatch <span>touchmove</span> event <br/>';
+          console.log('touchmove');
+        });
+        cube.on('touchend', function(ev) {
+          // box.innerHTML += 'dispatch <span>touchend</span> event <br/>';
+          console.log('touchend');
         });
 
 
@@ -90,6 +109,21 @@
           camera.updateProjectionMatrix();
           renderer.setSize(window.innerWidth, window.innerHeight);
         }
+
+        // box.addEventListener('touchmove', function(ev){
+        //   ev.preventDefault();
+        //   box.innerHTML = Math.random();
+        //   // console.log('pointerdown', ev);
+        // });
+        // box.addEventListener('mousedown', function(ev){
+        //   ev.preventDefault();
+        //   console.log('mousedown', ev);
+        //   return false;
+        // });
+        // box.addEventListener('mouseup', function(ev){
+        //   ev.preventDefault();
+        //   console.log('mouseup', ev);
+        // });
       </script>
 
     </body>

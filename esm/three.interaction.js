@@ -1,5 +1,35 @@
 import { EventDispatcher, Object3D, Raycaster, Vector2 } from 'three';
 
+(function () {
+  var lastTime = 0;
+  var vendors = ['ms', 'moz', 'webkit', 'o'];
+  for (var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
+    window.requestAnimationFrame = window[vendors[x] + 'RequestAnimationFrame'];
+    window.cancelAnimationFrame = window[vendors[x] + 'CancelAnimationFrame'] || window[vendors[x] + 'CancelRequestAnimationFrame'];
+  }
+
+  if (!window.requestAnimationFrame) {
+    window.requestAnimationFrame = function (callback) {
+      var currTime = new Date().getTime();
+      var timeToCall = Math.max(0, 16 - (currTime - lastTime));
+      var id = window.setTimeout(function () {
+        callback(currTime + timeToCall);
+      }, timeToCall);
+      lastTime = currTime + timeToCall;
+      return id;
+    };
+  }
+
+  if (!window.cancelAnimationFrame) {
+    window.cancelAnimationFrame = function (id) {
+      clearTimeout(id);
+    };
+  }
+
+  window.RAF = window.requestAnimationFrame;
+  window.CAF = window.cancelAnimationFrame;
+})();
+
 /**
  * get variable type
  * @param {*} val a variable which you want to get the type
@@ -127,13 +157,6 @@ var Utils = {
   }()
 };
 
-/**
- * proxy `addEventListener` function
- *
- * @param {String} type event type, evnet name
- * @param {Function} fn callback
- * @return {this} this
- */
 EventDispatcher.prototype.on = function (type, fn) {
   if (!Utils.isFunction(fn)) return;
   this.addEventListener(type, fn);
@@ -184,15 +207,18 @@ EventDispatcher.prototype.emit = function (type, event) {
   return this;
 };
 
-/**
- * whether displayObject is interactively
- */
 Object3D.prototype.interactive = false;
 
 /**
  * whether displayObject's children is interactively
  */
 Object3D.prototype.interactiveChildren = true;
+
+/**
+ * whether displayObject had touchstart
+ * @private
+ */
+Object3D.prototype.started = false;
 
 /**
  * tracked event cache, like: touchend、mouseout、pointerout which decided by primary-event
@@ -361,15 +387,94 @@ var possibleConstructorReturn = function (self, call) {
   return call && (typeof call === "object" || typeof call === "function") ? call : self;
 };
 
-/**
- * Holds all information related to an Interaction event
- *
- * @class
- */
+var Ticker = function (_EventDispatcher) {
+  inherits(Ticker, _EventDispatcher);
+
+  /**
+   *
+   */
+  function Ticker() {
+    classCallCheck(this, Ticker);
+
+    var _this = possibleConstructorReturn(this, (Ticker.__proto__ || Object.getPrototypeOf(Ticker)).call(this));
+
+    _this.timer = null;
+    _this.started = false;
+
+    /**
+     * 前一帧的时间标记
+     *
+     * @member {Number}
+     * @private
+     */
+    _this.pt = 0;
+
+    /**
+     * 本次渲染经历的时间片段长度
+     *
+     * @member {Number}
+     * @private
+     */
+    _this.snippet = 0;
+
+    _this.start();
+    return _this;
+  }
+
+  /**
+   * start
+   */
+
+
+  createClass(Ticker, [{
+    key: 'start',
+    value: function start() {
+      var _this2 = this;
+
+      if (this.started) return;
+      var loop = function loop() {
+        _this2.timeline();
+        _this2.emit('tick', { snippet: _this2.snippet });
+        _this2.timer = RAF(loop);
+      };
+      loop();
+    }
+
+    /**
+     * stop
+     */
+
+  }, {
+    key: 'stop',
+    value: function stop() {
+      CAF(this.timer);
+      this.started = false;
+    }
+
+    /**
+     * 时间轴部件
+     *
+     * @private
+     */
+
+  }, {
+    key: 'timeline',
+    value: function timeline() {
+      this.snippet = Date.now() - this.pt;
+      if (this.pt === 0 || this.snippet > 200) {
+        this.pt = Date.now();
+        this.snippet = Date.now() - this.pt;
+      }
+
+      this.pt += this.snippet;
+    }
+  }]);
+  return Ticker;
+}(EventDispatcher);
 
 var InteractionData = function () {
   /**
-   *
+   * InteractionData constructor
    */
   function InteractionData() {
     classCallCheck(this, InteractionData);
@@ -560,7 +665,7 @@ var InteractionData = function () {
  */
 var InteractionEvent = function () {
   /**
-   *
+   * InteractionEvent constructor
    */
   function InteractionEvent() {
     classCallCheck(this, InteractionEvent);
@@ -810,7 +915,34 @@ var hitTestEvent = {
  * The interaction manager deals with mouse, touch and pointer events. Any DisplayObject can be interactive
  * if its interactive parameter is set to true
  * This manager also supports multitouch.
- * base on `pixi.js`
+ *
+ * base on [pixi.js](http://www.pixijs.com/)
+ *
+ * @example
+ * import { Scene, PerspectiveCamera, WebGLRenderer, Mesh, BoxGeometry, MeshBasicMaterial } from 'three';
+ * const renderer = new WebGLRenderer({ canvas: canvasElement });
+ * const scene = new Scene();
+ * const camera = new PerspectiveCamera(60, width / height, 0.1, 100);
+ *
+ * const interactionManager = new InteractionManager(renderer, scene, camera);
+ * // then you can bind every interaction event with any mesh which you had `add` into `scene` before
+ * const cube = new Mesh(
+ *   new BoxGeometry(1, 1, 1),
+ *   new MeshBasicMaterial({ color: 0xffffff }),
+ * );
+ * scene.add(cube);
+ * cube.on('touchstart', ev => {
+ *   console.log(ev);
+ * });
+ *
+ * cube.on('mousedown', ev => {
+ *   console.log(ev);
+ * });
+ *
+ * cube.on('pointerdown', ev => {
+ *   console.log(ev);
+ * });
+ * // and so on
  *
  * @class
  * @extends EventDispatcher
@@ -824,7 +956,7 @@ var InteractionManager = function (_EventDispatcher) {
    * @param {Scene} scene - A reference to the current scene
    * @param {Camera} camera - A reference to the current camera
    * @param {Object} [options] - The options for the manager.
-   * @param {Boolean} [options.autoPreventDefault=true] - Should the manager automatically prevent default browser actions.
+   * @param {Boolean} [options.autoPreventDefault=false] - Should the manager automatically prevent default browser actions.
    * @param {Number} [options.interactionFrequency=10] - Frequency increases the interaction events will be checked.
    */
   function InteractionManager(renderer, scene, camera, options) {
@@ -844,14 +976,14 @@ var InteractionManager = function (_EventDispatcher) {
     /**
      * The renderer this interaction manager works for.
      *
-     * @member {WebGLRenderer}
+     * @member {Scene}
      */
     _this.scene = scene;
 
     /**
      * The renderer this interaction manager works for.
      *
-     * @member {WebGLRenderer}
+     * @member {Camera}
      */
     _this.camera = camera;
 
@@ -862,9 +994,17 @@ var InteractionManager = function (_EventDispatcher) {
      * Thus, for every pointer event, there will always be either a mouse of touch event alongside it.
      *
      * @member {boolean}
-     * @default true
+     * @default false
      */
-    _this.autoPreventDefault = options.autoPreventDefault !== undefined ? options.autoPreventDefault : true;
+    _this.autoPreventDefault = options.autoPreventDefault || false;
+
+    /**
+     * whether auto-update for over event
+     *
+     * @member {boolean}
+     * @default false
+     */
+    _this.autoUpdate = options.autoUpdate || false;
 
     /**
      * Frequency in milliseconds that the mousemove, moveover & mouseout interaction events will be checked.
@@ -928,7 +1068,7 @@ var InteractionManager = function (_EventDispatcher) {
      * @member {boolean}
      * @default false
      */
-    _this.moveWhenInside = false;
+    _this.moveWhenInside = true;
 
     /**
      * Have events been attached to the dom element?
@@ -965,6 +1105,13 @@ var InteractionManager = function (_EventDispatcher) {
     _this.supportsPointerEvents = !!window.PointerEvent;
 
     // this will make it so that you don't have to call bind all the time
+
+    /**
+     * @private
+     * @member {Function}
+     */
+    _this.onClick = _this.onClick.bind(_this);
+    _this.processClick = _this.processClick.bind(_this);
 
     /**
      * @private
@@ -1038,9 +1185,33 @@ var InteractionManager = function (_EventDispatcher) {
     /**
      * ray caster, for survey intersects from 3d-scene
      *
+     * @private
      * @member {Raycaster}
      */
     _this.raycaster = new Raycaster();
+
+    /**
+     * a ticker
+     *
+     * @private
+     * @member {Ticker}
+     */
+    _this.ticker = new Ticker();
+
+    /**
+     * update for some over event
+     *
+     * @private
+     */
+    _this.update = _this.update.bind(_this);
+
+    /**
+     * snippet time
+     *
+     * @private
+     * @member {Number}
+     */
+    _this._deltaTime = 0;
 
     _this.setTargetElement(_this.renderer.domElement);
 
@@ -1498,8 +1669,10 @@ var InteractionManager = function (_EventDispatcher) {
         return;
       }
 
-      // core.ticker.shared.add(this.update, this, core.UPDATE_PRIORITY.INTERACTION);
-      // TODO: shoule add update to tick
+      if (this.autoUpdate) this.ticker.addEventListener('tick', this.update);
+
+      // add click TODO:
+      this.interactionDOMElement.addEventListener('click', this.onClick, true);
 
       if (window.navigator.msPointerEnabled) {
         this.interactionDOMElement.style['-ms-content-zooming'] = 'none';
@@ -1556,8 +1729,10 @@ var InteractionManager = function (_EventDispatcher) {
         return;
       }
 
-      // core.ticker.shared.remove(this.update, this);
-      // TODO: shoule remove update to tick
+      if (this.autoUpdate) this.ticker.removeEventListener('tick', this.update);
+
+      // remove click TODO:
+      this.interactionDOMElement.removeEventListener('click', this.onClick, true);
 
       if (window.navigator.msPointerEnabled) {
         this.interactionDOMElement.style['-ms-content-zooming'] = '';
@@ -1602,8 +1777,10 @@ var InteractionManager = function (_EventDispatcher) {
 
   }, {
     key: 'update',
-    value: function update(deltaTime) {
-      this._deltaTime += deltaTime;
+    value: function update(_ref) {
+      var snippet = _ref.snippet;
+
+      this._deltaTime += snippet;
 
       if (this._deltaTime < this.interactionFrequency) {
         return;
@@ -1626,7 +1803,7 @@ var InteractionManager = function (_EventDispatcher) {
 
       // Resets the flag as set by a stopPropagation call. This flag is usually reset by a user interaction of any kind,
       // but there was a scenario of a display object moving under a static mouse cursor.
-      // In this case, mouseover and mouseevents would not pass the flag test in fireEvent function
+      // In this case, mouseover and mouseevents would not pass the flag test in triggerEvent function
       for (var k in this.activeInteractionData) {
         // eslint-disable-next-line no-prototype-builtins
         if (this.activeInteractionData.hasOwnProperty(k)) {
@@ -1698,8 +1875,8 @@ var InteractionManager = function (_EventDispatcher) {
      */
 
   }, {
-    key: 'fireEvent',
-    value: function fireEvent(displayObject, eventString, eventData) {
+    key: 'triggerEvent',
+    value: function triggerEvent(displayObject, eventString, eventData) {
       if (!eventData.stopped) {
         eventData.currentTarget = displayObject;
         eventData.type = eventString;
@@ -1851,6 +2028,52 @@ var InteractionManager = function (_EventDispatcher) {
     }
 
     /**
+     * Is called when the click is pressed down on the renderer element
+     *
+     * @private
+     * @param {MouseEvent} originalEvent - The DOM event of a click being pressed down
+     */
+
+  }, {
+    key: 'onClick',
+    value: function onClick(originalEvent) {
+      if (originalEvent.type !== 'click') return;
+
+      var events = this.normalizeToPointerData(originalEvent);
+
+      if (this.autoPreventDefault && events[0].isNormalized) {
+        originalEvent.preventDefault();
+      }
+
+      var interactionData = this.getInteractionDataForPointerId(events[0]);
+
+      var interactionEvent = this.configureInteractionEventForDOMEvent(this.eventData, event, interactionData);
+
+      interactionEvent.data.originalEvent = originalEvent;
+
+      this.processInteractive(interactionEvent, this.scene, this.processClick, true);
+
+      this.emit('click', interactionEvent);
+    }
+
+    /**
+     * Processes the result of the click check and dispatches the event if need be
+     *
+     * @private
+     * @param {InteractionEvent} interactionEvent - The interaction event wrapping the DOM event
+     * @param {Object3D} displayObject - The display object that was tested
+     * @param {boolean} hit - the result of the hit test on the display object
+     */
+
+  }, {
+    key: 'processClick',
+    value: function processClick(interactionEvent, displayObject, hit) {
+      if (hit) {
+        this.triggerEvent(displayObject, 'click', interactionEvent);
+      }
+    }
+
+    /**
      * Is called when the pointer button is pressed down on the renderer element
      *
      * @private
@@ -1880,21 +2103,21 @@ var InteractionManager = function (_EventDispatcher) {
       var eventLen = events.length;
 
       for (var i = 0; i < eventLen; i++) {
-        var event = events[i];
+        var _event = events[i];
 
-        var interactionData = this.getInteractionDataForPointerId(event);
+        var interactionData = this.getInteractionDataForPointerId(_event);
 
-        var interactionEvent = this.configureInteractionEventForDOMEvent(this.eventData, event, interactionData);
+        var interactionEvent = this.configureInteractionEventForDOMEvent(this.eventData, _event, interactionData);
 
         interactionEvent.data.originalEvent = originalEvent;
 
         this.processInteractive(interactionEvent, this.scene, this.processPointerDown, true);
 
         this.emit('pointerdown', interactionEvent);
-        if (event.pointerType === 'touch') {
+        if (_event.pointerType === 'touch') {
           this.emit('touchstart', interactionEvent);
-        } else if (event.pointerType === 'mouse' || event.pointerType === 'pen') {
-          var isRightButton = event.button === 2;
+        } else if (_event.pointerType === 'mouse' || _event.pointerType === 'pen') {
+          var isRightButton = _event.button === 2;
 
           this.emit(isRightButton ? 'rightdown' : 'mousedown', this.eventData);
         }
@@ -1920,10 +2143,11 @@ var InteractionManager = function (_EventDispatcher) {
         if (!displayObject.trackedPointers[id]) {
           displayObject.trackedPointers[id] = new InteractionTrackingData(id);
         }
-        this.fireEvent(displayObject, 'pointerdown', interactionEvent);
+        this.triggerEvent(displayObject, 'pointerdown', interactionEvent);
 
         if (data.pointerType === 'touch') {
-          this.fireEvent(displayObject, 'touchstart', interactionEvent);
+          displayObject.started = true;
+          this.triggerEvent(displayObject, 'touchstart', interactionEvent);
         } else if (data.pointerType === 'mouse' || data.pointerType === 'pen') {
           var isRightButton = data.button === 2;
 
@@ -1933,7 +2157,7 @@ var InteractionManager = function (_EventDispatcher) {
             displayObject.trackedPointers[id].leftDown = true;
           }
 
-          this.fireEvent(displayObject, isRightButton ? 'rightdown' : 'mousedown', interactionEvent);
+          this.triggerEvent(displayObject, isRightButton ? 'rightdown' : 'mousedown', interactionEvent);
         }
       }
     }
@@ -1959,11 +2183,11 @@ var InteractionManager = function (_EventDispatcher) {
       var eventAppend = originalEvent.target !== this.interactionDOMElement ? 'outside' : '';
 
       for (var i = 0; i < eventLen; i++) {
-        var event = events[i];
+        var _event2 = events[i];
 
-        var interactionData = this.getInteractionDataForPointerId(event);
+        var interactionData = this.getInteractionDataForPointerId(_event2);
 
-        var interactionEvent = this.configureInteractionEventForDOMEvent(this.eventData, event, interactionData);
+        var interactionEvent = this.configureInteractionEventForDOMEvent(this.eventData, _event2, interactionData);
 
         interactionEvent.data.originalEvent = originalEvent;
 
@@ -1972,13 +2196,13 @@ var InteractionManager = function (_EventDispatcher) {
 
         this.emit(cancelled ? 'pointercancel' : 'pointerup' + eventAppend, interactionEvent);
 
-        if (event.pointerType === 'mouse' || event.pointerType === 'pen') {
-          var isRightButton = event.button === 2;
+        if (_event2.pointerType === 'mouse' || _event2.pointerType === 'pen') {
+          var isRightButton = _event2.button === 2;
 
           this.emit(isRightButton ? 'rightup' + eventAppend : 'mouseup' + eventAppend, interactionEvent);
-        } else if (event.pointerType === 'touch') {
+        } else if (_event2.pointerType === 'touch') {
           this.emit(cancelled ? 'touchcancel' : 'touchend' + eventAppend, interactionEvent);
-          this.releaseInteractionDataForPointerId(event.pointerId, interactionData);
+          this.releaseInteractionDataForPointerId(_event2.pointerId, interactionData);
         }
       }
     }
@@ -2016,10 +2240,10 @@ var InteractionManager = function (_EventDispatcher) {
 
       if (displayObject.trackedPointers[id] !== undefined) {
         delete displayObject.trackedPointers[id];
-        this.fireEvent(displayObject, 'pointercancel', interactionEvent);
+        this.triggerEvent(displayObject, 'pointercancel', interactionEvent);
 
         if (data.pointerType === 'touch') {
-          this.fireEvent(displayObject, 'touchcancel', interactionEvent);
+          this.triggerEvent(displayObject, 'touchcancel', interactionEvent);
         }
       }
     }
@@ -2073,13 +2297,13 @@ var InteractionManager = function (_EventDispatcher) {
         var isDown = trackingData !== undefined && trackingData.flags & test;
 
         if (hit) {
-          this.fireEvent(displayObject, isRightButton ? 'rightup' : 'mouseup', interactionEvent);
+          this.triggerEvent(displayObject, isRightButton ? 'rightup' : 'mouseup', interactionEvent);
 
           if (isDown) {
-            this.fireEvent(displayObject, isRightButton ? 'rightclick' : 'click', interactionEvent);
+            this.triggerEvent(displayObject, isRightButton ? 'rightclick' : 'leftclick', interactionEvent);
           }
         } else if (isDown) {
-          this.fireEvent(displayObject, isRightButton ? 'rightupoutside' : 'mouseupoutside', interactionEvent);
+          this.triggerEvent(displayObject, isRightButton ? 'rightupoutside' : 'mouseupoutside', interactionEvent);
         }
         // update the down state of the tracking data
         if (trackingData) {
@@ -2093,21 +2317,24 @@ var InteractionManager = function (_EventDispatcher) {
 
       // Pointers and Touches, and Mouse
       if (hit) {
-        this.fireEvent(displayObject, 'pointerup', interactionEvent);
-        if (isTouch) this.fireEvent(displayObject, 'touchend', interactionEvent);
+        this.triggerEvent(displayObject, 'pointerup', interactionEvent);
+        if (isTouch && displayObject.started) {
+          displayObject.started = false;
+          this.triggerEvent(displayObject, 'touchend', interactionEvent);
+        }
 
         if (trackingData) {
-          this.fireEvent(displayObject, 'pointertap', interactionEvent);
+          this.triggerEvent(displayObject, 'pointertap', interactionEvent);
           if (isTouch) {
-            this.fireEvent(displayObject, 'tap', interactionEvent);
+            this.triggerEvent(displayObject, 'tap', interactionEvent);
             // touches are no longer over (if they ever were) when we get the touchend
             // so we should ensure that we don't keep pretending that they are
             trackingData.over = false;
           }
         }
       } else if (trackingData) {
-        this.fireEvent(displayObject, 'pointerupoutside', interactionEvent);
-        if (isTouch) this.fireEvent(displayObject, 'touchendoutside', interactionEvent);
+        this.triggerEvent(displayObject, 'pointerupoutside', interactionEvent);
+        if (isTouch) this.triggerEvent(displayObject, 'touchendoutside', interactionEvent);
       }
       // Only remove the tracking data if there is no over/down state still associated with it
       if (trackingData && trackingData.none) {
@@ -2139,20 +2366,20 @@ var InteractionManager = function (_EventDispatcher) {
       var eventLen = events.length;
 
       for (var i = 0; i < eventLen; i++) {
-        var event = events[i];
+        var _event3 = events[i];
 
-        var interactionData = this.getInteractionDataForPointerId(event);
+        var interactionData = this.getInteractionDataForPointerId(_event3);
 
-        var interactionEvent = this.configureInteractionEventForDOMEvent(this.eventData, event, interactionData);
+        var interactionEvent = this.configureInteractionEventForDOMEvent(this.eventData, _event3, interactionData);
 
         interactionEvent.data.originalEvent = originalEvent;
 
-        var interactive = event.pointerType === 'touch' ? this.moveWhenInside : true;
+        var interactive = _event3.pointerType === 'touch' ? this.moveWhenInside : true;
 
         this.processInteractive(interactionEvent, this.scene, this.processPointerMove, interactive);
         this.emit('pointermove', interactionEvent);
-        if (event.pointerType === 'touch') this.emit('touchmove', interactionEvent);
-        if (event.pointerType === 'mouse' || event.pointerType === 'pen') this.emit('mousemove', interactionEvent);
+        if (_event3.pointerType === 'touch') this.emit('touchmove', interactionEvent);
+        if (_event3.pointerType === 'mouse' || _event3.pointerType === 'pen') this.emit('mousemove', interactionEvent);
       }
 
       if (events[0].pointerType === 'mouse') {
@@ -2185,9 +2412,9 @@ var InteractionManager = function (_EventDispatcher) {
       }
 
       if (!this.moveWhenInside || hit) {
-        this.fireEvent(displayObject, 'pointermove', interactionEvent);
-        if (isTouch) this.fireEvent(displayObject, 'touchmove', interactionEvent);
-        if (isMouse) this.fireEvent(displayObject, 'mousemove', interactionEvent);
+        this.triggerEvent(displayObject, 'pointermove', interactionEvent);
+        if (isTouch && displayObject.started) this.triggerEvent(displayObject, 'touchmove', interactionEvent);
+        if (isMouse) this.triggerEvent(displayObject, 'mousemove', interactionEvent);
       }
     }
 
@@ -2262,9 +2489,9 @@ var InteractionManager = function (_EventDispatcher) {
       if (hit && this.mouseOverRenderer) {
         if (!trackingData.over) {
           trackingData.over = true;
-          this.fireEvent(displayObject, 'pointerover', interactionEvent);
+          this.triggerEvent(displayObject, 'pointerover', interactionEvent);
           if (isMouse) {
-            this.fireEvent(displayObject, 'mouseover', interactionEvent);
+            this.triggerEvent(displayObject, 'mouseover', interactionEvent);
           }
         }
 
@@ -2275,9 +2502,9 @@ var InteractionManager = function (_EventDispatcher) {
         }
       } else if (trackingData.over) {
         trackingData.over = false;
-        this.fireEvent(displayObject, 'pointerout', this.eventData);
+        this.triggerEvent(displayObject, 'pointerout', this.eventData);
         if (isMouse) {
-          this.fireEvent(displayObject, 'mouseout', interactionEvent);
+          this.triggerEvent(displayObject, 'mouseout', interactionEvent);
         }
         // if there is no mouse down information for the pointer, then it is safe to delete
         if (trackingData.none) {

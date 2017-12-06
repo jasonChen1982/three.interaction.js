@@ -12,6 +12,12 @@ Object3D.prototype.interactive = false;
 Object3D.prototype.interactiveChildren = true;
 
 /**
+ * whether displayObject had touchstart
+ * @private
+ */
+Object3D.prototype.started = false;
+
+/**
  * tracked event cache, like: touchend、mouseout、pointerout which decided by primary-event
  */
 Object.defineProperty(Object3D.prototype, 'trackedPointers', {

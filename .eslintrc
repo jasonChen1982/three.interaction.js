@@ -4,9 +4,14 @@
     "browser": true,
     "es6": true
   },
+  "globals": {
+    "RAF": true,
+    "CAF": true
+  },
   "rules": {
     "no-bitwise": 0,
     "max-len": 0,
+    "new-cap": 0,
     "object-curly-spacing": ["error", "always", { "arraysInObjects": true }]
   },
   "parserOptions": {
