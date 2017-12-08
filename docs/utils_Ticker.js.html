@@ -309,7 +309,7 @@
     </ul>
 </div>
     <div class="main">
-        <h1 class="page-title" data-filename="interaction_InteractionEvent.js.html">Source: interaction/InteractionEvent.js</h1>
+        <h1 class="page-title" data-filename="utils_Ticker.js.html">Source: utils/Ticker.js</h1>
         
 
 
@@ -317,85 +317,81 @@
     <section>
         <header>
             <div class="header content-size">
-                <h2>interaction/InteractionEvent.js</h2>
+                <h2>utils/Ticker.js</h2>
             </div>
         </header>
         <article>
-            <pre id="source-code" class="prettyprint source linenums"><code>/**
- * Event class that mimics native DOM events.
- *
- * @class
+            <pre id="source-code" class="prettyprint source linenums"><code>import { EventDispatcher } from 'three';
+
+/**
+ * @extends EventDispatcher
  */
-class InteractionEvent {
+class Ticker extends EventDispatcher {
   /**
-   * InteractionEvent constructor
-   */
-  constructor() {
-    /**
-     * Whether this event will continue propagating in the tree
-     *
-     * @member {boolean}
-     */
-    this.stopped = false;
-
-    /**
-     * The object which caused this event to be dispatched.
-     *
-     * @member {Object3D}
-     */
-    this.target = null;
-
-    /**
-     * The object whose event listener’s callback is currently being invoked.
-     *
-     * @member {Object3D}
-     */
-    this.currentTarget = null;
-
-    /**
-     * Type of the event
-     *
-     * @member {string}
-     */
-    this.type = null;
-
-    /**
-     * InteractionData related to this event
-     *
-     * @member {InteractionData}
-     */
-    this.data = null;
-
-    /**
-     * ray caster detial from 3d-mesh
-     *
-     * @member {Intersect}
-     */
-    this.intersect = null;
-  }
-
-  /**
-   * Prevents event from reaching any objects other than the current object.
    *
    */
-  stopPropagation() {
-    this.stopped = true;
+  constructor() {
+    super();
+    this.timer = null;
+    this.started = false;
+
+    /**
+     * pre-time cache
+     *
+     * @member {Number}
+     * @private
+     */
+    this.pt = 0;
+
+    /**
+     * how long the time through, at this tick
+     *
+     * @member {Number}
+     * @private
+     */
+    this.snippet = 0;
+
+    this.start();
   }
 
   /**
-   * Resets the event.
+   * start tick loop
+   */
+  start() {
+    if (this.started) return;
+    const loop = () => {
+      this.timeline();
+      this.emit('tick', { snippet: this.snippet });
+      this.timer = RAF(loop);
+    };
+    loop();
+  }
+
+  /**
+   * stop tick loop
+   */
+  stop() {
+    CAF(this.timer);
+    this.started = false;
+  }
+
+  /**
+   * get timeline snippet
    *
    * @private
    */
-  _reset() {
-    this.stopped = false;
-    this.currentTarget = null;
-    this.target = null;
-    this.intersect = null;
+  timeline() {
+    this.snippet = Date.now() - this.pt;
+    if (this.pt === 0 || this.snippet > 200) {
+      this.pt = Date.now();
+      this.snippet = Date.now() - this.pt;
+    }
+
+    this.pt += this.snippet;
   }
 }
 
-export default InteractionEvent;
+export default Ticker;
 </code></pre>
         </article>
     </section>

@@ -13,7 +13,7 @@ class Ticker extends EventDispatcher {
     this.started = false;
 
     /**
-     * 前一帧的时间标记
+     * pre-time cache
      *
      * @member {Number}
      * @private
@@ -21,7 +21,7 @@ class Ticker extends EventDispatcher {
     this.pt = 0;
 
     /**
-     * 本次渲染经历的时间片段长度
+     * how long the time through, at this tick
      *
      * @member {Number}
      * @private
@@ -32,7 +32,7 @@ class Ticker extends EventDispatcher {
   }
 
   /**
-   * start
+   * start tick loop
    */
   start() {
     if (this.started) return;
@@ -45,7 +45,7 @@ class Ticker extends EventDispatcher {
   }
 
   /**
-   * stop
+   * stop tick loop
    */
   stop() {
     CAF(this.timer);
@@ -53,7 +53,7 @@ class Ticker extends EventDispatcher {
   }
 
   /**
-   * 时间轴部件
+   * get timeline snippet
    *
    * @private
    */

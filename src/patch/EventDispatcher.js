@@ -47,12 +47,16 @@ EventDispatcher.prototype.once = function(type, fn) {
  * emit a event
  *
  * @param {String} type event type, evnet name
- * @param {Object} event event object, include more information
  * @return {this} this
  */
-EventDispatcher.prototype.emit = function(type, event) {
-  event.type = type;
-  this.dispatchEvent(event);
+EventDispatcher.prototype.emit = function(type, ...argument) {
+  if (this._listeners === undefined || Utils.isUndefined(this._listeners[type])) return;
+  const cbs = this._listeners[type] || [];
+  const cache = cbs.slice(0);
+
+  for (let i = 0; i < cache.length; i++) {
+    cache[i].apply(this, argument);
+  }
   return this;
 };
 

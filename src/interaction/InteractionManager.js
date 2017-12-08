@@ -1,6 +1,4 @@
 import { EventDispatcher, Raycaster } from 'three';
-
-import Ticker from '../utils/Ticker';
 import InteractionData from './InteractionData';
 import InteractionEvent from './InteractionEvent';
 import InteractionTrackingData from './InteractionTrackingData';
@@ -20,34 +18,9 @@ const hitTestEvent = {
  * if its interactive parameter is set to true
  * This manager also supports multitouch.
  *
- * base on [pixi.js](http://www.pixijs.com/)
+ * reference to [pixi.js](http://www.pixijs.com/) impl
  *
- * @example
- * import { Scene, PerspectiveCamera, WebGLRenderer, Mesh, BoxGeometry, MeshBasicMaterial } from 'three';
- * const renderer = new WebGLRenderer({ canvas: canvasElement });
- * const scene = new Scene();
- * const camera = new PerspectiveCamera(60, width / height, 0.1, 100);
- *
- * const interactionManager = new InteractionManager(renderer, scene, camera);
- * // then you can bind every interaction event with any mesh which you had `add` into `scene` before
- * const cube = new Mesh(
- *   new BoxGeometry(1, 1, 1),
- *   new MeshBasicMaterial({ color: 0xffffff }),
- * );
- * scene.add(cube);
- * cube.on('touchstart', ev => {
- *   console.log(ev);
- * });
- *
- * cube.on('mousedown', ev => {
- *   console.log(ev);
- * });
- *
- * cube.on('pointerdown', ev => {
- *   console.log(ev);
- * });
- * // and so on
- *
+ * @private
  * @class
  * @extends EventDispatcher
  */
@@ -58,6 +31,7 @@ class InteractionManager extends EventDispatcher {
    * @param {Camera} camera - A reference to the current camera
    * @param {Object} [options] - The options for the manager.
    * @param {Boolean} [options.autoPreventDefault=false] - Should the manager automatically prevent default browser actions.
+   * @param {Boolean} [options.autoAttach=true] - Should the manager automatically attach target element.
    * @param {Number} [options.interactionFrequency=10] - Frequency increases the interaction events will be checked.
    */
   constructor(renderer, scene, camera, options) {
@@ -96,14 +70,6 @@ class InteractionManager extends EventDispatcher {
      * @default false
      */
     this.autoPreventDefault = options.autoPreventDefault || false;
-
-    /**
-     * whether auto-update for over event
-     *
-     * @member {boolean}
-     * @default false
-     */
-    this.autoUpdate = options.autoUpdate || false;
 
     /**
      * Frequency in milliseconds that the mousemove, moveover & mouseout interaction events will be checked.
@@ -288,21 +254,6 @@ class InteractionManager extends EventDispatcher {
      * @member {Raycaster}
      */
     this.raycaster = new Raycaster();
-
-    /**
-     * a ticker
-     *
-     * @private
-     * @member {Ticker}
-     */
-    this.ticker = new Ticker();
-
-    /**
-     * update for some over event
-     *
-     * @private
-     */
-    this.update = this.update.bind(this);
 
     /**
      * snippet time
@@ -757,9 +708,8 @@ class InteractionManager extends EventDispatcher {
       return;
     }
 
-    if (this.autoUpdate) this.ticker.addEventListener('tick', this.update);
+    this.emit('addevents');
 
-    // add click TODO:
     this.interactionDOMElement.addEventListener('click', this.onClick, true);
 
     if (window.navigator.msPointerEnabled) {
@@ -814,9 +764,8 @@ class InteractionManager extends EventDispatcher {
       return;
     }
 
-    if (this.autoUpdate) this.ticker.removeEventListener('tick', this.update);
+    this.emit('removeevents');
 
-    // remove click TODO:
     this.interactionDOMElement.removeEventListener('click', this.onClick, true);
 
     if (window.navigator.msPointerEnabled) {

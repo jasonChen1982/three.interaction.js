@@ -157,13 +157,6 @@ var Utils = {
   }()
 };
 
-/**
- * proxy `addEventListener` function
- *
- * @param {String} type event type, evnet name
- * @param {Function} fn callback
- * @return {this} this
- */
 EventDispatcher.prototype.on = function (type, fn) {
   if (!Utils.isFunction(fn)) return;
   this.addEventListener(type, fn);
@@ -205,18 +198,23 @@ EventDispatcher.prototype.once = function (type, fn) {
  * emit a event
  *
  * @param {String} type event type, evnet name
- * @param {Object} event event object, include more information
  * @return {this} this
  */
-EventDispatcher.prototype.emit = function (type, event) {
-  event.type = type;
-  this.dispatchEvent(event);
+EventDispatcher.prototype.emit = function (type) {
+  if (this._listeners === undefined || Utils.isUndefined(this._listeners[type])) return;
+  var cbs = this._listeners[type] || [];
+  var cache = cbs.slice(0);
+
+  for (var _len = arguments.length, argument = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+    argument[_key - 1] = arguments[_key];
+  }
+
+  for (var i = 0; i < cache.length; i++) {
+    cache[i].apply(this, argument);
+  }
   return this;
 };
 
-/**
- * whether displayObject is interactively
- */
 Object3D.prototype.interactive = false;
 
 /**
@@ -289,12 +287,20 @@ Object3D.prototype.once = function (type, fn) {
  * emit a event
  *
  * @param {String} type event type, evnet name
- * @param {Object} event event object, include more information
  * @return {this} this
  */
-Object3D.prototype.emit = function (type, event) {
-  event.type = type;
-  this.dispatchEvent(event);
+Object3D.prototype.emit = function (type) {
+  if (this._listeners === undefined || Utils.isUndefined(this._listeners[type])) return;
+  var cbs = this._listeners[type] || [];
+  var cache = cbs.slice(0);
+
+  for (var _len = arguments.length, argument = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+    argument[_key - 1] = arguments[_key];
+  }
+
+  for (var i = 0; i < cache.length; i++) {
+    cache[i].apply(this, argument);
+  }
   return this;
 };
 
@@ -396,101 +402,6 @@ var possibleConstructorReturn = function (self, call) {
 
   return call && (typeof call === "object" || typeof call === "function") ? call : self;
 };
-
-/**
- * @extends EventDispatcher
- */
-
-var Ticker = function (_EventDispatcher) {
-  inherits(Ticker, _EventDispatcher);
-
-  /**
-   *
-   */
-  function Ticker() {
-    classCallCheck(this, Ticker);
-
-    var _this = possibleConstructorReturn(this, (Ticker.__proto__ || Object.getPrototypeOf(Ticker)).call(this));
-
-    _this.timer = null;
-    _this.started = false;
-
-    /**
-     * 前一帧的时间标记
-     *
-     * @member {Number}
-     * @private
-     */
-    _this.pt = 0;
-
-    /**
-     * 本次渲染经历的时间片段长度
-     *
-     * @member {Number}
-     * @private
-     */
-    _this.snippet = 0;
-
-    _this.start();
-    return _this;
-  }
-
-  /**
-   * start
-   */
-
-
-  createClass(Ticker, [{
-    key: 'start',
-    value: function start() {
-      var _this2 = this;
-
-      if (this.started) return;
-      var loop = function loop() {
-        _this2.timeline();
-        _this2.emit('tick', { snippet: _this2.snippet });
-        _this2.timer = RAF(loop);
-      };
-      loop();
-    }
-
-    /**
-     * stop
-     */
-
-  }, {
-    key: 'stop',
-    value: function stop() {
-      CAF(this.timer);
-      this.started = false;
-    }
-
-    /**
-     * 时间轴部件
-     *
-     * @private
-     */
-
-  }, {
-    key: 'timeline',
-    value: function timeline() {
-      this.snippet = Date.now() - this.pt;
-      if (this.pt === 0 || this.snippet > 200) {
-        this.pt = Date.now();
-        this.snippet = Date.now() - this.pt;
-      }
-
-      this.pt += this.snippet;
-    }
-  }]);
-  return Ticker;
-}(EventDispatcher);
-
-/**
- * Holds all information related to an Interaction event
- *
- * @class
- */
 
 var InteractionData = function () {
   /**
@@ -936,34 +847,9 @@ var hitTestEvent = {
  * if its interactive parameter is set to true
  * This manager also supports multitouch.
  *
- * base on [pixi.js](http://www.pixijs.com/)
+ * reference to [pixi.js](http://www.pixijs.com/) impl
  *
- * @example
- * import { Scene, PerspectiveCamera, WebGLRenderer, Mesh, BoxGeometry, MeshBasicMaterial } from 'three';
- * const renderer = new WebGLRenderer({ canvas: canvasElement });
- * const scene = new Scene();
- * const camera = new PerspectiveCamera(60, width / height, 0.1, 100);
- *
- * const interactionManager = new InteractionManager(renderer, scene, camera);
- * // then you can bind every interaction event with any mesh which you had `add` into `scene` before
- * const cube = new Mesh(
- *   new BoxGeometry(1, 1, 1),
- *   new MeshBasicMaterial({ color: 0xffffff }),
- * );
- * scene.add(cube);
- * cube.on('touchstart', ev => {
- *   console.log(ev);
- * });
- *
- * cube.on('mousedown', ev => {
- *   console.log(ev);
- * });
- *
- * cube.on('pointerdown', ev => {
- *   console.log(ev);
- * });
- * // and so on
- *
+ * @private
  * @class
  * @extends EventDispatcher
  */
@@ -977,6 +863,7 @@ var InteractionManager = function (_EventDispatcher) {
    * @param {Camera} camera - A reference to the current camera
    * @param {Object} [options] - The options for the manager.
    * @param {Boolean} [options.autoPreventDefault=false] - Should the manager automatically prevent default browser actions.
+   * @param {Boolean} [options.autoAttach=true] - Should the manager automatically attach target element.
    * @param {Number} [options.interactionFrequency=10] - Frequency increases the interaction events will be checked.
    */
   function InteractionManager(renderer, scene, camera, options) {
@@ -1017,14 +904,6 @@ var InteractionManager = function (_EventDispatcher) {
      * @default false
      */
     _this.autoPreventDefault = options.autoPreventDefault || false;
-
-    /**
-     * whether auto-update for over event
-     *
-     * @member {boolean}
-     * @default false
-     */
-    _this.autoUpdate = options.autoUpdate || false;
 
     /**
      * Frequency in milliseconds that the mousemove, moveover & mouseout interaction events will be checked.
@@ -1086,7 +965,7 @@ var InteractionManager = function (_EventDispatcher) {
      * It is currently set to false as this is how three.js used to work.
      *
      * @member {boolean}
-     * @default false
+     * @default true
      */
     _this.moveWhenInside = true;
 
@@ -1209,21 +1088,6 @@ var InteractionManager = function (_EventDispatcher) {
      * @member {Raycaster}
      */
     _this.raycaster = new Raycaster();
-
-    /**
-     * a ticker
-     *
-     * @private
-     * @member {Ticker}
-     */
-    _this.ticker = new Ticker();
-
-    /**
-     * update for some over event
-     *
-     * @private
-     */
-    _this.update = _this.update.bind(_this);
 
     /**
      * snippet time
@@ -1689,9 +1553,8 @@ var InteractionManager = function (_EventDispatcher) {
         return;
       }
 
-      if (this.autoUpdate) this.ticker.addEventListener('tick', this.update);
+      this.emit('addevents');
 
-      // add click TODO:
       this.interactionDOMElement.addEventListener('click', this.onClick, true);
 
       if (window.navigator.msPointerEnabled) {
@@ -1749,9 +1612,8 @@ var InteractionManager = function (_EventDispatcher) {
         return;
       }
 
-      if (this.autoUpdate) this.ticker.removeEventListener('tick', this.update);
+      this.emit('removeevents');
 
-      // remove click TODO:
       this.interactionDOMElement.removeEventListener('click', this.onClick, true);
 
       if (window.navigator.msPointerEnabled) {
@@ -2756,5 +2618,139 @@ var InteractionManager = function (_EventDispatcher) {
   return InteractionManager;
 }(EventDispatcher);
 
-export { InteractionManager };
+var Ticker = function (_EventDispatcher) {
+  inherits(Ticker, _EventDispatcher);
+
+  /**
+   *
+   */
+  function Ticker() {
+    classCallCheck(this, Ticker);
+
+    var _this = possibleConstructorReturn(this, (Ticker.__proto__ || Object.getPrototypeOf(Ticker)).call(this));
+
+    _this.timer = null;
+    _this.started = false;
+
+    /**
+     * pre-time cache
+     *
+     * @member {Number}
+     * @private
+     */
+    _this.pt = 0;
+
+    /**
+     * how long the time through, at this tick
+     *
+     * @member {Number}
+     * @private
+     */
+    _this.snippet = 0;
+
+    _this.start();
+    return _this;
+  }
+
+  /**
+   * start tick loop
+   */
+
+
+  createClass(Ticker, [{
+    key: 'start',
+    value: function start() {
+      var _this2 = this;
+
+      if (this.started) return;
+      var loop = function loop() {
+        _this2.timeline();
+        _this2.emit('tick', { snippet: _this2.snippet });
+        _this2.timer = RAF(loop);
+      };
+      loop();
+    }
+
+    /**
+     * stop tick loop
+     */
+
+  }, {
+    key: 'stop',
+    value: function stop() {
+      CAF(this.timer);
+      this.started = false;
+    }
+
+    /**
+     * get timeline snippet
+     *
+     * @private
+     */
+
+  }, {
+    key: 'timeline',
+    value: function timeline() {
+      this.snippet = Date.now() - this.pt;
+      if (this.pt === 0 || this.snippet > 200) {
+        this.pt = Date.now();
+        this.snippet = Date.now() - this.pt;
+      }
+
+      this.pt += this.snippet;
+    }
+  }]);
+  return Ticker;
+}(EventDispatcher);
+
+var Interaction = function (_InteractionManager) {
+  inherits(Interaction, _InteractionManager);
+
+  /**
+   * @param {WebGLRenderer} renderer - A reference to the current renderer
+   * @param {Scene} scene - A reference to the current scene
+   * @param {Camera} camera - A reference to the current camera
+   * @param {Object} [options] - The options for the manager.
+   * @param {Boolean} [options.autoPreventDefault=false] - Should the manager automatically prevent default browser actions.
+   * @param {Boolean} [options.autoAttach=false] - Should the manager automatically attach target element.
+   * @param {Number} [options.interactionFrequency=10] - Frequency increases the interaction events will be checked.
+   */
+  function Interaction(renderer, scene, camera, options) {
+    classCallCheck(this, Interaction);
+
+    options = Object.assign({ autoAttach: false }, options);
+
+    /**
+     * a ticker
+     *
+     * @private
+     * @member {Ticker}
+     */
+    var _this = possibleConstructorReturn(this, (Interaction.__proto__ || Object.getPrototypeOf(Interaction)).call(this, renderer, scene, camera, options));
+
+    _this.ticker = new Ticker();
+
+    /**
+     * update for some over event
+     *
+     * @private
+     */
+    _this.update = _this.update.bind(_this);
+
+    _this.on('addevents', function () {
+      _this.ticker.on('tick', _this.update);
+    });
+
+    _this.on('removeevents', function () {
+      _this.ticker.off('tick', _this.update);
+    });
+
+    _this.setTargetElement(_this.renderer.domElement);
+    return _this;
+  }
+
+  return Interaction;
+}(InteractionManager);
+
+export { InteractionManager, Interaction };
 //# sourceMappingURL=three.interaction.js.map
