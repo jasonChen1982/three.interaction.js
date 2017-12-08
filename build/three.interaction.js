@@ -1569,7 +1569,7 @@ var InteractionManager = function (_EventDispatcher) {
   }, {
     key: 'addEvents',
     value: function addEvents() {
-      if (!this.interactionDOMElement) {
+      if (!this.interactionDOMElement || this.eventsAdded) {
         return;
       }
 
