@@ -165,7 +165,7 @@ class InteractionManager extends EventDispatcher {
      * It is currently set to false as this is how three.js used to work.
      *
      * @member {boolean}
-     * @default false
+     * @default true
      */
     this.moveWhenInside = true;
 
