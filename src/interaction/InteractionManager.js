@@ -704,7 +704,7 @@ class InteractionManager extends EventDispatcher {
    * @private
    */
   addEvents() {
-    if (!this.interactionDOMElement) {
+    if (!this.interactionDOMElement || this.eventsAdded) {
       return;
     }
 
