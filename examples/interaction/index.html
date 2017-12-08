@@ -14,7 +14,10 @@
           position: relative;
           user-select: none;
         }
-
+        .title {
+          color: #fff;
+          padding-bottom: 20px;
+        }
         #event-box {
           position: absolute;
           width: 100%;
@@ -29,14 +32,15 @@
           margin: 5px 10px;
           padding: 0 10px;
           line-height: 28px;
-          color: #fff;
-          border: 1px solid #fff;
+          color: #41b882;
+          font-weight: 400;
+          border: 1px solid #41b882;
           border-radius: 15px;
           transition: 0.1s all ease;
         }
         .marker.active {
-          border: 1px solid #41b882;
-          color: #41b882;
+          background: #41b882;
+          color: #ffffff;
         }
       </style>
       <!-- <script src="//res.wx.qq.com/mmbizwap/zh_CN/htmledition/js/vconsole/3.0.0/vconsole.min.js"></script>
@@ -47,6 +51,7 @@
 
     <body>
       <div id="event-box">
+        <h3 class="title">Interaction with that cube</h3>
         <span class="marker" id="pointerdown">pointerdown</span>
         <span class="marker" id="pointermove">pointermove</span>
         <span class="marker" id="pointerup">pointerup</span>
