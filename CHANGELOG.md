@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.0.5"></a>
+## [0.0.5](https://github.com/jasonChen1982/three.interaction.js/compare/v0.0.4...v0.0.5) (2017-12-13)
+
+
+### Bug Fixes
+
+* **touch:** fixed `touchmove` and `touchend` impl like browser ([3a99d11](https://github.com/jasonChen1982/three.interaction.js/commit/3a99d11))
+
+
+
 <a name="0.0.4"></a>
 ## [0.0.4](https://github.com/jasonChen1982/three.interaction.js/compare/v0.0.3...v0.0.4) (2017-12-08)
 
