@@ -22,10 +22,12 @@
         #event-box {
           position: absolute;
           width: 100%;
+          max-height: 45%;
           padding: 20px 50px;
           background: #35485d;
           text-align: center;
           box-sizing: border-box;
+          overflow-y: auto;
         }
         .marker {
           display: inline-block;
@@ -42,6 +44,11 @@
         .marker.active {
           background: #41b882;
           color: #ffffff;
+        }
+        @media only screen and (max-width: 600px) {
+          #event-box {
+            padding: 20px 0;
+          }
         }
       </style>
       <!-- <script src="//res.wx.qq.com/mmbizwap/zh_CN/htmledition/js/vconsole/3.0.0/vconsole.min.js"></script>

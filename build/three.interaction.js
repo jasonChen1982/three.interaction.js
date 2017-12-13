@@ -161,13 +161,6 @@ var Utils = {
   }()
 };
 
-/**
- * proxy `addEventListener` function
- *
- * @param {String} type event type, evnet name
- * @param {Function} fn callback
- * @return {this} this
- */
 three.EventDispatcher.prototype.on = function (type, fn) {
   if (!Utils.isFunction(fn)) return;
   this.addEventListener(type, fn);
@@ -226,9 +219,6 @@ three.EventDispatcher.prototype.emit = function (type) {
   return this;
 };
 
-/**
- * whether displayObject is interactively
- */
 three.Object3D.prototype.interactive = false;
 
 /**
@@ -416,12 +406,6 @@ var possibleConstructorReturn = function (self, call) {
 
   return call && (typeof call === "object" || typeof call === "function") ? call : self;
 };
-
-/**
- * Holds all information related to an Interaction event
- *
- * @class
- */
 
 var InteractionData = function () {
   /**
@@ -2218,12 +2202,12 @@ var InteractionManager = function (_EventDispatcher) {
       }
 
       // Pointers and Touches, and Mouse
+      if (isTouch && displayObject.started) {
+        displayObject.started = false;
+        this.triggerEvent(displayObject, 'touchend', interactionEvent);
+      }
       if (hit) {
         this.triggerEvent(displayObject, 'pointerup', interactionEvent);
-        if (isTouch && displayObject.started) {
-          displayObject.started = false;
-          this.triggerEvent(displayObject, 'touchend', interactionEvent);
-        }
 
         if (trackingData) {
           this.triggerEvent(displayObject, 'pointertap', interactionEvent);
@@ -2313,9 +2297,9 @@ var InteractionManager = function (_EventDispatcher) {
         this.processPointerOverOut(interactionEvent, displayObject, hit);
       }
 
+      if (isTouch && displayObject.started) this.triggerEvent(displayObject, 'touchmove', interactionEvent);
       if (!this.moveWhenInside || hit) {
         this.triggerEvent(displayObject, 'pointermove', interactionEvent);
-        if (isTouch && displayObject.started) this.triggerEvent(displayObject, 'touchmove', interactionEvent);
         if (isMouse) this.triggerEvent(displayObject, 'mousemove', interactionEvent);
       }
     }
@@ -2638,10 +2622,6 @@ var InteractionManager = function (_EventDispatcher) {
   return InteractionManager;
 }(three.EventDispatcher);
 
-/**
- * @extends EventDispatcher
- */
-
 var Ticker = function (_EventDispatcher) {
   inherits(Ticker, _EventDispatcher);
 
@@ -2726,48 +2706,6 @@ var Ticker = function (_EventDispatcher) {
   }]);
   return Ticker;
 }(three.EventDispatcher);
-
-/**
- * The interaction manager deals with mouse, touch and pointer events. Any DisplayObject can be interactive
- * if its interactive parameter is set to true
- * This manager also supports multitouch.
- *
- * reference to [pixi.js](http://www.pixijs.com/) impl
- *
- * @example
- * import { Scene, PerspectiveCamera, WebGLRenderer, Mesh, BoxGeometry, MeshBasicMaterial } from 'three';
- * const renderer = new WebGLRenderer({ canvas: canvasElement });
- * const scene = new Scene();
- * const camera = new PerspectiveCamera(60, width / height, 0.1, 100);
- *
- * const interaction = new Interaction(renderer, scene, camera);
- * // then you can bind every interaction event with any mesh which you had `add` into `scene` before
- * const cube = new Mesh(
- *   new BoxGeometry(1, 1, 1),
- *   new MeshBasicMaterial({ color: 0xffffff }),
- * );
- * scene.add(cube);
- * cube.on('touchstart', ev => {
- *   console.log(ev);
- * });
- *
- * cube.on('mousedown', ev => {
- *   console.log(ev);
- * });
- *
- * cube.on('pointerdown', ev => {
- *   console.log(ev);
- * });
- * // and so on ...
- *
- * // you can linsten at parent or any display-list node, source event will bubble up
- * scene.on('touchstart', ev => {
- *   console.log(ev);
- * })
- *
- * @class
- * @extends InteractionManager
- */
 
 var Interaction = function (_InteractionManager) {
   inherits(Interaction, _InteractionManager);

@@ -1316,12 +1316,12 @@ class InteractionManager extends EventDispatcher {
     }
 
     // Pointers and Touches, and Mouse
+    if (isTouch && displayObject.started) {
+      displayObject.started = false;
+      this.triggerEvent(displayObject, 'touchend', interactionEvent);
+    }
     if (hit) {
       this.triggerEvent(displayObject, 'pointerup', interactionEvent);
-      if (isTouch && displayObject.started) {
-        displayObject.started = false;
-        this.triggerEvent(displayObject, 'touchend', interactionEvent);
-      }
 
       if (trackingData) {
         this.triggerEvent(displayObject, 'pointertap', interactionEvent);
@@ -1410,9 +1410,9 @@ class InteractionManager extends EventDispatcher {
       this.processPointerOverOut(interactionEvent, displayObject, hit);
     }
 
+    if (isTouch && displayObject.started) this.triggerEvent(displayObject, 'touchmove', interactionEvent);
     if (!this.moveWhenInside || hit) {
       this.triggerEvent(displayObject, 'pointermove', interactionEvent);
-      if (isTouch && displayObject.started) this.triggerEvent(displayObject, 'touchmove', interactionEvent);
       if (isMouse) this.triggerEvent(displayObject, 'mousemove', interactionEvent);
     }
   }
