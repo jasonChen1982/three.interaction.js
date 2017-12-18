@@ -1,6 +1,14 @@
 # three.interaction
 
-a full-interaction manager, help `three.js` easy to binding interaction event
+a full-interaction event manager, help `three.js` binding interaction event more simple
+
+# install
+
+```sh
+npm install -S three.interaction
+```
+
+# usage
 
 ```javascript
 import { Scene, PerspectiveCamera, WebGLRenderer, Mesh, BoxGeometry, MeshBasicMaterial } from 'three';
@@ -32,8 +40,9 @@ cube.on('mouseup', function(ev) {});
 // and so on ...
 
 /**
- * you can also linsten at parent or any display-tree node,
+ * you can also listen on parent-node or any display-tree node,
  * source event will bubble up along with display-tree.
+ * you can stop the bubble-up by invoke ev.stopPropagation function.
  */
 scene.on('touchstart', ev => {
   console.log(ev);
@@ -43,7 +52,6 @@ scene.on('touchmove', ev => {
 })
 
 ```
-
 
 ## Documentation
 [documentation][documentation]

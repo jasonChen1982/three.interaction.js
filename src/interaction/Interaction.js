@@ -10,6 +10,7 @@ import InteractionManager from './InteractionManager';
  *
  * @example
  * import { Scene, PerspectiveCamera, WebGLRenderer, Mesh, BoxGeometry, MeshBasicMaterial } from 'three';
+ * import { Interaction } from 'three.interaction';
  * const renderer = new WebGLRenderer({ canvas: canvasElement });
  * const scene = new Scene();
  * const camera = new PerspectiveCamera(60, width / height, 0.1, 100);
@@ -34,7 +35,9 @@ import InteractionManager from './InteractionManager';
  * });
  * // and so on ...
  *
- * // you can linsten at parent or any display-list node, source event will bubble up
+ * // you can also listen on parent-node or any display-tree node,
+ * // source event will bubble up along with display-tree.
+ * // you can stop the bubble-up by invoke ev.stopPropagation function.
  * scene.on('touchstart', ev => {
  *   console.log(ev);
  * })
