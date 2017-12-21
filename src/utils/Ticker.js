@@ -1,3 +1,4 @@
+import './Raf';
 import { EventDispatcher } from 'three';
 
 /**

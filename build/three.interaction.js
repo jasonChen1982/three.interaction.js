@@ -4,36 +4,6 @@
 	(factory((global.THREE = global.THREE || {}),global.THREE));
 }(this, (function (exports,three) { 'use strict';
 
-(function () {
-  var lastTime = 0;
-  var vendors = ['ms', 'moz', 'webkit', 'o'];
-  for (var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
-    window.requestAnimationFrame = window[vendors[x] + 'RequestAnimationFrame'];
-    window.cancelAnimationFrame = window[vendors[x] + 'CancelAnimationFrame'] || window[vendors[x] + 'CancelRequestAnimationFrame'];
-  }
-
-  if (!window.requestAnimationFrame) {
-    window.requestAnimationFrame = function (callback) {
-      var currTime = new Date().getTime();
-      var timeToCall = Math.max(0, 16 - (currTime - lastTime));
-      var id = window.setTimeout(function () {
-        callback(currTime + timeToCall);
-      }, timeToCall);
-      lastTime = currTime + timeToCall;
-      return id;
-    };
-  }
-
-  if (!window.cancelAnimationFrame) {
-    window.cancelAnimationFrame = function (id) {
-      clearTimeout(id);
-    };
-  }
-
-  window.RAF = window.requestAnimationFrame;
-  window.CAF = window.cancelAnimationFrame;
-})();
-
 /**
  * get variable type
  * @param {*} val a variable which you want to get the type
@@ -2638,6 +2608,36 @@ var InteractionManager = function (_EventDispatcher) {
   return InteractionManager;
 }(three.EventDispatcher);
 
+(function () {
+  var lastTime = 0;
+  var vendors = ['ms', 'moz', 'webkit', 'o'];
+  for (var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
+    window.requestAnimationFrame = window[vendors[x] + 'RequestAnimationFrame'];
+    window.cancelAnimationFrame = window[vendors[x] + 'CancelAnimationFrame'] || window[vendors[x] + 'CancelRequestAnimationFrame'];
+  }
+
+  if (!window.requestAnimationFrame) {
+    window.requestAnimationFrame = function (callback) {
+      var currTime = new Date().getTime();
+      var timeToCall = Math.max(0, 16 - (currTime - lastTime));
+      var id = window.setTimeout(function () {
+        callback(currTime + timeToCall);
+      }, timeToCall);
+      lastTime = currTime + timeToCall;
+      return id;
+    };
+  }
+
+  if (!window.cancelAnimationFrame) {
+    window.cancelAnimationFrame = function (id) {
+      clearTimeout(id);
+    };
+  }
+
+  window.RAF = window.requestAnimationFrame;
+  window.CAF = window.cancelAnimationFrame;
+})();
+
 /**
  * @extends EventDispatcher
  */
@@ -2736,6 +2736,7 @@ var Ticker = function (_EventDispatcher) {
  *
  * @example
  * import { Scene, PerspectiveCamera, WebGLRenderer, Mesh, BoxGeometry, MeshBasicMaterial } from 'three';
+ * import { Interaction } from 'three.interaction';
  * const renderer = new WebGLRenderer({ canvas: canvasElement });
  * const scene = new Scene();
  * const camera = new PerspectiveCamera(60, width / height, 0.1, 100);
@@ -2760,7 +2761,9 @@ var Ticker = function (_EventDispatcher) {
  * });
  * // and so on ...
  *
- * // you can linsten at parent or any display-list node, source event will bubble up
+ * // you can also listen on parent-node or any display-tree node,
+ * // source event will bubble up along with display-tree.
+ * // you can stop the bubble-up by invoke ev.stopPropagation function.
  * scene.on('touchstart', ev => {
  *   console.log(ev);
  * })

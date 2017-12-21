@@ -1,3 +1,6 @@
+import '../patch/EventDispatcher';
+import '../patch/Object3D';
+
 import { EventDispatcher, Raycaster } from 'three';
 import InteractionData from './InteractionData';
 import InteractionEvent from './InteractionEvent';
