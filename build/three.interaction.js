@@ -131,15 +131,9 @@ var Utils = {
   }()
 };
 
-/**
- * proxy `addEventListener` function
- *
- * @param {String} type event type, evnet name
- * @param {Function} fn callback
- * @return {this} this
- */
 three.EventDispatcher.prototype.on = function (type, fn) {
   if (!Utils.isFunction(fn)) return;
+  if (this instanceof three.Object3D) this.interactive = true;
   this.addEventListener(type, fn);
   return this;
 };
@@ -221,72 +215,6 @@ Object.defineProperty(three.Object3D.prototype, 'trackedPointers', {
     return this._trackedPointers;
   }
 });
-
-/**
- * proxy `addEventListener` function
- *
- * @param {String} type event type, evnet name
- * @param {Function} fn callback
- * @return {this} this
- */
-three.Object3D.prototype.on = function (type, fn) {
-  if (!Utils.isFunction(fn)) return;
-  this.interactive = true;
-  this.addEventListener(type, fn);
-  return this;
-};
-
-/**
- * proxy `removeEventListener` function
- *
- * @param {String} type event type, evnet name
- * @param {Function} fn callback, which you had bind before
- * @return {this} this
- */
-three.Object3D.prototype.off = function (type, fn) {
-  this.removeEventListener(type, fn);
-  return this;
-};
-
-/**
- * binding a once event, just emit once time
- *
- * @param {String} type event type, evnet name
- * @param {Function} fn callback
- * @return {this} this
- */
-three.Object3D.prototype.once = function (type, fn) {
-  var _this = this;
-
-  if (!Utils.isFunction(fn)) return;
-  var cb = function cb(ev) {
-    fn(ev);
-    _this.off(type, cb);
-  };
-  this.on(type, cb);
-  return this;
-};
-
-/**
- * emit a event
- *
- * @param {String} type event type, evnet name
- * @return {this} this
- */
-three.Object3D.prototype.emit = function (type) {
-  if (this._listeners === undefined || Utils.isUndefined(this._listeners[type])) return;
-  var cbs = this._listeners[type] || [];
-  var cache = cbs.slice(0);
-
-  for (var _len = arguments.length, argument = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-    argument[_key - 1] = arguments[_key];
-  }
-
-  for (var i = 0; i < cache.length; i++) {
-    cache[i].apply(this, argument);
-  }
-  return this;
-};
 
 /**
  * dispatch a raycast
@@ -386,12 +314,6 @@ var possibleConstructorReturn = function (self, call) {
 
   return call && (typeof call === "object" || typeof call === "function") ? call : self;
 };
-
-/**
- * Holds all information related to an Interaction event
- *
- * @class
- */
 
 var InteractionData = function () {
   /**
@@ -2638,10 +2560,6 @@ var InteractionManager = function (_EventDispatcher) {
   window.CAF = window.cancelAnimationFrame;
 })();
 
-/**
- * @extends EventDispatcher
- */
-
 var Ticker = function (_EventDispatcher) {
   inherits(Ticker, _EventDispatcher);
 
@@ -2726,51 +2644,6 @@ var Ticker = function (_EventDispatcher) {
   }]);
   return Ticker;
 }(three.EventDispatcher);
-
-/**
- * The interaction manager deals with mouse, touch and pointer events. Any DisplayObject can be interactive
- * if its interactive parameter is set to true
- * This manager also supports multitouch.
- *
- * reference to [pixi.js](http://www.pixijs.com/) impl
- *
- * @example
- * import { Scene, PerspectiveCamera, WebGLRenderer, Mesh, BoxGeometry, MeshBasicMaterial } from 'three';
- * import { Interaction } from 'three.interaction';
- * const renderer = new WebGLRenderer({ canvas: canvasElement });
- * const scene = new Scene();
- * const camera = new PerspectiveCamera(60, width / height, 0.1, 100);
- *
- * const interaction = new Interaction(renderer, scene, camera);
- * // then you can bind every interaction event with any mesh which you had `add` into `scene` before
- * const cube = new Mesh(
- *   new BoxGeometry(1, 1, 1),
- *   new MeshBasicMaterial({ color: 0xffffff }),
- * );
- * scene.add(cube);
- * cube.on('touchstart', ev => {
- *   console.log(ev);
- * });
- *
- * cube.on('mousedown', ev => {
- *   console.log(ev);
- * });
- *
- * cube.on('pointerdown', ev => {
- *   console.log(ev);
- * });
- * // and so on ...
- *
- * // you can also listen on parent-node or any display-tree node,
- * // source event will bubble up along with display-tree.
- * // you can stop the bubble-up by invoke ev.stopPropagation function.
- * scene.on('touchstart', ev => {
- *   console.log(ev);
- * })
- *
- * @class
- * @extends InteractionManager
- */
 
 var Interaction = function (_InteractionManager) {
   inherits(Interaction, _InteractionManager);

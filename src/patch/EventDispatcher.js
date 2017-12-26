@@ -1,4 +1,4 @@
-import { EventDispatcher } from 'three';
+import { EventDispatcher, Object3D } from 'three';
 import { Utils } from '../utils/Utils.js';
 
 /**
@@ -10,6 +10,7 @@ import { Utils } from '../utils/Utils.js';
  */
 EventDispatcher.prototype.on = function(type, fn) {
   if (!Utils.isFunction(fn)) return;
+  if (this instanceof Object3D) this.interactive = true;
   this.addEventListener(type, fn);
   return this;
 };
