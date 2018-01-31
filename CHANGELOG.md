@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.0.7"></a>
+## [0.0.7](https://github.com/jasonChen1982/three.interaction.js/compare/v0.0.6...v0.0.7) (2018-01-31)
+
+
+### Features
+
+* **patch:** remove object3d patch about event emit ([edc6746](https://github.com/jasonChen1982/three.interaction.js/commit/edc6746))
+* **peer:** peer dependencies three at 0.89.0 ([93343de](https://github.com/jasonChen1982/three.interaction.js/commit/93343de))
+* **utils:** remove some redundant function ([da46a97](https://github.com/jasonChen1982/three.interaction.js/commit/da46a97))
+
+
+
 <a name="0.0.6"></a>
 ## [0.0.6](https://github.com/jasonChen1982/three.interaction.js/compare/v0.0.5...v0.0.6) (2017-12-21)
 
