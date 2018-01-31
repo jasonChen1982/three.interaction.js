@@ -19,71 +19,6 @@ function _rt(val) {
  * @namespace Utils
  */
 var Utils = {
-
-  /**
-   * determine whether it is a `Array`
-   *
-   * @static
-   * @method
-   * @memberof Utils
-   * @param {*} variable a variable which you want to determine
-   * @return {Boolean} type result
-   */
-  isArray: function () {
-    var ks = _rt([]);
-    return function (variable) {
-      return _rt(variable) === ks;
-    };
-  }(),
-
-  /**
-   * determine whether it is a `Object`
-   *
-   * @static
-   * @method
-   * @memberof Utils
-   * @param {*} variable a variable which you want to determine
-   * @return {Boolean} type result
-   */
-  isObject: function () {
-    var ks = _rt({});
-    return function (variable) {
-      return _rt(variable) === ks;
-    };
-  }(),
-
-  /**
-   * determine whether it is a `String`
-   *
-   * @static
-   * @method
-   * @memberof Utils
-   * @param {*} variable a variable which you want to determine
-   * @return {Boolean} type result
-   */
-  isString: function () {
-    var ks = _rt('s');
-    return function (variable) {
-      return _rt(variable) === ks;
-    };
-  }(),
-
-  /**
-   * determine whether it is a `Number`
-   *
-   * @static
-   * @method
-   * @memberof Utils
-   * @param {*} variable a variable which you want to determine
-   * @return {Boolean} type result
-   */
-  isNumber: function () {
-    var ks = _rt(1);
-    return function (variable) {
-      return _rt(variable) === ks;
-    };
-  }(),
-
   /**
    * determine whether it is a `Function`
    *
@@ -111,26 +46,16 @@ var Utils = {
    */
   isUndefined: function isUndefined(variable) {
     return typeof variable === 'undefined';
-  },
-
-
-  /**
-   * determine whether it is a `Boolean`
-   *
-   * @static
-   * @method
-   * @memberof Utils
-   * @param {*} variable a variable which you want to determine
-   * @return {Boolean} type result
-   */
-  isBoolean: function () {
-    var ks = _rt(true);
-    return function (variable) {
-      return _rt(variable) === ks;
-    };
-  }()
+  }
 };
 
+/**
+ * proxy `addEventListener` function
+ *
+ * @param {String} type event type, evnet name
+ * @param {Function} fn callback
+ * @return {this} this
+ */
 three.EventDispatcher.prototype.on = function (type, fn) {
   if (!Utils.isFunction(fn)) return;
   if (this instanceof three.Object3D) this.interactive = true;
@@ -314,6 +239,12 @@ var possibleConstructorReturn = function (self, call) {
 
   return call && (typeof call === "object" || typeof call === "function") ? call : self;
 };
+
+/**
+ * Holds all information related to an Interaction event
+ *
+ * @class
+ */
 
 var InteractionData = function () {
   /**
@@ -2560,6 +2491,10 @@ var InteractionManager = function (_EventDispatcher) {
   window.CAF = window.cancelAnimationFrame;
 })();
 
+/**
+ * @extends EventDispatcher
+ */
+
 var Ticker = function (_EventDispatcher) {
   inherits(Ticker, _EventDispatcher);
 
@@ -2644,6 +2579,51 @@ var Ticker = function (_EventDispatcher) {
   }]);
   return Ticker;
 }(three.EventDispatcher);
+
+/**
+ * The interaction manager deals with mouse, touch and pointer events. Any DisplayObject can be interactive
+ * if its interactive parameter is set to true
+ * This manager also supports multitouch.
+ *
+ * reference to [pixi.js](http://www.pixijs.com/) impl
+ *
+ * @example
+ * import { Scene, PerspectiveCamera, WebGLRenderer, Mesh, BoxGeometry, MeshBasicMaterial } from 'three';
+ * import { Interaction } from 'three.interaction';
+ * const renderer = new WebGLRenderer({ canvas: canvasElement });
+ * const scene = new Scene();
+ * const camera = new PerspectiveCamera(60, width / height, 0.1, 100);
+ *
+ * const interaction = new Interaction(renderer, scene, camera);
+ * // then you can bind every interaction event with any mesh which you had `add` into `scene` before
+ * const cube = new Mesh(
+ *   new BoxGeometry(1, 1, 1),
+ *   new MeshBasicMaterial({ color: 0xffffff }),
+ * );
+ * scene.add(cube);
+ * cube.on('touchstart', ev => {
+ *   console.log(ev);
+ * });
+ *
+ * cube.on('mousedown', ev => {
+ *   console.log(ev);
+ * });
+ *
+ * cube.on('pointerdown', ev => {
+ *   console.log(ev);
+ * });
+ * // and so on ...
+ *
+ * // you can also listen on parent-node or any display-tree node,
+ * // source event will bubble up along with display-tree.
+ * // you can stop the bubble-up by invoke ev.stopPropagation function.
+ * scene.on('touchstart', ev => {
+ *   console.log(ev);
+ * })
+ *
+ * @class
+ * @extends InteractionManager
+ */
 
 var Interaction = function (_InteractionManager) {
   inherits(Interaction, _InteractionManager);
