@@ -1,5 +1,9 @@
 # three.interaction
 
+[![npm](https://img.shields.io/npm/v/three.interaction.svg?style=flat-square)](https://github.com/jasonChen1982/three.interaction.js)
+[![javascript style guide](https://img.shields.io/badge/code_style-google-brightgreen.svg)](https://google.github.io/styleguide/jsguide.html)
+[![Standard Version](https://img.shields.io/badge/release-standard%20version-brightgreen.svg)](https://github.com/conventional-changelog/standard-version)
+
 a full-interaction event manager, help `three.js` binding interaction event more simple
 
 # install
