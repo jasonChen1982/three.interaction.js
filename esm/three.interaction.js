@@ -1768,7 +1768,7 @@ var InteractionManager = function (_EventDispatcher) {
 
       var interactionData = this.getInteractionDataForPointerId(events[0]);
 
-      var interactionEvent = this.configureInteractionEventForDOMEvent(this.eventData, interactionData.originalEvent, interactionData);
+      var interactionEvent = this.configureInteractionEventForDOMEvent(this.eventData, events[0], interactionData);
 
       interactionEvent.data.originalEvent = originalEvent;
 
