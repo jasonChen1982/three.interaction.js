@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.0.9"></a>
+## [0.0.9](https://github.com/jasonChen1982/three.interaction.js/compare/v0.0.8...v0.0.9) (2018-03-13)
+
+
+### Bug Fixes
+
+* **error:** fixed event was undefined in onClick function ([08a91f0](https://github.com/jasonChen1982/three.interaction.js/commit/08a91f0))
+
+
+
 <a name="0.0.8"></a>
 ## [0.0.8](https://github.com/jasonChen1982/three.interaction.js/compare/v0.0.7...v0.0.8) (2018-03-13)
 
