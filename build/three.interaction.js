@@ -1772,7 +1772,7 @@ var InteractionManager = function (_EventDispatcher) {
 
       var interactionData = this.getInteractionDataForPointerId(events[0]);
 
-      var interactionEvent = this.configureInteractionEventForDOMEvent(this.eventData, event, interactionData);
+      var interactionEvent = this.configureInteractionEventForDOMEvent(this.eventData, interactionData.originalEvent, interactionData);
 
       interactionEvent.data.originalEvent = originalEvent;
 
@@ -1828,21 +1828,21 @@ var InteractionManager = function (_EventDispatcher) {
       var eventLen = events.length;
 
       for (var i = 0; i < eventLen; i++) {
-        var _event = events[i];
+        var event = events[i];
 
-        var interactionData = this.getInteractionDataForPointerId(_event);
+        var interactionData = this.getInteractionDataForPointerId(event);
 
-        var interactionEvent = this.configureInteractionEventForDOMEvent(this.eventData, _event, interactionData);
+        var interactionEvent = this.configureInteractionEventForDOMEvent(this.eventData, event, interactionData);
 
         interactionEvent.data.originalEvent = originalEvent;
 
         this.processInteractive(interactionEvent, this.scene, this.processPointerDown, true);
 
         this.emit('pointerdown', interactionEvent);
-        if (_event.pointerType === 'touch') {
+        if (event.pointerType === 'touch') {
           this.emit('touchstart', interactionEvent);
-        } else if (_event.pointerType === 'mouse' || _event.pointerType === 'pen') {
-          var isRightButton = _event.button === 2;
+        } else if (event.pointerType === 'mouse' || event.pointerType === 'pen') {
+          var isRightButton = event.button === 2;
 
           this.emit(isRightButton ? 'rightdown' : 'mousedown', this.eventData);
         }
@@ -1908,11 +1908,11 @@ var InteractionManager = function (_EventDispatcher) {
       var eventAppend = originalEvent.target !== this.interactionDOMElement ? 'outside' : '';
 
       for (var i = 0; i < eventLen; i++) {
-        var _event2 = events[i];
+        var event = events[i];
 
-        var interactionData = this.getInteractionDataForPointerId(_event2);
+        var interactionData = this.getInteractionDataForPointerId(event);
 
-        var interactionEvent = this.configureInteractionEventForDOMEvent(this.eventData, _event2, interactionData);
+        var interactionEvent = this.configureInteractionEventForDOMEvent(this.eventData, event, interactionData);
 
         interactionEvent.data.originalEvent = originalEvent;
 
@@ -1921,13 +1921,13 @@ var InteractionManager = function (_EventDispatcher) {
 
         this.emit(cancelled ? 'pointercancel' : 'pointerup' + eventAppend, interactionEvent);
 
-        if (_event2.pointerType === 'mouse' || _event2.pointerType === 'pen') {
-          var isRightButton = _event2.button === 2;
+        if (event.pointerType === 'mouse' || event.pointerType === 'pen') {
+          var isRightButton = event.button === 2;
 
           this.emit(isRightButton ? 'rightup' + eventAppend : 'mouseup' + eventAppend, interactionEvent);
-        } else if (_event2.pointerType === 'touch') {
+        } else if (event.pointerType === 'touch') {
           this.emit(cancelled ? 'touchcancel' : 'touchend' + eventAppend, interactionEvent);
-          this.releaseInteractionDataForPointerId(_event2.pointerId, interactionData);
+          this.releaseInteractionDataForPointerId(event.pointerId, interactionData);
         }
       }
     }
@@ -2091,20 +2091,20 @@ var InteractionManager = function (_EventDispatcher) {
       var eventLen = events.length;
 
       for (var i = 0; i < eventLen; i++) {
-        var _event3 = events[i];
+        var event = events[i];
 
-        var interactionData = this.getInteractionDataForPointerId(_event3);
+        var interactionData = this.getInteractionDataForPointerId(event);
 
-        var interactionEvent = this.configureInteractionEventForDOMEvent(this.eventData, _event3, interactionData);
+        var interactionEvent = this.configureInteractionEventForDOMEvent(this.eventData, event, interactionData);
 
         interactionEvent.data.originalEvent = originalEvent;
 
-        var interactive = _event3.pointerType === 'touch' ? this.moveWhenInside : true;
+        var interactive = event.pointerType === 'touch' ? this.moveWhenInside : true;
 
         this.processInteractive(interactionEvent, this.scene, this.processPointerMove, interactive);
         this.emit('pointermove', interactionEvent);
-        if (_event3.pointerType === 'touch') this.emit('touchmove', interactionEvent);
-        if (_event3.pointerType === 'mouse' || _event3.pointerType === 'pen') this.emit('mousemove', interactionEvent);
+        if (event.pointerType === 'touch') this.emit('touchmove', interactionEvent);
+        if (event.pointerType === 'mouse' || event.pointerType === 'pen') this.emit('mousemove', interactionEvent);
       }
 
       if (events[0].pointerType === 'mouse') {

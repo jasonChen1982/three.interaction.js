@@ -1074,7 +1074,7 @@ class InteractionManager extends EventDispatcher {
 
     const interactionData = this.getInteractionDataForPointerId(events[0]);
 
-    const interactionEvent = this.configureInteractionEventForDOMEvent(this.eventData, event, interactionData);
+    const interactionEvent = this.configureInteractionEventForDOMEvent(this.eventData, interactionData.originalEvent, interactionData);
 
     interactionEvent.data.originalEvent = originalEvent;
 
