@@ -12,6 +12,7 @@
     "src"
   ],
   "scripts": {
+    "extract": "npmsrcify extract",
     "build": "rollup -c",
     "build:dev": "rollup -c -w",
     "prever": "npm run build && git add -A && git commit -m 'release: release a new version'",
@@ -64,12 +65,20 @@
     "karma-mocha": "^1.3.0",
     "karma-phantomjs-launcher": "^1.0.4",
     "mocha": "^4.0.1",
+    "npmsrcify": "0.0.2",
     "rollup": "^0.52.0",
     "rollup-plugin-babel": "^3.0.2",
     "standard-version": "^4.2.0",
+    "three": "^0.91.0",
     "validate-commit-msg": "^2.14.0"
   },
   "config": {
+    "npmsrcify": {
+      "modules": [
+        "three"
+      ],
+      "output": "./examples/libs"
+    },
     "validate-commit-msg": {
       "types": [
         "feat",
