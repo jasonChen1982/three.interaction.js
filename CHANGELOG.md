@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.1.0"></a>
+# [0.1.0](https://github.com/jasonChen1982/three.interaction.js/compare/v0.0.9...v0.1.0) (2018-08-24)
+
+
+### Features
+
+* **layer:** add interaction for layer ([6cd1c5a](https://github.com/jasonChen1982/three.interaction.js/commit/6cd1c5a))
+
+
+
 <a name="0.0.9"></a>
 ## [0.0.9](https://github.com/jasonChen1982/three.interaction.js/compare/v0.0.8...v0.0.9) (2018-03-13)
 
