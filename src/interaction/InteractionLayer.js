@@ -27,17 +27,15 @@ const hitTestEvent = {
  * @class
  * @extends EventDispatcher
  */
-class InteractionManager extends EventDispatcher {
+class InteractionLayer extends EventDispatcher {
   /**
    * @param {WebGLRenderer} renderer - A reference to the current renderer
-   * @param {Scene} scene - A reference to the current scene
-   * @param {Camera} camera - A reference to the current camera
    * @param {Object} [options] - The options for the manager.
    * @param {Boolean} [options.autoPreventDefault=false] - Should the manager automatically prevent default browser actions.
    * @param {Boolean} [options.autoAttach=true] - Should the manager automatically attach target element.
    * @param {Number} [options.interactionFrequency=10] - Frequency increases the interaction events will be checked.
    */
-  constructor(renderer, scene, camera, options) {
+  constructor(renderer, options) {
     super();
 
     options = options || {};
@@ -52,16 +50,23 @@ class InteractionManager extends EventDispatcher {
     /**
      * The renderer this interaction manager works for.
      *
+     * @member {Layer}
+     */
+    this.layer = null;
+
+    /**
+     * The renderer this interaction manager works for.
+     *
      * @member {Scene}
      */
-    this.scene = scene;
+    // this.scene = scene;
 
     /**
      * The renderer this interaction manager works for.
      *
      * @member {Camera}
      */
-    this.camera = camera;
+    // this.camera = camera;
 
     /**
      * Should default browser actions automatically be prevented.
@@ -272,7 +277,7 @@ class InteractionManager extends EventDispatcher {
      * Fired when a pointer device button (usually a mouse left-button) is pressed on the display
      * object.
      *
-     * @event InteractionManager#mousedown
+     * @event InteractionLayer#mousedown
      * @param {InteractionEvent} event - Interaction event
      */
 
@@ -280,7 +285,7 @@ class InteractionManager extends EventDispatcher {
      * Fired when a pointer device secondary button (usually a mouse right-button) is pressed
      * on the display object.
      *
-     * @event InteractionManager#rightdown
+     * @event InteractionLayer#rightdown
      * @param {InteractionEvent} event - Interaction event
      */
 
@@ -288,7 +293,7 @@ class InteractionManager extends EventDispatcher {
      * Fired when a pointer device button (usually a mouse left-button) is released over the display
      * object.
      *
-     * @event InteractionManager#mouseup
+     * @event InteractionLayer#mouseup
      * @param {InteractionEvent} event - Interaction event
      */
 
@@ -296,7 +301,7 @@ class InteractionManager extends EventDispatcher {
      * Fired when a pointer device secondary button (usually a mouse right-button) is released
      * over the display object.
      *
-     * @event InteractionManager#rightup
+     * @event InteractionLayer#rightup
      * @param {InteractionEvent} event - Interaction event
      */
 
@@ -304,7 +309,7 @@ class InteractionManager extends EventDispatcher {
      * Fired when a pointer device button (usually a mouse left-button) is pressed and released on
      * the display object.
      *
-     * @event InteractionManager#click
+     * @event InteractionLayer#click
      * @param {InteractionEvent} event - Interaction event
      */
 
@@ -312,146 +317,146 @@ class InteractionManager extends EventDispatcher {
      * Fired when a pointer device secondary button (usually a mouse right-button) is pressed
      * and released on the display object.
      *
-     * @event InteractionManager#rightclick
+     * @event InteractionLayer#rightclick
      * @param {InteractionEvent} event - Interaction event
      */
 
     /**
      * Fired when a pointer device button (usually a mouse left-button) is released outside the
      * display object that initially registered a
-     * [mousedown]{@link InteractionManager#event:mousedown}.
+     * [mousedown]{@link InteractionLayer#event:mousedown}.
      *
-     * @event InteractionManager#mouseupoutside
+     * @event InteractionLayer#mouseupoutside
      * @param {InteractionEvent} event - Interaction event
      */
 
     /**
      * Fired when a pointer device secondary button (usually a mouse right-button) is released
      * outside the display object that initially registered a
-     * [rightdown]{@link InteractionManager#event:rightdown}.
+     * [rightdown]{@link InteractionLayer#event:rightdown}.
      *
-     * @event InteractionManager#rightupoutside
+     * @event InteractionLayer#rightupoutside
      * @param {InteractionEvent} event - Interaction event
      */
 
     /**
      * Fired when a pointer device (usually a mouse) is moved while over the display object
      *
-     * @event InteractionManager#mousemove
+     * @event InteractionLayer#mousemove
      * @param {InteractionEvent} event - Interaction event
      */
 
     /**
      * Fired when a pointer device (usually a mouse) is moved onto the display object
      *
-     * @event InteractionManager#mouseover
+     * @event InteractionLayer#mouseover
      * @param {InteractionEvent} event - Interaction event
      */
 
     /**
      * Fired when a pointer device (usually a mouse) is moved off the display object
      *
-     * @event InteractionManager#mouseout
+     * @event InteractionLayer#mouseout
      * @param {InteractionEvent} event - Interaction event
      */
 
     /**
      * Fired when a pointer device button is pressed on the display object.
      *
-     * @event InteractionManager#pointerdown
+     * @event InteractionLayer#pointerdown
      * @param {InteractionEvent} event - Interaction event
      */
 
     /**
      * Fired when a pointer device button is released over the display object.
      *
-     * @event InteractionManager#pointerup
+     * @event InteractionLayer#pointerup
      * @param {InteractionEvent} event - Interaction event
      */
 
     /**
      * Fired when the operating system cancels a pointer event
      *
-     * @event InteractionManager#pointercancel
+     * @event InteractionLayer#pointercancel
      * @param {InteractionEvent} event - Interaction event
      */
 
     /**
      * Fired when a pointer device button is pressed and released on the display object.
      *
-     * @event InteractionManager#pointertap
+     * @event InteractionLayer#pointertap
      * @param {InteractionEvent} event - Interaction event
      */
 
     /**
      * Fired when a pointer device button is released outside the display object that initially
-     * registered a [pointerdown]{@link InteractionManager#event:pointerdown}.
+     * registered a [pointerdown]{@link InteractionLayer#event:pointerdown}.
      *
-     * @event InteractionManager#pointerupoutside
+     * @event InteractionLayer#pointerupoutside
      * @param {InteractionEvent} event - Interaction event
      */
 
     /**
      * Fired when a pointer device is moved while over the display object
      *
-     * @event InteractionManager#pointermove
+     * @event InteractionLayer#pointermove
      * @param {InteractionEvent} event - Interaction event
      */
 
     /**
      * Fired when a pointer device is moved onto the display object
      *
-     * @event InteractionManager#pointerover
+     * @event InteractionLayer#pointerover
      * @param {InteractionEvent} event - Interaction event
      */
 
     /**
      * Fired when a pointer device is moved off the display object
      *
-     * @event InteractionManager#pointerout
+     * @event InteractionLayer#pointerout
      * @param {InteractionEvent} event - Interaction event
      */
 
     /**
      * Fired when a touch point is placed on the display object.
      *
-     * @event InteractionManager#touchstart
+     * @event InteractionLayer#touchstart
      * @param {InteractionEvent} event - Interaction event
      */
 
     /**
      * Fired when a touch point is removed from the display object.
      *
-     * @event InteractionManager#touchend
+     * @event InteractionLayer#touchend
      * @param {InteractionEvent} event - Interaction event
      */
 
     /**
      * Fired when the operating system cancels a touch
      *
-     * @event InteractionManager#touchcancel
+     * @event InteractionLayer#touchcancel
      * @param {InteractionEvent} event - Interaction event
      */
 
     /**
      * Fired when a touch point is placed and removed from the display object.
      *
-     * @event InteractionManager#tap
+     * @event InteractionLayer#tap
      * @param {InteractionEvent} event - Interaction event
      */
 
     /**
      * Fired when a touch point is removed outside of the display object that initially
-     * registered a [touchstart]{@link InteractionManager#event:touchstart}.
+     * registered a [touchstart]{@link InteractionLayer#event:touchstart}.
      *
-     * @event InteractionManager#touchendoutside
+     * @event InteractionLayer#touchendoutside
      * @param {InteractionEvent} event - Interaction event
      */
 
     /**
      * Fired when a touch point is moved along the display object.
      *
-     * @event InteractionManager#touchmove
+     * @event InteractionLayer#touchmove
      * @param {InteractionEvent} event - Interaction event
      */
 
@@ -663,6 +668,21 @@ class InteractionManager extends EventDispatcher {
   }
 
   /**
+   * @return {boolean}
+   */
+  isAble() {
+    return this.layer && this.layer.interactive;
+  }
+
+  /**
+   * set layer
+   * @param {Layer} layer layer
+   */
+  setLayer(layer) {
+    this.layer = layer;
+  }
+
+  /**
    * Hit tests a point against the display tree, returning the first interactive object that is hit.
    *
    * @param {Point} globalPoint - A point to hit test with, in global space.
@@ -671,13 +691,14 @@ class InteractionManager extends EventDispatcher {
    * @return {Object3D} The hit display object, if any.
    */
   hitTest(globalPoint, root) {
+    if (!this.isAble()) return null;
     // clear the target for our hit test
     hitTestEvent.target = null;
     // assign the global point
     hitTestEvent.data.global = globalPoint;
     // ensure safety of the root
     if (!root) {
-      root = this.scene;
+      root = this.layer.scene;
     }
     // run the hit test
     this.processInteractive(hitTestEvent, root, null, true);
@@ -812,6 +833,7 @@ class InteractionManager extends EventDispatcher {
    * @param {number} deltaTime - time delta since last tick
    */
   update({ snippet }) {
+    if (!this.isAble()) return;
     this._deltaTime += snippet;
 
     if (this._deltaTime < this.interactionFrequency) {
@@ -850,7 +872,7 @@ class InteractionManager extends EventDispatcher {
 
           this.processInteractive(
             interactionEvent,
-            this.scene,
+            this.layer.scene,
             this.processPointerOverOut,
             true
           );
@@ -1034,6 +1056,7 @@ class InteractionManager extends EventDispatcher {
    * @param {MouseEvent} originalEvent - The DOM event of a click being pressed down
    */
   onClick(originalEvent) {
+    if (!this.isAble()) return;
     if (originalEvent.type !== 'click') return;
 
     const events = this.normalizeToPointerData(originalEvent);
@@ -1048,7 +1071,7 @@ class InteractionManager extends EventDispatcher {
 
     interactionEvent.data.originalEvent = originalEvent;
 
-    this.processInteractive(interactionEvent, this.scene, this.processClick, true);
+    this.processInteractive(interactionEvent, this.layer.scene, this.processClick, true);
 
     this.emit('click', interactionEvent);
   }
@@ -1074,6 +1097,7 @@ class InteractionManager extends EventDispatcher {
    * @param {PointerEvent} originalEvent - The DOM event of a pointer button being pressed down
    */
   onPointerDown(originalEvent) {
+    if (!this.isAble()) return;
     // if we support touch events, then only use those for touch events, not pointer events
     if (this.supportsTouchEvents && originalEvent.pointerType === 'touch') return;
 
@@ -1102,7 +1126,7 @@ class InteractionManager extends EventDispatcher {
 
       interactionEvent.data.originalEvent = originalEvent;
 
-      this.processInteractive(interactionEvent, this.scene, this.processPointerDown, true);
+      this.processInteractive(interactionEvent, this.layer.scene, this.processPointerDown, true);
 
       this.emit('pointerdown', interactionEvent);
       if (event.pointerType === 'touch') {
@@ -1177,7 +1201,7 @@ class InteractionManager extends EventDispatcher {
       interactionEvent.data.originalEvent = originalEvent;
 
       // perform hit testing for events targeting our canvas or cancel events
-      this.processInteractive(interactionEvent, this.scene, func, cancelled || !eventAppend);
+      this.processInteractive(interactionEvent, this.layer.scene, func, cancelled || !eventAppend);
 
       this.emit(cancelled ? 'pointercancel' : `pointerup${eventAppend}`, interactionEvent);
 
@@ -1199,6 +1223,7 @@ class InteractionManager extends EventDispatcher {
    * @param {PointerEvent} event - The DOM event of a pointer button being released
    */
   onPointerCancel(event) {
+    if (!this.isAble()) return;
     // if we support touch events, then only use those for touch events, not pointer events
     if (this.supportsTouchEvents && event.pointerType === 'touch') return;
 
@@ -1234,6 +1259,7 @@ class InteractionManager extends EventDispatcher {
    * @param {PointerEvent} event - The DOM event of a pointer button being released
    */
   onPointerUp(event) {
+    if (!this.isAble()) return;
     // if we support touch events, then only use those for touch events, not pointer events
     if (this.supportsTouchEvents && event.pointerType === 'touch') return;
 
@@ -1322,6 +1348,7 @@ class InteractionManager extends EventDispatcher {
    * @param {PointerEvent} originalEvent - The DOM event of a pointer moving
    */
   onPointerMove(originalEvent) {
+    if (!this.isAble()) return;
     // if we support touch events, then only use those for touch events, not pointer events
     if (this.supportsTouchEvents && originalEvent.pointerType === 'touch') return;
 
@@ -1348,7 +1375,7 @@ class InteractionManager extends EventDispatcher {
 
       this.processInteractive(
         interactionEvent,
-        this.scene,
+        this.layer.scene,
         this.processPointerMove,
         interactive
       );
@@ -1397,6 +1424,7 @@ class InteractionManager extends EventDispatcher {
    * @param {PointerEvent} originalEvent - The DOM event of a pointer being moved out
    */
   onPointerOut(originalEvent) {
+    if (!this.isAble()) return;
     // if we support touch events, then only use those for touch events, not pointer events
     if (this.supportsTouchEvents && originalEvent.pointerType === 'touch') return;
 
@@ -1416,7 +1444,7 @@ class InteractionManager extends EventDispatcher {
 
     interactionEvent.data.originalEvent = event;
 
-    this.processInteractive(interactionEvent, this.scene, this.processPointerOverOut, false);
+    this.processInteractive(interactionEvent, this.layer.scene, this.processPointerOverOut, false);
 
     this.emit('pointerout', interactionEvent);
     if (event.pointerType === 'mouse' || event.pointerType === 'pen') {
@@ -1486,6 +1514,7 @@ class InteractionManager extends EventDispatcher {
    * @param {PointerEvent} originalEvent - The DOM event of a pointer button being moved into the renderer view
    */
   onPointerOver(originalEvent) {
+    if (!this.isAble()) return;
     const events = this.normalizeToPointerData(originalEvent);
 
     // Only mouse and pointer can call onPointerOver, so events will always be length 1
@@ -1596,7 +1625,7 @@ class InteractionManager extends EventDispatcher {
 
     this.mapPositionToPoint(interactionData.global, pointerEvent.clientX, pointerEvent.clientY);
 
-    this.raycaster.setFromCamera(interactionData.global, this.camera);
+    if (this.layer && this.layer.interactive) this.raycaster.setFromCamera(interactionData.global, this.layer.camera);
 
     // Not really sure why this is happening, but it's how a previous version handled things TODO: there should be remove
     if (pointerEvent.pointerType === 'touch') {
@@ -1712,4 +1741,4 @@ class InteractionManager extends EventDispatcher {
   }
 }
 
-export default InteractionManager;
+export default InteractionLayer;
