@@ -1,8 +1,4 @@
-(function (global, factory) {
-	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('three')) :
-	typeof define === 'function' && define.amd ? define(['exports', 'three'], factory) :
-	(factory((global.THREE = global.THREE || {}),global.THREE));
-}(this, (function (exports,three) { 'use strict';
+import { EventDispatcher, Object3D, Raycaster, Vector2 } from 'three';
 
 /**
  * get variable type
@@ -56,9 +52,9 @@ var Utils = {
  * @param {Function} fn callback
  * @return {this} this
  */
-three.EventDispatcher.prototype.on = function (type, fn) {
+EventDispatcher.prototype.on = function (type, fn) {
   if (!Utils.isFunction(fn)) return;
-  if (this instanceof three.Object3D) this.interactive = true;
+  if (this instanceof Object3D) this.interactive = true;
   this.addEventListener(type, fn);
   return this;
 };
@@ -70,7 +66,7 @@ three.EventDispatcher.prototype.on = function (type, fn) {
  * @param {Function} fn callback, which you had bind before
  * @return {this} this
  */
-three.EventDispatcher.prototype.off = function (type, fn) {
+EventDispatcher.prototype.off = function (type, fn) {
   this.removeEventListener(type, fn);
   return this;
 };
@@ -82,7 +78,7 @@ three.EventDispatcher.prototype.off = function (type, fn) {
  * @param {Function} fn callback
  * @return {this} this
  */
-three.EventDispatcher.prototype.once = function (type, fn) {
+EventDispatcher.prototype.once = function (type, fn) {
   var _this = this;
 
   if (!Utils.isFunction(fn)) return;
@@ -100,7 +96,7 @@ three.EventDispatcher.prototype.once = function (type, fn) {
  * @param {String} type event type, evnet name
  * @return {this} this
  */
-three.EventDispatcher.prototype.emit = function (type) {
+EventDispatcher.prototype.emit = function (type) {
   if (this._listeners === undefined || Utils.isUndefined(this._listeners[type])) return;
   var cbs = this._listeners[type] || [];
   var cache = cbs.slice(0);
@@ -118,23 +114,23 @@ three.EventDispatcher.prototype.emit = function (type) {
 /**
  * whether displayObject is interactively
  */
-three.Object3D.prototype.interactive = false;
+Object3D.prototype.interactive = false;
 
 /**
  * whether displayObject's children is interactively
  */
-three.Object3D.prototype.interactiveChildren = true;
+Object3D.prototype.interactiveChildren = true;
 
 /**
  * whether displayObject had touchstart
  * @private
  */
-three.Object3D.prototype.started = false;
+Object3D.prototype.started = false;
 
 /**
  * tracked event cache, like: touchend、mouseout、pointerout which decided by primary-event
  */
-Object.defineProperty(three.Object3D.prototype, 'trackedPointers', {
+Object.defineProperty(Object3D.prototype, 'trackedPointers', {
   get: function get() {
     if (!this._trackedPointers) this._trackedPointers = {};
     return this._trackedPointers;
@@ -147,7 +143,7 @@ Object.defineProperty(three.Object3D.prototype, 'trackedPointers', {
  * @param {Raycaster} raycaster Raycaster object, get from THREE.Raycaster
  * @return {Object|Boolean} had pass hit-test
  */
-three.Object3D.prototype.raycastTest = function (raycaster) {
+Object3D.prototype.raycastTest = function (raycaster) {
   var result = [];
   this.raycast(raycaster, result);
 
@@ -258,7 +254,7 @@ var InteractionData = function () {
      *
      * @member {Vector2}
      */
-    this.global = new three.Vector2();
+    this.global = new Vector2();
 
     /**
      * The target DisplayObject that was interacted with
@@ -930,7 +926,7 @@ var InteractionManager = function (_EventDispatcher) {
      * @private
      * @member {Raycaster}
      */
-    _this.raycaster = new three.Raycaster();
+    _this.raycaster = new Raycaster();
 
     /**
      * snippet time
@@ -2458,7 +2454,7 @@ var InteractionManager = function (_EventDispatcher) {
     }
   }]);
   return InteractionManager;
-}(three.EventDispatcher);
+}(EventDispatcher);
 
 var MOUSE_POINTER_ID$1 = 'MOUSE';
 
@@ -2720,7 +2716,7 @@ var InteractionLayer = function (_EventDispatcher) {
      * @private
      * @member {Raycaster}
      */
-    _this.raycaster = new three.Raycaster();
+    _this.raycaster = new Raycaster();
 
     /**
      * snippet time
@@ -4278,7 +4274,7 @@ var InteractionLayer = function (_EventDispatcher) {
     }
   }]);
   return InteractionLayer;
-}(three.EventDispatcher);
+}(EventDispatcher);
 
 (function () {
   var lastTime = 0;
@@ -4397,7 +4393,7 @@ var Ticker = function (_EventDispatcher) {
     }
   }]);
   return Ticker;
-}(three.EventDispatcher);
+}(EventDispatcher);
 
 /**
  * The interaction manager deals with mouse, touch and pointer events. Any DisplayObject can be interactive
@@ -4493,11 +4489,5 @@ var Interaction = function (_InteractionManager) {
   return Interaction;
 }(InteractionManager);
 
-exports.InteractionManager = InteractionManager;
-exports.InteractionLayer = InteractionLayer;
-exports.Interaction = Interaction;
-
-Object.defineProperty(exports, '__esModule', { value: true });
-
-})));
-//# sourceMappingURL=three.interaction.js.map
+export { InteractionManager, InteractionLayer, Interaction };
+//# sourceMappingURL=three.interaction.module.js.map
