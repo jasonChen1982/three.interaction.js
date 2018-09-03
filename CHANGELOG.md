@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.2.0"></a>
+# [0.2.0](https://github.com/jasonChen1982/three.interaction.js/compare/v0.1.0...v0.2.0) (2018-09-03)
+
+
+### Features
+
+* **intersects:** add intersects for event ([5be6e2b](https://github.com/jasonChen1982/three.interaction.js/commit/5be6e2b))
+
+
+
 <a name="0.1.0"></a>
 # [0.1.0](https://github.com/jasonChen1982/three.interaction.js/compare/v0.0.9...v0.1.0) (2018-08-24)
 
