@@ -12,7 +12,7 @@ export default {
     },
     {
       format: 'es',
-      file: 'esm/three.interaction.js',
+      file: 'build/three.interaction.module.js',
     },
   ],
   plugins: [

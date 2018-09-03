@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "a interaction manager, serve the three.js, help you build a interactivity 3d-scene",
   "main": "./build/three.interaction.js",
-  "module": "./esm/three.interaction.js",
+  "module": "./build/three.interaction.module.js",
   "files": [
     "CHANGELOG.md",
     "README.md",
