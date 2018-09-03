@@ -46,9 +46,9 @@ class InteractionEvent {
     /**
      * ray caster detial from 3d-mesh
      *
-     * @member {Intersect}
+     * @member {Intersects}
      */
-    this.intersect = null;
+    this.intersects = [];
   }
 
   /**
@@ -68,7 +68,7 @@ class InteractionEvent {
     this.stopped = false;
     this.currentTarget = null;
     this.target = null;
-    this.intersect = null;
+    this.intersects = [];
   }
 }
 

@@ -1027,9 +1027,7 @@ class InteractionLayer extends EventDispatcher {
       // has already been hit - but only if it was interactive, otherwise we need to keep
       // looking for an interactive child, just in case we hit one
       if (hitTest && !interactionEvent.target) {
-        const intersect = displayObject.raycastTest(this.raycaster);
-        if (intersect) {
-          interactionEvent.intersect = intersect;
+        if (interactionEvent.intersects[0] && interactionEvent.intersects[0].object === displayObject) {
           hit = true;
         }
       }
@@ -1635,6 +1633,7 @@ class InteractionLayer extends EventDispatcher {
 
     interactionData.originalEvent = pointerEvent;
     interactionEvent._reset();
+    this.raycaster.intersectObjects(this.scene.children, interactionEvent.intersects);
 
     return interactionEvent;
   }
