@@ -1604,7 +1604,7 @@ class InteractionManager extends EventDispatcher {
 
     interactionData.originalEvent = pointerEvent;
     interactionEvent._reset();
-    this.raycaster.intersectObjects(this.scene.children, interactionEvent.intersects);
+    interactionEvent.intersects = this.raycaster.intersectObjects(this.scene.children);
 
     return interactionEvent;
   }
