@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.2.1"></a>
+## [0.2.1](https://github.com/jasonChen1982/three.interaction.js/compare/v0.2.0...v0.2.1) (2018-09-04)
+
+
+### Bug Fixes
+
+* **invoke:** use three ray caster with a wrong way, my bad ([4e165a8](https://github.com/jasonChen1982/three.interaction.js/commit/4e165a8))
+
+
+
 <a name="0.2.0"></a>
 # [0.2.0](https://github.com/jasonChen1982/three.interaction.js/compare/v0.1.0...v0.2.0) (2018-09-03)
 
