@@ -2341,7 +2341,7 @@ var InteractionManager = function (_EventDispatcher) {
 
       interactionData.originalEvent = pointerEvent;
       interactionEvent._reset();
-      this.raycaster.intersectObjects(this.scene.children, interactionEvent.intersects);
+      interactionEvent.intersects = this.raycaster.intersectObjects(this.scene.children);
 
       return interactionEvent;
     }
@@ -4161,7 +4161,7 @@ var InteractionLayer = function (_EventDispatcher) {
 
       interactionData.originalEvent = pointerEvent;
       interactionEvent._reset();
-      this.raycaster.intersectObjects(this.scene.children, interactionEvent.intersects);
+      interactionEvent.intersects = this.raycaster.intersectObjects(this.scene.children);
 
       return interactionEvent;
     }
