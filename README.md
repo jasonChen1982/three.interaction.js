@@ -61,8 +61,10 @@ scene.on('touchmove', ev => {
 [documentation][documentation]
 
 ## Examples
-[examples][examples]
+[examples cube][examples]
+[examples cube overlap][examples-overlap]
 
 
 [documentation]:https://jasonchen1982.github.io/three.interaction.js/docs/ "three.interaction documention page"
 [examples]:https://jasonchen1982.github.io/three.interaction.js/examples/interaction/ "three.interaction examples page"
+[examples-overlap]:https://jasonchen1982.github.io/three.interaction.js/examples/interaction-overlap/ "three.interaction examples page with overlap"
