@@ -101,6 +101,7 @@
         cube.cursor = 'pointer';
         cube.position.y = -2;
         cube.position.z = -10;
+        cube.name = 'cube';
         scene.add(cube);
 
         var ambient = new THREE.AmbientLight( 0x666666 );
@@ -112,56 +113,56 @@
         var box = document.querySelector('#event-box');
         cube.on('pointerdown', function(ev) {
           blink(document.querySelector('#pointerdown'));
-          console.log('pointerdown');
+          console.log('%c' + cube.name + '%c => pointerdown', 'color: #fff; background: #41b882; padding: 3px 4px;', 'color: #41b882; background: #fff;');
         });
         cube.on('pointermove', function(ev) {
           blink(document.querySelector('#pointermove'));
-          console.log('pointermove');
+          console.log('%c' + cube.name + '%c => pointermove', 'color: #fff; background: #41b882; padding: 3px 4px;', 'color: #41b882; background: #fff;');
         });
         cube.on('pointerup', function(ev) {
           blink(document.querySelector('#pointerup'));
-          console.log('pointerup');
+          console.log('%c' + cube.name + '%c => pointerup', 'color: #fff; background: #41b882; padding: 3px 4px;', 'color: #41b882; background: #fff;');
         });
         cube.on('pointerout', function(ev) {
           blink(document.querySelector('#pointerout'));
-          console.log('pointerout');
+          console.log('%c' + cube.name + '%c => pointerout', 'color: #fff; background: #41b882; padding: 3px 4px;', 'color: #41b882; background: #fff;');
         });
         cube.on('click', function(ev) {
           blink(document.querySelector('#click'));
-          console.log('click');
+          console.log('%c' + cube.name + '%c => click', 'color: #fff; background: #41b882; padding: 3px 4px;', 'color: #41b882; background: #fff;');
         });
         cube.on('touchstart', function(ev) {
           blink(document.querySelector('#touchstart'));
-          console.log('touchstart');
+          console.log('%c' + cube.name + '%c => touchstart', 'color: #fff; background: #41b882; padding: 3px 4px;', 'color: #41b882; background: #fff;');
         });
         cube.on('touchmove', function(ev) {
           blink(document.querySelector('#touchmove'));
           ev.data.originalEvent.preventDefault();
-          console.log('touchmove');
+          console.log('%c' + cube.name + '%c => touchmove', 'color: #fff; background: #41b882; padding: 3px 4px;', 'color: #41b882; background: #fff;');
         });
         cube.on('touchend', function(ev) {
           blink(document.querySelector('#touchend'));
-          console.log('touchend');
+          console.log('%c' + cube.name + '%c => touchend', 'color: #fff; background: #41b882; padding: 3px 4px;', 'color: #41b882; background: #fff;');
         });
         cube.on('mousemove', function(ev) {
           blink(document.querySelector('#mousemove'));
-          console.log('mousemove');
+          console.log('%c' + cube.name + '%c => mousemove', 'color: #fff; background: #41b882; padding: 3px 4px;', 'color: #41b882; background: #fff;');
         });
         cube.on('mousedown', function(ev) {
           blink(document.querySelector('#mousedown'));
-          console.log('mousedown');
+          console.log('%c' + cube.name + '%c => mousedown', 'color: #fff; background: #41b882; padding: 3px 4px;', 'color: #41b882; background: #fff;');
         });
         cube.on('mouseout', function(ev) {
           blink(document.querySelector('#mouseout'));
-          console.log('mouseout');
+          console.log('%c' + cube.name + '%c => mouseout', 'color: #fff; background: #41b882; padding: 3px 4px;', 'color: #41b882; background: #fff;');
         });
         cube.on('mouseover', function(ev) {
           blink(document.querySelector('#mouseover'));
-          console.log('mouseover');
+          console.log('%c' + cube.name + '%c => mouseover', 'color: #fff; background: #41b882; padding: 3px 4px;', 'color: #41b882; background: #fff;');
         });
         cube.on('mouseup', function(ev) {
           blink(document.querySelector('#mouseup'));
-          console.log('mouseup');
+          console.log('%c' + cube.name + '%c => mouseup', 'color: #fff; background: #41b882; padding: 3px 4px;', 'color: #41b882; background: #fff;');
         });
 
 

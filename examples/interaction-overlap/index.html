@@ -1,0 +1,208 @@
+<html>
+
+    <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+      <meta http-equiv="Cache-Control" content="no-cache">
+      <meta name="viewport" content="initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
+      <title>interaction many event support</title>
+      <style>
+        * {
+          margin: 0;
+        }
+
+        body {
+          position: relative;
+          user-select: none;
+          background: #41b882;
+        }
+        .title {
+          color: #fff;
+          padding-bottom: 20px;
+        }
+        #event-box {
+          position: absolute;
+          width: 100%;
+          max-height: 45%;
+          padding: 20px 50px;
+          background: #35485d;
+          text-align: center;
+          box-sizing: border-box;
+          overflow-y: auto;
+        }
+        .marker {
+          display: inline-block;
+          height: 30px;
+          margin: 5px 10px;
+          padding: 0 10px;
+          line-height: 28px;
+          color: #41b882;
+          font-weight: 400;
+          border: 1px solid #41b882;
+          border-radius: 15px;
+          transition: 0.1s all ease;
+        }
+        .marker.active {
+          background: #41b882;
+          color: #ffffff;
+        }
+        @media only screen and (max-width: 600px) {
+          #event-box {
+            padding: 20px 0;
+          }
+        }
+      </style>
+      <!-- <script src="//res.wx.qq.com/mmbizwap/zh_CN/htmledition/js/vconsole/3.0.0/vconsole.min.js"></script>
+      <script>
+        new VConsole();
+      </script> -->
+    </head>
+
+    <body>
+      <div id="event-box">
+        <h3 class="title">Interaction with that cube</h3>
+        <span class="marker" id="pointerdown">pointerdown</span>
+        <span class="marker" id="pointermove">pointermove</span>
+        <span class="marker" id="pointerup">pointerup</span>
+        <span class="marker" id="pointerout">pointerout</span>
+        <span class="marker" id="click">click</span>
+        <span class="marker" id="touchstart">touchstart</span>
+        <span class="marker" id="touchmove">touchmove</span>
+        <span class="marker" id="touchend">touchend</span>
+        <span class="marker" id="mousedown">mousedown</span>
+        <span class="marker" id="mousemove">mousemove</span>
+        <span class="marker" id="mouseout">mouseout</span>
+        <span class="marker" id="mouseover">mouseover</span>
+        <span class="marker" id="mouseup">mouseup</span>
+      </div>
+      <canvas id="webgl"></canvas>
+      <script src="../libs/three/build/three.min.js"></script>
+      <script src="../../build/three.interaction.js"></script>
+      <script>
+        window.addEventListener('resize', onWindowResize, false);
+
+        var WIDTH = window.innerWidth;
+        var HEIGHT = window.innerHeight;
+        var camera = new THREE.PerspectiveCamera(60, WIDTH / HEIGHT, 0.01, 100);
+        var renderer = new THREE.WebGLRenderer({
+          canvas: document.querySelector('#webgl'),
+          antialias: true,
+        });
+        renderer.setClearColor(0x41b882);
+        renderer.setSize(WIDTH, HEIGHT);
+        var scene = new THREE.Scene();
+        var group = new THREE.Group();
+
+
+        var interaction = new THREE.Interaction(renderer, scene, camera);
+
+        var cube1 = new THREE.Mesh(
+          new THREE.BoxGeometry(3, 3, 3),
+          new THREE.MeshPhongMaterial({ color: 0xffffff })
+        );
+        cube1.cursor = 'pointer';
+        cube1.position.y = -2;
+        cube1.position.z = -10;
+        cube1.name = 'front cube';
+        var cube2 = new THREE.Mesh(
+          new THREE.BoxGeometry(3, 3, 3),
+          new THREE.MeshPhongMaterial({ color: 0xffffff })
+        );
+        cube2.cursor = 'pointer';
+        cube2.position.y = -1;
+        cube2.position.z = -16;
+        cube2.name = 'behind cube';
+        group.add(cube1, cube2);
+        scene.add(group);
+
+        var ambient = new THREE.AmbientLight( 0x666666 );
+        scene.add( ambient );
+        var light = new THREE.PointLight(0xffffff);
+        light.position.set(20, 50, 10);
+        scene.add(light);
+
+        bindEvent(cube1);
+        bindEvent(cube2);
+
+        function bindEvent(cube) {
+          cube.on('pointerdown', function(ev) {
+            blink(document.querySelector('#pointerdown'));
+            console.log('%c' + cube.name + '%c => pointerdown', 'color: #fff; background: #41b882; padding: 3px 4px;', 'color: #41b882; background: #fff;');
+          });
+          cube.on('pointermove', function(ev) {
+            blink(document.querySelector('#pointermove'));
+            console.log('%c' + cube.name + '%c => pointermove', 'color: #fff; background: #41b882; padding: 3px 4px;', 'color: #41b882; background: #fff;');
+          });
+          cube.on('pointerup', function(ev) {
+            blink(document.querySelector('#pointerup'));
+            console.log('%c' + cube.name + '%c => pointerup', 'color: #fff; background: #41b882; padding: 3px 4px;', 'color: #41b882; background: #fff;');
+          });
+          cube.on('pointerout', function(ev) {
+            blink(document.querySelector('#pointerout'));
+            console.log('%c' + cube.name + '%c => pointerout', 'color: #fff; background: #41b882; padding: 3px 4px;', 'color: #41b882; background: #fff;');
+          });
+          cube.on('click', function(ev) {
+            blink(document.querySelector('#click'));
+            console.log('%c' + cube.name + '%c => click', 'color: #fff; background: #41b882; padding: 3px 4px;', 'color: #41b882; background: #fff;');
+          });
+          cube.on('touchstart', function(ev) {
+            blink(document.querySelector('#touchstart'));
+            console.log('%c' + cube.name + '%c => touchstart', 'color: #fff; background: #41b882; padding: 3px 4px;', 'color: #41b882; background: #fff;');
+          });
+          cube.on('touchmove', function(ev) {
+            blink(document.querySelector('#touchmove'));
+            ev.data.originalEvent.preventDefault();
+            console.log('%c' + cube.name + '%c => touchmove', 'color: #fff; background: #41b882; padding: 3px 4px;', 'color: #41b882; background: #fff;');
+          });
+          cube.on('touchend', function(ev) {
+            blink(document.querySelector('#touchend'));
+            console.log('%c' + cube.name + '%c => touchend', 'color: #fff; background: #41b882; padding: 3px 4px;', 'color: #41b882; background: #fff;');
+          });
+          cube.on('mousemove', function(ev) {
+            blink(document.querySelector('#mousemove'));
+            console.log('%c' + cube.name + '%c => mousemove', 'color: #fff; background: #41b882; padding: 3px 4px;', 'color: #41b882; background: #fff;');
+          });
+          cube.on('mousedown', function(ev) {
+            blink(document.querySelector('#mousedown'));
+            console.log('%c' + cube.name + '%c => mousedown', 'color: #fff; background: #41b882; padding: 3px 4px;', 'color: #41b882; background: #fff;');
+          });
+          cube.on('mouseout', function(ev) {
+            blink(document.querySelector('#mouseout'));
+            console.log('%c' + cube.name + '%c => mouseout', 'color: #fff; background: #41b882; padding: 3px 4px;', 'color: #41b882; background: #fff;');
+          });
+          cube.on('mouseover', function(ev) {
+            blink(document.querySelector('#mouseover'));
+            console.log('%c' + cube.name + '%c => mouseover', 'color: #fff; background: #41b882; padding: 3px 4px;', 'color: #41b882; background: #fff;');
+          });
+          cube.on('mouseup', function(ev) {
+            blink(document.querySelector('#mouseup'));
+            console.log('%c' + cube.name + '%c => mouseup', 'color: #fff; background: #41b882; padding: 3px 4px;', 'color: #41b882; background: #fff;');
+          });
+        }
+
+
+        function render() {
+          cube1.rotation.y += 0.01;
+          cube2.rotation.y += 0.01;
+          renderer.render(scene, camera);
+          requestAnimationFrame(render);
+        }
+        render();
+
+        function onWindowResize() {
+          camera.aspect = window.innerWidth / window.innerHeight;
+          camera.updateProjectionMatrix();
+          renderer.setSize(window.innerWidth, window.innerHeight);
+        }
+
+        function blink(dom) {
+          clearTimeout(dom.timer);
+          dom.className = 'marker active';
+          dom.timer = setTimeout(function(){
+            dom.className = 'marker';
+          }, 300);
+        }
+      </script>
+
+    </body>
+
+    </html>
