@@ -1633,7 +1633,7 @@ class InteractionLayer extends EventDispatcher {
 
     interactionData.originalEvent = pointerEvent;
     interactionEvent._reset();
-    interactionEvent.intersects = this.raycaster.intersectObjects(this.scene.children);
+    interactionEvent.intersects = this.raycaster.intersectObjects(this.scene.children, true);
 
     return interactionEvent;
   }
