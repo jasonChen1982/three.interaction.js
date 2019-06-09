@@ -1,4 +1,8 @@
 (function() {
+  if (typeof window === 'undefined') {
+    return
+  }
+
   let lastTime = 0;
   let vendors = ['ms', 'moz', 'webkit', 'o'];
   for (let x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
