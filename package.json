@@ -47,7 +47,7 @@
   },
   "homepage": "https://github.com/jasonChen1982/three.interaction.js#readme",
   "peerDependencies": {
-    "three": "^0.89.0"
+    "three": "^0.110.0"
   },
   "devDependencies": {
     "@pixi/jsdoc-template": "^2.2.0",
@@ -69,7 +69,6 @@
     "rollup": "^0.52.0",
     "rollup-plugin-babel": "^3.0.2",
     "standard-version": "^4.2.0",
-    "three": "^0.91.0",
     "validate-commit-msg": "^2.14.0"
   },
   "config": {
