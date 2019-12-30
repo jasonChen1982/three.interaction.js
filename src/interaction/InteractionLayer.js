@@ -186,6 +186,9 @@ class InteractionLayer extends EventDispatcher {
     this.onClick = this.onClick.bind(this);
     this.processClick = this.processClick.bind(this);
 
+    this.onContextmenu = this.onContextmenu.bind(this);
+    this.processContextmenu = this.processContextmenu.bind(this);
+
     /**
      * @private
      * @member {Function}
@@ -735,6 +738,7 @@ class InteractionLayer extends EventDispatcher {
     this.emit('addevents');
 
     this.interactionDOMElement.addEventListener('click', this.onClick, true);
+    this.interactionDOMElement.addEventListener('contextmenu', this.onContextmenu, true);
 
     if (window.navigator.msPointerEnabled) {
       this.interactionDOMElement.style['-ms-content-zooming'] = 'none';
@@ -791,6 +795,7 @@ class InteractionLayer extends EventDispatcher {
     this.emit('removeevents');
 
     this.interactionDOMElement.removeEventListener('click', this.onClick, true);
+    this.interactionDOMElement.removeEventListener('contextmenu', this.onContextmenu, true);
 
     if (window.navigator.msPointerEnabled) {
       this.interactionDOMElement.style['-ms-content-zooming'] = '';
@@ -824,6 +829,10 @@ class InteractionLayer extends EventDispatcher {
     this.interactionDOMElement = null;
 
     this.eventsAdded = false;
+  }
+
+  removeAllListeners() {
+
   }
 
   /**
@@ -865,16 +874,16 @@ class InteractionLayer extends EventDispatcher {
 
         if (interactionData.originalEvent && interactionData.pointerType !== 'touch') {
           const interactionEvent = this.configureInteractionEventForDOMEvent(
-            this.eventData,
-            interactionData.originalEvent,
-            interactionData
+              this.eventData,
+              interactionData.originalEvent,
+              interactionData
           );
 
           this.processInteractive(
-            interactionEvent,
-            this.layer.scene,
-            this.processPointerOverOut,
-            true
+              interactionEvent,
+              this.layer.scene,
+              this.processPointerOverOut,
+              true
           );
         }
       }
@@ -1075,6 +1084,33 @@ class InteractionLayer extends EventDispatcher {
   }
 
   /**
+   * Is called when the contextmenu is pressed down on the renderer element
+   *
+   * @private
+   * @param {MouseEvent} originalEvent - The DOM event of a click being pressed down
+   */
+  onContextmenu(originalEvent) {
+    if (!this.isAble()) return;
+    if (originalEvent.type !== 'contextmenu') return;
+
+    const events = this.normalizeToPointerData(originalEvent);
+
+    if (this.autoPreventDefault && events[0].isNormalized) {
+      originalEvent.preventDefault();
+    }
+
+    const interactionData = this.getInteractionDataForPointerId(events[0]);
+
+    const interactionEvent = this.configureInteractionEventForDOMEvent(this.eventData, events[0], interactionData);
+
+    interactionEvent.data.originalEvent = originalEvent;
+
+    this.processInteractive(interactionEvent, this.layer.scene, this.processContextmenu, true);
+
+    this.emit('contextmenu', interactionEvent);
+  }
+
+  /**
    * Processes the result of the click check and dispatches the event if need be
    *
    * @private
@@ -1085,6 +1121,20 @@ class InteractionLayer extends EventDispatcher {
   processClick(interactionEvent, displayObject, hit) {
     if (hit) {
       this.triggerEvent(displayObject, 'click', interactionEvent);
+    }
+  }
+
+  /**
+   * Processes the result of the contextmenu check and dispatches the event if need be
+   *
+   * @private
+   * @param {InteractionEvent} interactionEvent - The interaction event wrapping the DOM event
+   * @param {Object3D} displayObject - The display object that was tested
+   * @param {boolean} hit - the result of the hit test on the display object
+   */
+  processContextmenu(interactionEvent, displayObject, hit) {
+    if (hit) {
+      this.triggerEvent(displayObject, 'contextmenu', interactionEvent);
     }
   }
 
@@ -1372,10 +1422,10 @@ class InteractionLayer extends EventDispatcher {
       const interactive = event.pointerType === 'touch' ? this.moveWhenInside : true;
 
       this.processInteractive(
-        interactionEvent,
-        this.layer.scene,
-        this.processPointerMove,
-        interactive
+          interactionEvent,
+          this.layer.scene,
+          this.processPointerMove,
+          interactive
       );
       this.emit('pointermove', interactionEvent);
       if (event.pointerType === 'touch') this.emit('touchmove', interactionEvent);
@@ -1633,7 +1683,7 @@ class InteractionLayer extends EventDispatcher {
 
     interactionData.originalEvent = pointerEvent;
     interactionEvent._reset();
-    interactionEvent.intersects = this.raycaster.intersectObjects(this.scene.children, true);
+    interactionEvent.intersects = this.raycaster.intersectObjects(this.scene.children, true).filter(d => !d.object.silent);
 
     return interactionEvent;
   }

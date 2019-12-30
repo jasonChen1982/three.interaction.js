@@ -73,6 +73,7 @@
         <span class="marker" id="mouseout">mouseout</span>
         <span class="marker" id="mouseover">mouseover</span>
         <span class="marker" id="mouseup">mouseup</span>
+		<span class="marker" id="contextmenu">contextmenu</span>
       </div>
       <canvas id="webgl"></canvas>
       <script src="../libs/three/build/three.min.js"></script>
@@ -163,6 +164,10 @@
         cube.on('mouseup', function(ev) {
           blink(document.querySelector('#mouseup'));
           console.log('%c' + cube.name + '%c => mouseup', 'color: #fff; background: #41b882; padding: 3px 4px;', 'color: #41b882; background: #fff;');
+        });
+		cube.on('contextmenu', function(ev) {
+          blink(document.querySelector('#contextmenu'));
+          console.log('%c' + cube.name + '%c => contextmenu', 'color: #fff; background: #41b882; padding: 3px 4px;', 'color: #41b882; background: #fff;');
         });
 
 

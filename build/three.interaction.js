@@ -859,6 +859,13 @@ var InteractionManager = function (_EventDispatcher) {
      * @private
      * @member {Function}
      */
+    _this.onContextmenu = _this.onContextmenu.bind(_this);
+    _this.processContextmenu = _this.processContextmenu.bind(_this);
+
+    /**
+     * @private
+     * @member {Function}
+     */
     _this.onPointerUp = _this.onPointerUp.bind(_this);
     _this.processPointerUp = _this.processPointerUp.bind(_this);
 
@@ -1399,6 +1406,7 @@ var InteractionManager = function (_EventDispatcher) {
       this.emit('addevents');
 
       this.interactionDOMElement.addEventListener('click', this.onClick, true);
+      this.interactionDOMElement.addEventListener('contextmenu', this.onContextmenu, true);
 
       if (window.navigator.msPointerEnabled) {
         this.interactionDOMElement.style['-ms-content-zooming'] = 'none';
@@ -1458,6 +1466,7 @@ var InteractionManager = function (_EventDispatcher) {
       this.emit('removeevents');
 
       this.interactionDOMElement.removeEventListener('click', this.onClick, true);
+      this.interactionDOMElement.removeEventListener('contextmenu', this.onContextmenu, true);
 
       if (window.navigator.msPointerEnabled) {
         this.interactionDOMElement.style['-ms-content-zooming'] = '';
@@ -1500,6 +1509,11 @@ var InteractionManager = function (_EventDispatcher) {
      * @param {number} deltaTime - time delta since last tick
      */
 
+  }, {
+    key: 'removeAllListeners',
+    value: function removeAllListeners () {
+
+    }
   }, {
     key: 'update',
     value: function update(_ref) {
@@ -1770,6 +1784,34 @@ var InteractionManager = function (_EventDispatcher) {
      * @param {PointerEvent} originalEvent - The DOM event of a pointer button being pressed down
      */
 
+  }, {
+    key: 'onContextmenu',
+    value: function onContextmenu(originalEvent) {
+      if (originalEvent.type !== 'contextmenu') return;
+
+      var events = this.normalizeToPointerData(originalEvent);
+
+      if (this.autoPreventDefault && events[0].isNormalized) {
+        originalEvent.preventDefault();
+      }
+
+      var interactionData = this.getInteractionDataForPointerId(events[0]);
+
+      var interactionEvent = this.configureInteractionEventForDOMEvent(this.eventData, events[0], interactionData);
+
+      interactionEvent.data.originalEvent = originalEvent;
+
+      this.processInteractive(interactionEvent, this.scene, this.processContextmenu, true);
+
+      this.emit('contextmenu', interactionEvent);
+    }
+  }, {
+    key: 'processContextmenu',
+    value: function processContextmenu(interactionEvent, displayObject, hit) {
+      if (hit) {
+        this.triggerEvent(displayObject, 'contextmenu', interactionEvent);
+      }
+    }
   }, {
     key: 'onPointerDown',
     value: function onPointerDown(originalEvent) {
@@ -2190,7 +2232,7 @@ var InteractionManager = function (_EventDispatcher) {
         if (isMouse && this.cursor === null) {
           this.cursor = displayObject.cursor;
         }
-      } else if (trackingData.over) {
+      } else if (!hit && trackingData.over) {
         trackingData.over = false;
         this.triggerEvent(displayObject, 'pointerout', this.eventData);
         if (isMouse) {
@@ -2345,8 +2387,7 @@ var InteractionManager = function (_EventDispatcher) {
 
       interactionData.originalEvent = pointerEvent;
       interactionEvent._reset();
-      interactionEvent.intersects = this.raycaster.intersectObjects(this.scene.children, true);
-
+      interactionEvent.intersects = this.raycaster.intersectObjects(this.scene.children, true).filter(d => !d.object.silent);;
       return interactionEvent;
     }
 
@@ -2644,6 +2685,13 @@ var InteractionLayer = function (_EventDispatcher) {
      */
     _this.onClick = _this.onClick.bind(_this);
     _this.processClick = _this.processClick.bind(_this);
+
+    /**
+     * @private
+     * @member {Function}
+     */
+    _this.onContextmenu = _this.onContextmenu.bind(_this);
+    _this.processContextmenu = _this.processContextmenu.bind(_this);
 
     /**
      * @private
@@ -3211,6 +3259,7 @@ var InteractionLayer = function (_EventDispatcher) {
       this.emit('addevents');
 
       this.interactionDOMElement.addEventListener('click', this.onClick, true);
+      this.interactionDOMElement.addEventListener('contextmenu', this.onContextmenu, true);
 
       if (window.navigator.msPointerEnabled) {
         this.interactionDOMElement.style['-ms-content-zooming'] = 'none';
@@ -3270,6 +3319,7 @@ var InteractionLayer = function (_EventDispatcher) {
       this.emit('removeevents');
 
       this.interactionDOMElement.removeEventListener('click', this.onClick, true);
+      this.interactionDOMElement.removeEventListener('contextmenu', this.onContextmenu, true);
 
       if (window.navigator.msPointerEnabled) {
         this.interactionDOMElement.style['-ms-content-zooming'] = '';
@@ -3312,6 +3362,11 @@ var InteractionLayer = function (_EventDispatcher) {
      * @param {number} deltaTime - time delta since last tick
      */
 
+  }, {
+    key: 'removeAllListeners',
+    value: function removeAllListeners() {
+
+    }
   }, {
     key: 'update',
     value: function update(_ref) {
@@ -3584,6 +3639,35 @@ var InteractionLayer = function (_EventDispatcher) {
      * @param {PointerEvent} originalEvent - The DOM event of a pointer button being pressed down
      */
 
+  }, {
+    key: 'onContextmenu',
+    value: function onContextmenu(originalEvent) {
+      if (!this.isAble()) return;
+      if (originalEvent.type !== 'contextmenu') return;
+
+      var events = this.normalizeToPointerData(originalEvent);
+
+      if (this.autoPreventDefault && events[0].isNormalized) {
+        originalEvent.preventDefault();
+      }
+
+      var interactionData = this.getInteractionDataForPointerId(events[0]);
+
+      var interactionEvent = this.configureInteractionEventForDOMEvent(this.eventData, events[0], interactionData);
+
+      interactionEvent.data.originalEvent = originalEvent;
+
+      this.processInteractive(interactionEvent, this.layer.scene, this.processContextmenu, true);
+
+      this.emit('contextmenu', interactionEvent);
+    }
+  }, {
+    key: 'processContextmenu',
+    value: function processContextmenu(interactionEvent, displayObject, hit) {
+      if (hit) {
+        this.triggerEvent(displayObject, 'contextmenu', interactionEvent);
+      }
+    }
   }, {
     key: 'onPointerDown',
     value: function onPointerDown(originalEvent) {
@@ -4009,7 +4093,7 @@ var InteractionLayer = function (_EventDispatcher) {
         if (isMouse && this.cursor === null) {
           this.cursor = displayObject.cursor;
         }
-      } else if (trackingData.over) {
+      } else if (!hit && trackingData.over) {
         trackingData.over = false;
         this.triggerEvent(displayObject, 'pointerout', this.eventData);
         if (isMouse) {
@@ -4165,7 +4249,7 @@ var InteractionLayer = function (_EventDispatcher) {
 
       interactionData.originalEvent = pointerEvent;
       interactionEvent._reset();
-      interactionEvent.intersects = this.raycaster.intersectObjects(this.scene.children, true);
+      interactionEvent.intersects = this.raycaster.intersectObjects(this.scene.children, true).filter(d => !d.object.silent);
 
       return interactionEvent;
     }
