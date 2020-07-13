@@ -68,7 +68,7 @@
     "npmsrcify": "0.0.2",
     "rollup": "^0.52.0",
     "rollup-plugin-babel": "^3.0.2",
-    "standard-version": "^4.2.0",
+    "standard-version": "^8.0.1",
     "three": "^0.91.0",
     "validate-commit-msg": "^2.14.0"
   },
