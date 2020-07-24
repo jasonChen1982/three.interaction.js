@@ -716,6 +716,8 @@ var InteractionManager = function (_EventDispatcher) {
 
     options = options || {};
 
+    _this.objects = null;
+
     /**
      * The renderer this interaction manager works for.
      *
@@ -2345,9 +2347,25 @@ var InteractionManager = function (_EventDispatcher) {
 
       interactionData.originalEvent = pointerEvent;
       interactionEvent._reset();
-      interactionEvent.intersects = this.raycaster.intersectObjects(this.scene.children, true);
-
+      if (this.objectsToRaycast) {
+        interactionEvent.intersects = this.raycaster.intersectObjects(this.objectsToRaycast, true);
+      } else {
+        interactionEvent.intersects = this.raycaster.intersectObjects(this.scene.children, true);
+      }
       return interactionEvent;
+    }
+
+    /**
+     * set objects to raycast
+     *
+     * @param {Object3D} objects
+     * @memberof InteractionManager
+     */
+
+  }, {
+    key: 'setObjectsToRaycast',
+    value: function setObjectsToRaycast(objects) {
+      this.objectsToRaycast = objects;
     }
 
     /**
