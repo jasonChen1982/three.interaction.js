@@ -1,6 +1,6 @@
 {
   "name": "three.interaction",
-  "version": "0.2.2",
+  "version": "0.2.3-beta.0",
   "description": "a interaction manager, serve the three.js, help you build a interactivity 3d-scene",
   "main": "./build/three.interaction.js",
   "module": "./build/three.interaction.module.js",
