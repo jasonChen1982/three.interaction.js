@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.2.3"></a>
+## [0.2.3](https://github.com/jasonChen1982/three.interaction.js/compare/v0.2.3-beta.0...v0.2.3) (2020-07-24)
+
+
+
 <a name="0.2.3-beta.0"></a>
 ## [0.2.3-beta.0](https://github.com/jasonChen1982/three.interaction.js/compare/v0.2.2...v0.2.3-beta.0) (2020-07-24)
 
