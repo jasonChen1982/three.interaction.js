@@ -58,7 +58,7 @@
     "chalk": "^2.3.0",
     "eslint": "^4.12.1",
     "eslint-config-google": "^0.9.1",
-    "http-server": "^0.10.0",
+    "http-server": "^14.1.1",
     "jsdoc": "^3.5.5",
     "karma": "^1.7.1",
     "karma-chai": "^0.1.0",
