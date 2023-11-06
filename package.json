@@ -47,7 +47,7 @@
   },
   "homepage": "https://github.com/jasonChen1982/three.interaction.js#readme",
   "peerDependencies": {
-    "three": "^0.89.0"
+    "three": "^0.158.0"
   },
   "devDependencies": {
     "@pixi/jsdoc-template": "^2.2.0",
